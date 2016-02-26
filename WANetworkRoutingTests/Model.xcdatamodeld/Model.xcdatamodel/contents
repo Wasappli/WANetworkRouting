@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15B42" minimumToolsVersion="Xcode 7.0">
+    <entity name="Employee" representedClassName="EmployeeCD" syncable="YES">
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="enterprise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Enterprise" inverseName="employees" inverseEntity="Enterprise" syncable="YES"/>
+    </entity>
+    <entity name="Enterprise" representedClassName="EnterpriseCD" syncable="YES">
+        <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="itemID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="streetNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="chiefs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Employee" syncable="YES"/>
+        <relationship name="employees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="enterprise" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="orderedEmployees" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Employee" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Employee" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Enterprise" positionX="-54" positionY="9" width="128" height="150"/>
+    </elements>
+</model>

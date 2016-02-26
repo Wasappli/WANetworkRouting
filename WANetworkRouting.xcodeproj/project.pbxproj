@@ -7,13 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B220D457102AEFF2B257BB1 /* libPods-WANetworkRoutingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE48A9F7E1AFBF272F4C39EB /* libPods-WANetworkRoutingTests.a */; };
+		A112863FA06BAC723883769B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8288A69B4A2CB10241A9C1C4 /* libPods.a */; };
 		E01C1C971C7CB5CB00FFEF06 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1C961C7CB5CB00FFEF06 /* main.m */; };
 		E01C1C9A1C7CB5CB00FFEF06 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1C991C7CB5CB00FFEF06 /* AppDelegate.m */; };
 		E01C1C9D1C7CB5CB00FFEF06 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1C9C1C7CB5CB00FFEF06 /* ViewController.m */; };
 		E01C1CA01C7CB5CB00FFEF06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E01C1C9E1C7CB5CB00FFEF06 /* Main.storyboard */; };
 		E01C1CA21C7CB5CB00FFEF06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E01C1CA11C7CB5CB00FFEF06 /* Assets.xcassets */; };
 		E01C1CA51C7CB5CB00FFEF06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E01C1CA31C7CB5CB00FFEF06 /* LaunchScreen.storyboard */; };
-		E01C1CB01C7CB5CB00FFEF06 /* WANetworkRoutingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CAF1C7CB5CB00FFEF06 /* WANetworkRoutingTests.m */; };
+		E01C1CC61C7CBBC800FFEF06 /* WAAFNetworkingRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CC51C7CBBC800FFEF06 /* WAAFNetworkingRequestManager.m */; };
+		E01C1CCB1C7CC00300FFEF06 /* WAObjectRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CCA1C7CC00300FFEF06 /* WAObjectRequest.m */; };
+		E01C1CCF1C7CC02600FFEF06 /* WAObjectResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CCE1C7CC02600FFEF06 /* WAObjectResponse.m */; };
+		E01C1CD21C7CC78000FFEF06 /* WAURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CD11C7CC78000FFEF06 /* WAURLResponse.m */; };
+		E01C1CD61C7CD6A700FFEF06 /* WANetworkRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CD51C7CD6A700FFEF06 /* WANetworkRouter.m */; };
+		E01C1CD91C7CD6B100FFEF06 /* WANetworkRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CD81C7CD6B100FFEF06 /* WANetworkRoute.m */; };
+		E01C1CDC1C7CD6BD00FFEF06 /* WANetworkRoutePattern.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CDB1C7CD6BD00FFEF06 /* WANetworkRoutePattern.m */; };
+		E01C1CE01C7CDA2200FFEF06 /* WAResponseDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CDF1C7CDA2200FFEF06 /* WAResponseDescriptor.m */; };
+		E01C1CE31C7CDA3000FFEF06 /* WARequestDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CE21C7CDA3000FFEF06 /* WARequestDescriptor.m */; };
+		E01C1CE61C7CDB3400FFEF06 /* WAMappingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CE51C7CDB3400FFEF06 /* WAMappingManager.m */; };
+		E01C1CF51C7CE7C500FFEF06 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CE81C7CE7C500FFEF06 /* Employee.m */; };
+		E01C1CF61C7CE7C500FFEF06 /* EmployeeCD.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CEA1C7CE7C500FFEF06 /* EmployeeCD.m */; };
+		E01C1CF71C7CE7C500FFEF06 /* EmployeeCD+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CEC1C7CE7C500FFEF06 /* EmployeeCD+CoreDataProperties.m */; };
+		E01C1CF81C7CE7C500FFEF06 /* Enterprise.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CEE1C7CE7C500FFEF06 /* Enterprise.m */; };
+		E01C1CF91C7CE7C500FFEF06 /* EnterpriseCD.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CF01C7CE7C500FFEF06 /* EnterpriseCD.m */; };
+		E01C1CFA1C7CE7C500FFEF06 /* EnterpriseCD+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CF21C7CE7C500FFEF06 /* EnterpriseCD+CoreDataProperties.m */; };
+		E01C1CFB1C7CE7C500FFEF06 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CF31C7CE7C500FFEF06 /* Model.xcdatamodeld */; };
+		E01C1CFF1C7CE81B00FFEF06 /* WARouteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CFE1C7CE81B00FFEF06 /* WARouteTests.m */; };
+		E01C1D021C7CE87600FFEF06 /* WANetworkRoutingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1D011C7CE87600FFEF06 /* WANetworkRoutingManager.m */; };
+		E01C1D041C7CED7D00FFEF06 /* WARouteEqualityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1D031C7CED7D00FFEF06 /* WARouteEqualityTests.m */; };
+		E01C1D061C7CEE5300FFEF06 /* WARouteURLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1D051C7CEE5300FFEF06 /* WARouteURLTests.m */; };
+		E01C1D081C7CEEEE00FFEF06 /* WAObjectRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1D071C7CEEEE00FFEF06 /* WAObjectRequestTests.m */; };
+		E01C1D0A1C7CF06C00FFEF06 /* WAResponseDescriptorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1D091C7CF06C00FFEF06 /* WAResponseDescriptorTests.m */; };
+		E09D02F31C7D17E800938629 /* WANRBasicError.m in Sources */ = {isa = PBXBuildFile; fileRef = E09D02F21C7D17E800938629 /* WANRBasicError.m */; };
+		E09D02F51C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E09D02F41C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m */; };
+		E09D02F71C7D1C4E00938629 /* EnterprisesList.json in Resources */ = {isa = PBXBuildFile; fileRef = E09D02F61C7D1C4E00938629 /* EnterprisesList.json */; };
+		E09D02F91C7D1CD300938629 /* Wasappli.json in Resources */ = {isa = PBXBuildFile; fileRef = E09D02F81C7D1CD300938629 /* Wasappli.json */; };
+		E09D02FB1C7D24AD00938629 /* WARoutingManagerRequestMappingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E09D02FA1C7D24AD00938629 /* WARoutingManagerRequestMappingTests.m */; };
+		E09D02FE1C7D421100938629 /* WARoutingManagerRequestMappingRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E09D02FD1C7D421100938629 /* WARoutingManagerRequestMappingRouterTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +57,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E0A281D802DC4DF8EBB6391 /* Pods-WANetworkRoutingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WANetworkRoutingTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WANetworkRoutingTests/Pods-WANetworkRoutingTests.debug.xcconfig"; sourceTree = "<group>"; };
+		70E6F3FE1A9A8BE187FC72D4 /* Pods-WANetworkRoutingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WANetworkRoutingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WANetworkRoutingTests/Pods-WANetworkRoutingTests.release.xcconfig"; sourceTree = "<group>"; };
+		8288A69B4A2CB10241A9C1C4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE48A9F7E1AFBF272F4C39EB /* libPods-WANetworkRoutingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WANetworkRoutingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01C1C921C7CB5CB00FFEF06 /* WANetworkRouting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WANetworkRouting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01C1C961C7CB5CB00FFEF06 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E01C1C981C7CB5CB00FFEF06 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -38,8 +72,63 @@
 		E01C1CA41C7CB5CB00FFEF06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E01C1CA61C7CB5CB00FFEF06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E01C1CAB1C7CB5CB00FFEF06 /* WANetworkRoutingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WANetworkRoutingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E01C1CAF1C7CB5CB00FFEF06 /* WANetworkRoutingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WANetworkRoutingTests.m; sourceTree = "<group>"; };
 		E01C1CB11C7CB5CB00FFEF06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E01C1CBB1C7CB6DF00FFEF06 /* WANetworkRouting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WANetworkRouting.h; sourceTree = "<group>"; };
+		E01C1CBE1C7CB78400FFEF06 /* WARequestAuthenticationManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WARequestAuthenticationManagerProtocol.h; sourceTree = "<group>"; };
+		E01C1CBF1C7CB86200FFEF06 /* WARequestManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WARequestManagerProtocol.h; sourceTree = "<group>"; };
+		E01C1CC01C7CB98700FFEF06 /* WAMappingManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAMappingManagerProtocol.h; sourceTree = "<group>"; };
+		E01C1CC21C7CBA8D00FFEF06 /* WANetworkRoutingUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WANetworkRoutingUtilities.h; sourceTree = "<group>"; };
+		E01C1CC41C7CBBC800FFEF06 /* WAAFNetworkingRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAAFNetworkingRequestManager.h; sourceTree = "<group>"; };
+		E01C1CC51C7CBBC800FFEF06 /* WAAFNetworkingRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAAFNetworkingRequestManager.m; sourceTree = "<group>"; };
+		E01C1CC71C7CBC2800FFEF06 /* WANetworkRoutingMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WANetworkRoutingMacros.h; sourceTree = "<group>"; };
+		E01C1CC81C7CBF4000FFEF06 /* WANRErrorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WANRErrorProtocol.h; sourceTree = "<group>"; };
+		E01C1CC91C7CC00300FFEF06 /* WAObjectRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAObjectRequest.h; sourceTree = "<group>"; };
+		E01C1CCA1C7CC00300FFEF06 /* WAObjectRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAObjectRequest.m; sourceTree = "<group>"; };
+		E01C1CCD1C7CC02600FFEF06 /* WAObjectResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAObjectResponse.h; sourceTree = "<group>"; };
+		E01C1CCE1C7CC02600FFEF06 /* WAObjectResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAObjectResponse.m; sourceTree = "<group>"; };
+		E01C1CD01C7CC78000FFEF06 /* WAURLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAURLResponse.h; sourceTree = "<group>"; };
+		E01C1CD11C7CC78000FFEF06 /* WAURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAURLResponse.m; sourceTree = "<group>"; };
+		E01C1CD41C7CD6A700FFEF06 /* WANetworkRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WANetworkRouter.h; sourceTree = "<group>"; };
+		E01C1CD51C7CD6A700FFEF06 /* WANetworkRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WANetworkRouter.m; sourceTree = "<group>"; };
+		E01C1CD71C7CD6B100FFEF06 /* WANetworkRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WANetworkRoute.h; sourceTree = "<group>"; };
+		E01C1CD81C7CD6B100FFEF06 /* WANetworkRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WANetworkRoute.m; sourceTree = "<group>"; };
+		E01C1CDA1C7CD6BD00FFEF06 /* WANetworkRoutePattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WANetworkRoutePattern.h; sourceTree = "<group>"; };
+		E01C1CDB1C7CD6BD00FFEF06 /* WANetworkRoutePattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WANetworkRoutePattern.m; sourceTree = "<group>"; };
+		E01C1CDE1C7CDA2200FFEF06 /* WAResponseDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAResponseDescriptor.h; sourceTree = "<group>"; };
+		E01C1CDF1C7CDA2200FFEF06 /* WAResponseDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAResponseDescriptor.m; sourceTree = "<group>"; };
+		E01C1CE11C7CDA3000FFEF06 /* WARequestDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WARequestDescriptor.h; sourceTree = "<group>"; };
+		E01C1CE21C7CDA3000FFEF06 /* WARequestDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARequestDescriptor.m; sourceTree = "<group>"; };
+		E01C1CE41C7CDB3400FFEF06 /* WAMappingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAMappingManager.h; sourceTree = "<group>"; };
+		E01C1CE51C7CDB3400FFEF06 /* WAMappingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAMappingManager.m; sourceTree = "<group>"; };
+		E01C1CE71C7CE7C500FFEF06 /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
+		E01C1CE81C7CE7C500FFEF06 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
+		E01C1CE91C7CE7C500FFEF06 /* EmployeeCD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeCD.h; sourceTree = "<group>"; };
+		E01C1CEA1C7CE7C500FFEF06 /* EmployeeCD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeCD.m; sourceTree = "<group>"; };
+		E01C1CEB1C7CE7C500FFEF06 /* EmployeeCD+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmployeeCD+CoreDataProperties.h"; sourceTree = "<group>"; };
+		E01C1CEC1C7CE7C500FFEF06 /* EmployeeCD+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EmployeeCD+CoreDataProperties.m"; sourceTree = "<group>"; };
+		E01C1CED1C7CE7C500FFEF06 /* Enterprise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enterprise.h; sourceTree = "<group>"; };
+		E01C1CEE1C7CE7C500FFEF06 /* Enterprise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Enterprise.m; sourceTree = "<group>"; };
+		E01C1CEF1C7CE7C500FFEF06 /* EnterpriseCD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterpriseCD.h; sourceTree = "<group>"; };
+		E01C1CF01C7CE7C500FFEF06 /* EnterpriseCD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterpriseCD.m; sourceTree = "<group>"; };
+		E01C1CF11C7CE7C500FFEF06 /* EnterpriseCD+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EnterpriseCD+CoreDataProperties.h"; sourceTree = "<group>"; };
+		E01C1CF21C7CE7C500FFEF06 /* EnterpriseCD+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EnterpriseCD+CoreDataProperties.m"; sourceTree = "<group>"; };
+		E01C1CF41C7CE7C500FFEF06 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		E01C1CFE1C7CE81B00FFEF06 /* WARouteTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARouteTests.m; sourceTree = "<group>"; };
+		E01C1D001C7CE87600FFEF06 /* WANetworkRoutingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WANetworkRoutingManager.h; sourceTree = "<group>"; };
+		E01C1D011C7CE87600FFEF06 /* WANetworkRoutingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WANetworkRoutingManager.m; sourceTree = "<group>"; };
+		E01C1D031C7CED7D00FFEF06 /* WARouteEqualityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARouteEqualityTests.m; sourceTree = "<group>"; };
+		E01C1D051C7CEE5300FFEF06 /* WARouteURLTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARouteURLTests.m; sourceTree = "<group>"; };
+		E01C1D071C7CEEEE00FFEF06 /* WAObjectRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAObjectRequestTests.m; sourceTree = "<group>"; };
+		E01C1D091C7CF06C00FFEF06 /* WAResponseDescriptorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAResponseDescriptorTests.m; sourceTree = "<group>"; };
+		E09D02F11C7D17E800938629 /* WANRBasicError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WANRBasicError.h; sourceTree = "<group>"; };
+		E09D02F21C7D17E800938629 /* WANRBasicError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WANRBasicError.m; sourceTree = "<group>"; };
+		E09D02F41C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARoutingManagerRequestOnlyTests.m; sourceTree = "<group>"; };
+		E09D02F61C7D1C4E00938629 /* EnterprisesList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EnterprisesList.json; sourceTree = "<group>"; };
+		E09D02F81C7D1CD300938629 /* Wasappli.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Wasappli.json; sourceTree = "<group>"; };
+		E09D02FA1C7D24AD00938629 /* WARoutingManagerRequestMappingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARoutingManagerRequestMappingTests.m; sourceTree = "<group>"; };
+		E09D02FD1C7D421100938629 /* WARoutingManagerRequestMappingRouterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARoutingManagerRequestMappingRouterTests.m; sourceTree = "<group>"; };
+		E82FFD9E7F3107C38B61B5AD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E984CCFFE13D7E119A724EAD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A112863FA06BAC723883769B /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,18 +144,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B220D457102AEFF2B257BB1 /* libPods-WANetworkRoutingTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A2BEDD3395E3FFC4AFBC7014 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8288A69B4A2CB10241A9C1C4 /* libPods.a */,
+				DE48A9F7E1AFBF272F4C39EB /* libPods-WANetworkRoutingTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E01C1C891C7CB5CB00FFEF06 = {
 			isa = PBXGroup;
 			children = (
+				E01C1CBA1C7CB69A00FFEF06 /* Files */,
 				E01C1C941C7CB5CB00FFEF06 /* WANetworkRouting */,
 				E01C1CAE1C7CB5CB00FFEF06 /* WANetworkRoutingTests */,
 				E01C1C931C7CB5CB00FFEF06 /* Products */,
+				F7366E4AE8E8F6086C16461A /* Pods */,
+				A2BEDD3395E3FFC4AFBC7014 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,10 +208,153 @@
 		E01C1CAE1C7CB5CB00FFEF06 /* WANetworkRoutingTests */ = {
 			isa = PBXGroup;
 			children = (
-				E01C1CAF1C7CB5CB00FFEF06 /* WANetworkRoutingTests.m */,
+				E01C1CFD1C7CE7EC00FFEF06 /* Specs */,
+				E01C1CFC1C7CE7E600FFEF06 /* Model */,
 				E01C1CB11C7CB5CB00FFEF06 /* Info.plist */,
+				E09D02FC1C7D24B300938629 /* Fixtures */,
 			);
 			path = WANetworkRoutingTests;
+			sourceTree = "<group>";
+		};
+		E01C1CBA1C7CB69A00FFEF06 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				E01C1CBB1C7CB6DF00FFEF06 /* WANetworkRouting.h */,
+				E01C1D001C7CE87600FFEF06 /* WANetworkRoutingManager.h */,
+				E01C1D011C7CE87600FFEF06 /* WANetworkRoutingManager.m */,
+				E01C1CC11C7CBA4800FFEF06 /* Headers */,
+				E01C1CBC1C7CB6F200FFEF06 /* Protocols */,
+				E01C1CC31C7CBBA900FFEF06 /* Requests */,
+				E01C1CCC1C7CC00C00FFEF06 /* Response */,
+				E01C1CD31C7CD68B00FFEF06 /* Router */,
+				E01C1CDD1C7CDA0200FFEF06 /* Mapping */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
+		E01C1CBC1C7CB6F200FFEF06 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				E01C1CBE1C7CB78400FFEF06 /* WARequestAuthenticationManagerProtocol.h */,
+				E01C1CBF1C7CB86200FFEF06 /* WARequestManagerProtocol.h */,
+				E01C1CC01C7CB98700FFEF06 /* WAMappingManagerProtocol.h */,
+				E01C1CC81C7CBF4000FFEF06 /* WANRErrorProtocol.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		E01C1CC11C7CBA4800FFEF06 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				E01C1CC21C7CBA8D00FFEF06 /* WANetworkRoutingUtilities.h */,
+				E01C1CC71C7CBC2800FFEF06 /* WANetworkRoutingMacros.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		E01C1CC31C7CBBA900FFEF06 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				E01C1CC41C7CBBC800FFEF06 /* WAAFNetworkingRequestManager.h */,
+				E01C1CC51C7CBBC800FFEF06 /* WAAFNetworkingRequestManager.m */,
+				E01C1CC91C7CC00300FFEF06 /* WAObjectRequest.h */,
+				E01C1CCA1C7CC00300FFEF06 /* WAObjectRequest.m */,
+				E09D02F11C7D17E800938629 /* WANRBasicError.h */,
+				E09D02F21C7D17E800938629 /* WANRBasicError.m */,
+			);
+			name = Requests;
+			sourceTree = "<group>";
+		};
+		E01C1CCC1C7CC00C00FFEF06 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				E01C1CCD1C7CC02600FFEF06 /* WAObjectResponse.h */,
+				E01C1CCE1C7CC02600FFEF06 /* WAObjectResponse.m */,
+				E01C1CD01C7CC78000FFEF06 /* WAURLResponse.h */,
+				E01C1CD11C7CC78000FFEF06 /* WAURLResponse.m */,
+			);
+			name = Response;
+			sourceTree = "<group>";
+		};
+		E01C1CD31C7CD68B00FFEF06 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				E01C1CD41C7CD6A700FFEF06 /* WANetworkRouter.h */,
+				E01C1CD51C7CD6A700FFEF06 /* WANetworkRouter.m */,
+				E01C1CD71C7CD6B100FFEF06 /* WANetworkRoute.h */,
+				E01C1CD81C7CD6B100FFEF06 /* WANetworkRoute.m */,
+				E01C1CDA1C7CD6BD00FFEF06 /* WANetworkRoutePattern.h */,
+				E01C1CDB1C7CD6BD00FFEF06 /* WANetworkRoutePattern.m */,
+			);
+			name = Router;
+			sourceTree = "<group>";
+		};
+		E01C1CDD1C7CDA0200FFEF06 /* Mapping */ = {
+			isa = PBXGroup;
+			children = (
+				E01C1CDE1C7CDA2200FFEF06 /* WAResponseDescriptor.h */,
+				E01C1CDF1C7CDA2200FFEF06 /* WAResponseDescriptor.m */,
+				E01C1CE11C7CDA3000FFEF06 /* WARequestDescriptor.h */,
+				E01C1CE21C7CDA3000FFEF06 /* WARequestDescriptor.m */,
+				E01C1CE41C7CDB3400FFEF06 /* WAMappingManager.h */,
+				E01C1CE51C7CDB3400FFEF06 /* WAMappingManager.m */,
+			);
+			name = Mapping;
+			sourceTree = "<group>";
+		};
+		E01C1CFC1C7CE7E600FFEF06 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E01C1CE71C7CE7C500FFEF06 /* Employee.h */,
+				E01C1CE81C7CE7C500FFEF06 /* Employee.m */,
+				E01C1CE91C7CE7C500FFEF06 /* EmployeeCD.h */,
+				E01C1CEA1C7CE7C500FFEF06 /* EmployeeCD.m */,
+				E01C1CEB1C7CE7C500FFEF06 /* EmployeeCD+CoreDataProperties.h */,
+				E01C1CEC1C7CE7C500FFEF06 /* EmployeeCD+CoreDataProperties.m */,
+				E01C1CED1C7CE7C500FFEF06 /* Enterprise.h */,
+				E01C1CEE1C7CE7C500FFEF06 /* Enterprise.m */,
+				E01C1CEF1C7CE7C500FFEF06 /* EnterpriseCD.h */,
+				E01C1CF01C7CE7C500FFEF06 /* EnterpriseCD.m */,
+				E01C1CF11C7CE7C500FFEF06 /* EnterpriseCD+CoreDataProperties.h */,
+				E01C1CF21C7CE7C500FFEF06 /* EnterpriseCD+CoreDataProperties.m */,
+				E01C1CF31C7CE7C500FFEF06 /* Model.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		E01C1CFD1C7CE7EC00FFEF06 /* Specs */ = {
+			isa = PBXGroup;
+			children = (
+				E01C1CFE1C7CE81B00FFEF06 /* WARouteTests.m */,
+				E01C1D031C7CED7D00FFEF06 /* WARouteEqualityTests.m */,
+				E01C1D051C7CEE5300FFEF06 /* WARouteURLTests.m */,
+				E01C1D071C7CEEEE00FFEF06 /* WAObjectRequestTests.m */,
+				E01C1D091C7CF06C00FFEF06 /* WAResponseDescriptorTests.m */,
+				E09D02F41C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m */,
+				E09D02FA1C7D24AD00938629 /* WARoutingManagerRequestMappingTests.m */,
+				E09D02FD1C7D421100938629 /* WARoutingManagerRequestMappingRouterTests.m */,
+			);
+			name = Specs;
+			sourceTree = "<group>";
+		};
+		E09D02FC1C7D24B300938629 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				E09D02F61C7D1C4E00938629 /* EnterprisesList.json */,
+				E09D02F81C7D1CD300938629 /* Wasappli.json */,
+			);
+			name = Fixtures;
+			sourceTree = "<group>";
+		};
+		F7366E4AE8E8F6086C16461A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E82FFD9E7F3107C38B61B5AD /* Pods.debug.xcconfig */,
+				E984CCFFE13D7E119A724EAD /* Pods.release.xcconfig */,
+				6E0A281D802DC4DF8EBB6391 /* Pods-WANetworkRoutingTests.debug.xcconfig */,
+				70E6F3FE1A9A8BE187FC72D4 /* Pods-WANetworkRoutingTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,9 +364,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E01C1CB41C7CB5CB00FFEF06 /* Build configuration list for PBXNativeTarget "WANetworkRouting" */;
 			buildPhases = (
+				5A3F989B3B021C2E9238BE85 /* Check Pods Manifest.lock */,
 				E01C1C8E1C7CB5CB00FFEF06 /* Sources */,
 				E01C1C8F1C7CB5CB00FFEF06 /* Frameworks */,
 				E01C1C901C7CB5CB00FFEF06 /* Resources */,
+				82E32C8E3E98AB4257D5E1B0 /* Embed Pods Frameworks */,
+				343F0137E2CA9C3FBDA57164 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -135,9 +384,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E01C1CB71C7CB5CB00FFEF06 /* Build configuration list for PBXNativeTarget "WANetworkRoutingTests" */;
 			buildPhases = (
+				D91B0DE415D14106B741ECDA /* Check Pods Manifest.lock */,
 				E01C1CA71C7CB5CB00FFEF06 /* Sources */,
 				E01C1CA81C7CB5CB00FFEF06 /* Frameworks */,
 				E01C1CA91C7CB5CB00FFEF06 /* Resources */,
+				6E0BF39C5F048D121CB7F0E5 /* Embed Pods Frameworks */,
+				406D08F0240767CFFA93DCB1 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -201,19 +453,125 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E09D02F91C7D1CD300938629 /* Wasappli.json in Resources */,
+				E09D02F71C7D1C4E00938629 /* EnterprisesList.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		343F0137E2CA9C3FBDA57164 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		406D08F0240767CFFA93DCB1 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WANetworkRoutingTests/Pods-WANetworkRoutingTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5A3F989B3B021C2E9238BE85 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6E0BF39C5F048D121CB7F0E5 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WANetworkRoutingTests/Pods-WANetworkRoutingTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		82E32C8E3E98AB4257D5E1B0 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D91B0DE415D14106B741ECDA /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E01C1C8E1C7CB5CB00FFEF06 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E01C1CE01C7CDA2200FFEF06 /* WAResponseDescriptor.m in Sources */,
 				E01C1C9D1C7CB5CB00FFEF06 /* ViewController.m in Sources */,
+				E01C1CD91C7CD6B100FFEF06 /* WANetworkRoute.m in Sources */,
+				E01C1CCF1C7CC02600FFEF06 /* WAObjectResponse.m in Sources */,
+				E01C1CE31C7CDA3000FFEF06 /* WARequestDescriptor.m in Sources */,
+				E01C1CDC1C7CD6BD00FFEF06 /* WANetworkRoutePattern.m in Sources */,
+				E01C1CC61C7CBBC800FFEF06 /* WAAFNetworkingRequestManager.m in Sources */,
+				E01C1CD21C7CC78000FFEF06 /* WAURLResponse.m in Sources */,
+				E01C1CE61C7CDB3400FFEF06 /* WAMappingManager.m in Sources */,
 				E01C1C9A1C7CB5CB00FFEF06 /* AppDelegate.m in Sources */,
 				E01C1C971C7CB5CB00FFEF06 /* main.m in Sources */,
+				E01C1CCB1C7CC00300FFEF06 /* WAObjectRequest.m in Sources */,
+				E01C1CD61C7CD6A700FFEF06 /* WANetworkRouter.m in Sources */,
+				E09D02F31C7D17E800938629 /* WANRBasicError.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,7 +579,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E01C1CB01C7CB5CB00FFEF06 /* WANetworkRoutingTests.m in Sources */,
+				E01C1CFA1C7CE7C500FFEF06 /* EnterpriseCD+CoreDataProperties.m in Sources */,
+				E01C1D061C7CEE5300FFEF06 /* WARouteURLTests.m in Sources */,
+				E01C1D021C7CE87600FFEF06 /* WANetworkRoutingManager.m in Sources */,
+				E01C1CF71C7CE7C500FFEF06 /* EmployeeCD+CoreDataProperties.m in Sources */,
+				E01C1D0A1C7CF06C00FFEF06 /* WAResponseDescriptorTests.m in Sources */,
+				E01C1CF61C7CE7C500FFEF06 /* EmployeeCD.m in Sources */,
+				E01C1CFF1C7CE81B00FFEF06 /* WARouteTests.m in Sources */,
+				E01C1D041C7CED7D00FFEF06 /* WARouteEqualityTests.m in Sources */,
+				E09D02F51C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m in Sources */,
+				E01C1CFB1C7CE7C500FFEF06 /* Model.xcdatamodeld in Sources */,
+				E09D02FE1C7D421100938629 /* WARoutingManagerRequestMappingRouterTests.m in Sources */,
+				E01C1D081C7CEEEE00FFEF06 /* WAObjectRequestTests.m in Sources */,
+				E01C1CF81C7CE7C500FFEF06 /* Enterprise.m in Sources */,
+				E01C1CF91C7CE7C500FFEF06 /* EnterpriseCD.m in Sources */,
+				E01C1CF51C7CE7C500FFEF06 /* Employee.m in Sources */,
+				E09D02FB1C7D24AD00938629 /* WARoutingManagerRequestMappingTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +712,7 @@
 		};
 		E01C1CB51C7CB5CB00FFEF06 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E82FFD9E7F3107C38B61B5AD /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WANetworkRouting/Info.plist;
@@ -350,6 +724,7 @@
 		};
 		E01C1CB61C7CB5CB00FFEF06 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E984CCFFE13D7E119A724EAD /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WANetworkRouting/Info.plist;
@@ -361,6 +736,7 @@
 		};
 		E01C1CB81C7CB5CB00FFEF06 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E0A281D802DC4DF8EBB6391 /* Pods-WANetworkRoutingTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = WANetworkRoutingTests/Info.plist;
@@ -373,6 +749,7 @@
 		};
 		E01C1CB91C7CB5CB00FFEF06 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 70E6F3FE1A9A8BE187FC72D4 /* Pods-WANetworkRoutingTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = WANetworkRoutingTests/Info.plist;
@@ -402,6 +779,7 @@
 				E01C1CB61C7CB5CB00FFEF06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E01C1CB71C7CB5CB00FFEF06 /* Build configuration list for PBXNativeTarget "WANetworkRoutingTests" */ = {
 			isa = XCConfigurationList;
@@ -410,8 +788,22 @@
 				E01C1CB91C7CB5CB00FFEF06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E01C1CF31C7CE7C500FFEF06 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E01C1CF41C7CE7C500FFEF06 /* Model.xcdatamodel */,
+			);
+			currentVersion = E01C1CF41C7CE7C500FFEF06 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E01C1C8A1C7CB5CB00FFEF06 /* Project object */;
 }

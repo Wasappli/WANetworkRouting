@@ -1,0 +1,24 @@
+{
+    "enterprises": [{
+                    "id": 1,
+                    "name": "Wasappli",
+                    "creation_date": "2013-10-01",
+                    "address": {
+                    "street_number": 5149
+                    }
+                    }, {
+                    "id": 2,
+                    "name": "Potloc",
+                    "creation_date": "2014-11-04",
+                    "address": {
+                    "street_number": 6789
+                    }
+                    }, {
+                    "id": 3,
+                    "name": "O&O",
+                    "creation_date": "2014-08-04",
+                    "address": {
+                    "street_number": 1234
+                    }
+                    }]
+}
