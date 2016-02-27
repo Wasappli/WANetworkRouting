@@ -153,6 +153,10 @@
 }
 
 - (void)deleteObjectFromStore:(id)object fromRequest:(WAObjectRequest *)request {
+    if (!object) {
+        return;
+    }
+    
     BOOL shouldDelete = NO;
     if (request.method & WAObjectRequestMethodDELETE) {
         shouldDelete = YES;

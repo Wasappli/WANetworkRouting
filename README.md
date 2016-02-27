@@ -372,7 +372,7 @@ If you write
                    }];
 ```
 
-This will automatically delete enterprise from the store on success!
+This will automatically delete enterprise from the store on success! Be careful that if you delete an object only from it's ressource, it's up to you to delete it from your store (`[routingManager deleteObject:nil path:@"enterprises/1"...]`).
 
 ## Get the HTTP code and header fields from the response
 
