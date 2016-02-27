@@ -22,7 +22,7 @@
 #import "WARequestDescriptor.h"
 #import "WAResponseDescriptor.h"
 
-#import "WANetworkRouter"
+#import "WANetworkRouter.h"
 #import "WANetworkRoute.h"
 
 #import <WAMapping/WAMapping.h>
