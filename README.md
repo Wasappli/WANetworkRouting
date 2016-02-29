@@ -98,6 +98,18 @@ WAMemoryStore *memoryStore = [[WAMemoryStore alloc] init];
 WAMapper *mapper               = [WAMapper newMapperWithStore:memoryStore];
 WAReverseMapper *reverseMapper = [WAReverseMapper new];
 
+// Add a default date formatter on mapper
+id(^toDateMappingBlock)(id ) = ^id(id value) {
+    if ([value isKindOfClass:[NSString class]]) {
+        return [dateFormatter dateFromString:value];
+    }
+
+    return value;
+};
+
+[mapper addDefaultMappingBlock:toDateMappingBlock
+           forDestinationClass:[NSDate class]];
+           
 // Create the mapping description for `Enterprise`
 WAEntityMapping *enterpriseMapping = [WAEntityMapping mappingForEntityName:@"Enterprise"];
 enterpriseMapping.identificationAttribute = @"itemID";
@@ -206,7 +218,7 @@ Please note that the `requestKeyPath` fits with how your object would be wrapped
 
 This allows you to post an object like this
 
-```
+```objc
 Enterprise *enterprise = [Enterprise new];
 enterprise.name = @"Test";
         
@@ -303,7 +315,7 @@ It's an other protocol (again): `WANRErrorProtocol`
 ### Create your own class
 The routing manager comes with a default error class which does nothing except being allocated. 
 
-```
+```objc
 @interface MyAPIError : NSObject <WANRErrorProtocol>
 @end
 
