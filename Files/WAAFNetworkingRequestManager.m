@@ -49,7 +49,7 @@
     _errorClass = errorClass;
 }
 
-- (void)enqueueRequest:(WAObjectRequest *)objectRequest authenticateRequestBlock:(WARequestManagerAuthenticateRequest)authenticateRequestBlock successBlock:(WARequestManagerSuccess)successBlock failureBlock:(WARequestManagerFailure)failureBlock {
+- (void)enqueueRequest:(WAObjectRequest *)objectRequest authenticateRequestBlock:(WARequestManagerAuthenticateRequest)authenticateRequestBlock successBlock:(WARequestManagerSuccess)successBlock failureBlock:(WARequestManagerFailure)failureBlock progress:(WARequestManagerProgress)progressBlock {
     NSError *requestError = nil;
     NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:WAStringFromObjectRequestMethod(objectRequest.method)
                                                                                  URLString:[[NSURL URLWithString:objectRequest.path relativeToURL:self.baseURL] absoluteString]
@@ -72,29 +72,42 @@
     wanrWeakify(self);
     __block NSURLSessionDataTask *dataTask = nil;
     dataTask = [self.httpManager dataTaskWithRequest:request
-                                   completionHandler:
-                ^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-                    wanrStrongify(self);
-                    
-                    WAURLResponse *urlResponse = [WAURLResponse new];
-                    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                        urlResponse.statusCode = [(NSHTTPURLResponse *)response statusCode];
-                        urlResponse.httpHeaderFields = [(NSHTTPURLResponse *)response allHeaderFields];
-                    }
-                    
-                    WAObjectResponse *objectResponse = [WAObjectResponse new];
-                    objectResponse.responseObject    = responseObject;
-                    objectResponse.urlResponse       = urlResponse;
-                    
-                    if (error) {
-                        id apiError = [[self.errorClass alloc] initWithOriginalError:error
-                                                                            response:objectResponse];
-                        
-                        failureBlock(objectRequest, objectResponse, apiError);
-                    } else {
-                        successBlock(objectRequest, objectResponse);
-                    }
-                }];
+                                      uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
+                                          if (progressBlock) {
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  progressBlock(objectRequest, uploadProgress, nil);
+                                              });
+                                          }
+                                      }
+                                    downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
+                                        if (progressBlock) {
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                progressBlock(objectRequest, nil, downloadProgress);
+                                            });
+                                        }
+                                    }
+                                   completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                                       wanrStrongify(self);
+                                       
+                                       WAURLResponse *urlResponse = [WAURLResponse new];
+                                       if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                                           urlResponse.statusCode = [(NSHTTPURLResponse *)response statusCode];
+                                           urlResponse.httpHeaderFields = [(NSHTTPURLResponse *)response allHeaderFields];
+                                       }
+                                       
+                                       WAObjectResponse *objectResponse = [WAObjectResponse new];
+                                       objectResponse.responseObject    = responseObject;
+                                       objectResponse.urlResponse       = urlResponse;
+                                       
+                                       if (error) {
+                                           id apiError = [[self.errorClass alloc] initWithOriginalError:error
+                                                                                               response:objectResponse];
+                                           
+                                           failureBlock(objectRequest, objectResponse, apiError);
+                                       } else {
+                                           successBlock(objectRequest, objectResponse);
+                                       }
+                                   }];
     
     [dataTask resume];
 }

@@ -15,31 +15,34 @@ PODS:
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
   - Kiwi (2.4.0)
-  - OHHTTPStubs (4.7.1):
-    - OHHTTPStubs/Default (= 4.7.1)
-  - OHHTTPStubs/Core (4.7.1)
-  - OHHTTPStubs/Default (4.7.1):
+  - M13ProgressSuite (1.2.7)
+  - OHHTTPStubs (4.8.0):
+    - OHHTTPStubs/Default (= 4.8.0)
+  - OHHTTPStubs/Core (4.8.0)
+  - OHHTTPStubs/Default (4.8.0):
     - OHHTTPStubs/Core
     - OHHTTPStubs/JSON
     - OHHTTPStubs/NSURLSession
     - OHHTTPStubs/OHPathHelpers
-  - OHHTTPStubs/JSON (4.7.1):
+  - OHHTTPStubs/JSON (4.8.0):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/NSURLSession (4.7.1):
+  - OHHTTPStubs/NSURLSession (4.8.0):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/OHPathHelpers (4.7.1)
-  - WAMapping (0.0.2)
+  - OHHTTPStubs/OHPathHelpers (4.8.0)
+  - WAMapping (0.0.6)
 
 DEPENDENCIES:
   - AFNetworking
   - Kiwi
+  - M13ProgressSuite
   - OHHTTPStubs
-  - WAMapping
+  - WAMapping (~> 0.0.4)
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
-  OHHTTPStubs: f7d1604d04d37d055460c0ef9af01bb249ded0fa
-  WAMapping: a8aeed4c71dee3258c92aee09108bc0d43924169
+  M13ProgressSuite: 03d194af6359da440641ba758aed5a18b0386a86
+  OHHTTPStubs: b393565822317305b87a1440d4c7aff131679f66
+  WAMapping: d263a63a4e40383562df335d1612bfe270351302
 
 COCOAPODS: 0.39.0

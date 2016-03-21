@@ -36,7 +36,7 @@
 + (instancetype)managerWithBaseURL:(NSURL *)baseURL requestManager:(id <WARequestManagerProtocol>)requestManager mappingManager:(id <WAMappingManagerProtocol>)mappingManager authenticationManager:(id <WARequestAuthenticationManagerProtocol>)authenticationManager;
 
 /**
- *  Get all objects on a path
+ *  GET all objects on a path
  *
  *  @param path       the path, relative to the base URL
  *  @param parameters the optional parameters
@@ -48,9 +48,23 @@
                  success:(WAObjectRequestSuccessCompletionBlock)success
                  failure:(WAObjectRequestFailureCompletionBlock)failure;
 
+/**
+ *  Get all objects on a path
+ *
+ *  @param path       the path, relative to the base URL
+ *  @param parameters the optional parameters
+ *  @param progress   a progress block
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
+- (void)getObjectsAtPath:(NSString *)path
+              parameters:(NSDictionary *)parameters
+                progress:(WAObjectRequestProgressBlock)progress
+                 success:(WAObjectRequestSuccessCompletionBlock)success
+                 failure:(WAObjectRequestFailureCompletionBlock)failure;
 
 /**
- *  Get an object from a path
+ *  GET an object
  *
  *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
  *  @param path       if you don't want to use an object, write the path to access the ressource
@@ -64,38 +78,181 @@
           success:(WAObjectRequestSuccessCompletionBlock)success
           failure:(WAObjectRequestFailureCompletionBlock)failure;
 
-// @see `getObject: path: parameters: success: failure:`
+/**
+ *  GET an object
+ *
+ *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
+ *  @param path       if you don't want to use an object, write the path to access the ressource
+ *  @param parameters optional parameters
+ *  @param progress   a progress block
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
+- (void)getObject:(id)object
+             path:(NSString *)path
+       parameters:(NSDictionary *)parameters
+         progress:(WAObjectRequestProgressBlock)progress
+          success:(WAObjectRequestSuccessCompletionBlock)success
+          failure:(WAObjectRequestFailureCompletionBlock)failure;
+
+
+/**
+ *  POST an object
+ *
+ *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
+ *  @param path       if you don't want to use an object, write the path to access the ressource
+ *  @param parameters optional parameters
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
 - (void)postObject:(id)object
               path:(NSString *)path
         parameters:(NSDictionary *)parameters
            success:(WAObjectRequestSuccessCompletionBlock)success
            failure:(WAObjectRequestFailureCompletionBlock)failure;
 
-// @see `getObject: path: parameters: success: failure:`
+/**
+ *  POST an object
+ *
+ *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
+ *  @param path       if you don't want to use an object, write the path to access the ressource
+ *  @param parameters optional parameters
+ *  @param progress   a progress block
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
+- (void)postObject:(id)object
+              path:(NSString *)path
+        parameters:(NSDictionary *)parameters
+          progress:(WAObjectRequestProgressBlock)progress
+           success:(WAObjectRequestSuccessCompletionBlock)success
+           failure:(WAObjectRequestFailureCompletionBlock)failure;
+
+/**
+ *  PUT an object
+ *
+ *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
+ *  @param path       if you don't want to use an object, write the path to access the ressource
+ *  @param parameters optional parameters
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
 - (void)putObject:(id)object
              path:(NSString *)path
        parameters:(NSDictionary *)parameters
           success:(WAObjectRequestSuccessCompletionBlock)success
           failure:(WAObjectRequestFailureCompletionBlock)failure;
 
-// @see `getObject: path: parameters: success: failure:`
+/**
+ *  PUT an object
+ *
+ *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
+ *  @param path       if you don't want to use an object, write the path to access the ressource
+ *  @param parameters optional parameters
+ *  @param progress   a progress block
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
+- (void)putObject:(id)object
+             path:(NSString *)path
+       parameters:(NSDictionary *)parameters
+         progress:(WAObjectRequestProgressBlock)progress
+          success:(WAObjectRequestSuccessCompletionBlock)success
+          failure:(WAObjectRequestFailureCompletionBlock)failure;
+
+/**
+ *  DELETE an object
+ *
+ *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
+ *  @param path       if you don't want to use an object, write the path to access the ressource
+ *  @param parameters optional parameters
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
 - (void)deleteObject:(id)object
                 path:(NSString *)path
           parameters:(NSDictionary *)parameters
              success:(WAObjectRequestSuccessCompletionBlock)success
              failure:(WAObjectRequestFailureCompletionBlock)failure;
 
-// @see `getObject: path: parameters: success: failure:`
+/**
+ *  DELETE an object
+ *
+ *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
+ *  @param path       if you don't want to use an object, write the path to access the ressource
+ *  @param parameters optional parameters
+ *  @param progress   a progress block
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
+- (void)deleteObject:(id)object
+                path:(NSString *)path
+          parameters:(NSDictionary *)parameters
+            progress:(WAObjectRequestProgressBlock)progress
+             success:(WAObjectRequestSuccessCompletionBlock)success
+             failure:(WAObjectRequestFailureCompletionBlock)failure;
+
+/**
+ *  HEAD an object
+ *
+ *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
+ *  @param path       if you don't want to use an object, write the path to access the ressource
+ *  @param parameters optional parameters
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
 - (void)headObject:(id)object
               path:(NSString *)path
         parameters:(NSDictionary *)parameters
            success:(WAObjectRequestSuccessCompletionBlock)success
            failure:(WAObjectRequestFailureCompletionBlock)failure;
 
-// @see `getObject: path: parameters: success: failure:`
+/**
+ *  HEAD an object
+ *
+ *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
+ *  @param path       if you don't want to use an object, write the path to access the ressource
+ *  @param parameters optional parameters
+ *  @param progress   a progress block
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
+- (void)headObject:(id)object
+              path:(NSString *)path
+        parameters:(NSDictionary *)parameters
+          progress:(WAObjectRequestProgressBlock)progress
+           success:(WAObjectRequestSuccessCompletionBlock)success
+           failure:(WAObjectRequestFailureCompletionBlock)failure;
+
+/**
+ *  PATCH an object
+ *
+ *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
+ *  @param path       if you don't want to use an object, write the path to access the ressource
+ *  @param parameters optional parameters
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
 - (void)patchObject:(id)object
                path:(NSString *)path
          parameters:(NSDictionary *)parameters
+            success:(WAObjectRequestSuccessCompletionBlock)success
+            failure:(WAObjectRequestFailureCompletionBlock)failure;
+
+/**
+ *  PATCH an object
+ *
+ *  @param object     if used with the `WANetworkRouter`, pass the object and the router will find the path
+ *  @param path       if you don't want to use an object, write the path to access the ressource
+ *  @param parameters optional parameters
+ *  @param progress   a progress block
+ *  @param success    a success block
+ *  @param failure    a failure block
+ */
+- (void)patchObject:(id)object
+               path:(NSString *)path
+         parameters:(NSDictionary *)parameters
+           progress:(WAObjectRequestProgressBlock)progress
             success:(WAObjectRequestSuccessCompletionBlock)success
             failure:(WAObjectRequestFailureCompletionBlock)failure;
 

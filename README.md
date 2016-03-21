@@ -15,6 +15,7 @@ A routing library to fetch objects from an API and map them to your app
 - [x] Default mapping layer built on top of WAMapping
 - [x] Built-in object router
 - [x] Different configurations available
+- [x] `NSProgress` support
 - [x] Tested
 
 Go visit the [wiki](https://github.com/wasappli/WANetworkRouting/wiki) for more details about `WANetworkRouting` advanced use.
@@ -94,10 +95,6 @@ Have a look at [`WAMapping`](https://github.com/wasappli/WAMapping) for every de
 // Specify a store to use between WAMemoryStore, WANSCodingStore, WACoreDataStore, your own store.
 WAMemoryStore *memoryStore = [[WAMemoryStore alloc] init];
 
-// Create both a mapper and a reverse mapper
-WAMapper *mapper               = [WAMapper newMapperWithStore:memoryStore];
-WAReverseMapper *reverseMapper = [WAReverseMapper new];
-
 // Add a default date formatter on mapper
 id(^toDateMappingBlock)(id ) = ^id(id value) {
     if ([value isKindOfClass:[NSString class]]) {
@@ -118,8 +115,7 @@ enterpriseMapping.identificationAttribute = @"itemID";
                                                         @"name": @"name",
                                                         @"address.street_number": @"streetNumber"}];
 // Create the mapping manager
-WAMappingManager *mappingManager = [WAMappingManager mappingManagerWithMapper:mapper
-                                                                reverseMapper:reverseMapper];
+WAMappingManager *mappingManager = [WAMappingManager mappingManagerWithStore:memoryStore];
                                                                 
 WAAFNetworkingRequestManager *requestManager = [WAAFNetworkingRequestManager new];
 
@@ -295,6 +291,59 @@ By implementing the simple `WARequestAuthenticationManagerProtocol` protocol, an
 - Ask you to authenticate (renew the authorization somehow) and replay the request (`[routingManager enqueueRequest:]`) (The request will automatically be re authorized for you).
 
 This will allow the routing manager to run every requests without any surprise when authentication has expired!
+
+## Progress
+
+You can track the progress of your request. This library uses `NSProgress` class which is a great tool for dealing with progress.
+If your app supports iOS 9+, there is the explicit child feature. You can then write:
+
+(Please note that we are using a subclass of `NSProgress` that you can find on the sample. This is because `NSProgress` does not allow you to check if a progress already has a child :/)
+
+```objc
+WAProgress *mainProgress = [[WAProgress alloc] initWithParent:nil userInfo:nil];
+mainProgress.totalUnitCount = 100; // 100%
+
+// Add an observer to track the fraction completed
+[mainProgress addObserver:self forKeyPath:NSStringFromSelector(@selector(fractionCompleted)) options:NSKeyValueObservingOptionNew context:nil];
+
+                                     }];
+
+[routingManager getObjectsAtPath:@"posts"
+                      parameters:nil
+                        progress:^(WAObjectRequest *objectRequest, NSProgress *uploadProgress, NSProgress *downloadProgress, NSProgress *mappingProgress) {
+                            // Add the progress as a child
+                            [mainProgress addChildOnce:downloadProgress withPendingUnitCount:80]; // Network counts as 80% of the time
+                            [mainProgress addChildOnce:mappingProgress withPendingUnitCount:20]; // Mapping counts as 20% of the time. This is arbitrary
+                        }
+                         success:^(WAObjectRequest *objectRequest, WAObjectResponse *response, NSArray *mappedObjects) {
+                             self.posts = mappedObjects;
+                             [self.tableView reloadData];
+                             
+                             // Remove the observer!
+                             [mainProgress removeObserver:self forKeyPath:NSStringFromSelector(@selector(fractionCompleted))];
+                         }
+                         failure:^(WAObjectRequest *objectRequest, WAObjectResponse *response, id<WANRErrorProtocol> error) {
+                             [mainProgress removeObserver:self forKeyPath:NSStringFromSelector(@selector(fractionCompleted))];
+                         }];
+
+...
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([object isKindOfClass:[NSProgress class]]) {
+        NSLog(@"New progress is %f", [change[NSKeyValueChangeNewKey] floatValue]);
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+```
+	
+If your app targets less than iOS 9, I suggest you to calculate your own progress, this is simple since it is synchronous.
+
+## Cancellation
+
+Because of `NSProgress`, you can easily cancel the request:
+You have to call `[downloadProgress cancel]` and `[mappingProgress cancel]` and it will cancel either the mapping or the server fetch task depending on where you are on the process.
 
 ## Errors
 

@@ -14,6 +14,7 @@
 typedef NSMutableURLRequest* (^WARequestManagerAuthenticateRequest)(NSMutableURLRequest *request);
 typedef void (^WARequestManagerSuccess)(WAObjectRequest *request, WAObjectResponse *response);
 typedef void (^WARequestManagerFailure)(WAObjectRequest *request, WAObjectResponse *response, id <WANRErrorProtocol>error);
+typedef void (^WARequestManagerProgress)(WAObjectRequest *request, NSProgress *uploadProgress, NSProgress *downloadProgress);
 
 @protocol WARequestManagerProtocol <NSObject>
 
@@ -27,7 +28,8 @@ typedef void (^WARequestManagerFailure)(WAObjectRequest *request, WAObjectRespon
  *  @param authenticateRequestBlock provide a block if needed to authenticate the `NSMutableURLRequest` created
  *  @param successBlock             a block called on success
  *  @param failureBlock             a block called on failure
+ *  @param progressBlock            a block called for progress
  */
-- (void)enqueueRequest:(WAObjectRequest *)objectRequest authenticateRequestBlock:(WARequestManagerAuthenticateRequest)authenticateRequestBlock successBlock:(WARequestManagerSuccess)successBlock failureBlock:(WARequestManagerFailure)failureBlock;
+- (void)enqueueRequest:(WAObjectRequest *)objectRequest authenticateRequestBlock:(WARequestManagerAuthenticateRequest)authenticateRequestBlock successBlock:(WARequestManagerSuccess)successBlock failureBlock:(WARequestManagerFailure)failureBlock progress:(WARequestManagerProgress)progressBlock;
 
 @end

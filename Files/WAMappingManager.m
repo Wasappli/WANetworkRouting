@@ -24,29 +24,31 @@
 @property (nonatomic, strong) NSMutableArray *mutableResponseDescriptors;
 @property (nonatomic, strong) NSMutableArray *mutableRequestDescriptors;
 
-@property (nonatomic, strong) WAMapper        *mapper;
-@property (nonatomic, strong) WAReverseMapper *reverseMapper;
+@property (nonatomic, strong) NSMutableDictionary *defaultMappingBlocks;
+@property (nonatomic, strong) NSMutableDictionary *defaultReverseMappingBlocks;
+
+@property (nonatomic, strong) id <WAStoreProtocol> store;
+
+@property (nonatomic, strong) NSMutableArray *mappers;
 
 @end
 
 @implementation WAMappingManager
 
-- (instancetype)initWithMapper:(WAMapper *)mapper reverseMapper:(WAReverseMapper *)reverseMapper {
+- (instancetype)initWithStore:(id<WAStoreProtocol>)store {
     self = [super init];
     
     if (self) {
-        WANRClassParameterAssert(mapper, WAMapper);
-        WANRClassParameterAssert(reverseMapper, WAReverseMapper);
-        
-        self->_mapper        = mapper;
-        self->_reverseMapper = reverseMapper;
+        WANRProtocolParameterAssert(store, WAStoreProtocol);
+        self->_mappers = [NSMutableArray array];
+        self->_store   = store;
     }
     
     return self;
 }
 
-+ (instancetype)mappingManagerWithMapper:(WAMapper *)mapper reverseMapper:(WAReverseMapper *)reverseMapper {
-    return [[self alloc] initWithMapper:mapper reverseMapper:reverseMapper];
++ (instancetype)mappingManagerWithStore:(id<WAStoreProtocol>)store {
+    return [[self alloc] initWithStore:store];
 }
 
 - (void)addResponseDescriptor:(WAResponseDescriptor *)responseDescriptor {
@@ -65,45 +67,92 @@
     return [[self responseDescriptorsForRequest:request] count] != 0;
 }
 
+- (NSArray *)representationArrayFromResponse:(WAObjectResponse *)response usingResponseDescriptor:(WAResponseDescriptor *)responseDescriptor {
+    NSString *key = responseDescriptor.keyPath;
+    NSArray *array = nil;
+    if (key) {
+        array = response.responseObject[key];
+    }
+    else {
+        if (response.responseObject) {
+            array = [response.responseObject isKindOfClass:[NSArray class]] ? (NSArray *)response.responseObject : @[response.responseObject];
+        }
+    }
+    
+    return array;
+}
+
 - (void)mapResponse:(WAObjectResponse *)response fromRequest:(WAObjectRequest *)request withCompletion:(WAMappingManagerMappingCompletion)completion {
     NSArray *responseDescriptors = [self responseDescriptorsForRequest:request];
     
     if ([responseDescriptors count] > 0) {
         NSMutableArray *allObjectsMapped = [NSMutableArray array];
+        __block NSError *finalError      = nil;
+        
         __block int currentIndex = 0;
         __unsafe_unretained __block void (^mapResponseBlock)(WAResponseDescriptor *);
         
+        NSInteger numberOfMappings = 0;
+        for (WAResponseDescriptor *responseDescriptor in responseDescriptors) {
+            NSArray *array = [self representationArrayFromResponse:response
+                                           usingResponseDescriptor:responseDescriptor];
+            if (array) {
+                numberOfMappings++;
+            }
+        }
+        
+        NSProgress *mappingProgress = [NSProgress progressWithTotalUnitCount:numberOfMappings];
+        [mappingProgress addObserver:self
+                          forKeyPath:NSStringFromSelector(@selector(fractionCompleted))
+                             options:NSKeyValueObservingOptionNew
+                             context:(__bridge void * _Nullable)(request)];
+        
+        wanrWeakify(self);
         void (^endMappingBlock)(void) = ^{
+            wanrStrongify(self);
             currentIndex ++;
             if ([responseDescriptors count] > currentIndex) {
                 mapResponseBlock(responseDescriptors[currentIndex]);
             }
             else {
-                completion([allObjectsMapped copy]);
+                [mappingProgress removeObserver:self
+                                     forKeyPath:NSStringFromSelector(@selector(fractionCompleted))];
+                
+                completion([allObjectsMapped copy], finalError);
             }
         };
         
         mapResponseBlock = ^(WAResponseDescriptor *responseDescriptor) {
-            NSString *key = responseDescriptor.keyPath;
-            NSArray *array = nil;
-            if (key) {
-                array = response.responseObject[key];
-            }
-            else {
-                if (response.responseObject) {
-                    array = [response.responseObject isKindOfClass:[NSArray class]] ? (NSArray *)response.responseObject : @[response.responseObject];
-                }
-            }
-            
+            NSArray *array = [self representationArrayFromResponse:response usingResponseDescriptor:responseDescriptor];
             if (array) {
-                [self.mapper mapFromRepresentation:array
-                                           mapping:responseDescriptor.mapping
-                                        completion:^(NSArray *mappedObjects) {
-                                            if ([mappedObjects count] != 0) {
-                                                [allObjectsMapped addObjectsFromArray:mappedObjects];
-                                            }
-                                            endMappingBlock();
-                                        }];
+                [mappingProgress becomeCurrentWithPendingUnitCount:1];
+
+                WAMapper *mapper = [WAMapper newMapperWithStore:self.store];
+                // Transfer default mappings blocks
+                [self.defaultMappingBlocks enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    [mapper addDefaultMappingBlock:obj forDestinationClass:NSClassFromString(key)];
+                }];
+                
+                [self.mappers addObject:mapper];
+                wanrWeakify(self);
+                [mapper mapFromRepresentation:array
+                                      mapping:responseDescriptor.mapping
+                                   completion:^(NSArray *mappedObjects, NSError *error) {
+                                       wanrStrongify(self);
+                                       if ([mappedObjects count] != 0) {
+                                           [allObjectsMapped addObjectsFromArray:mappedObjects];
+                                       }
+                                       
+                                       if (error) {
+                                           finalError = error;
+                                       }
+                                       
+                                       endMappingBlock();
+                                       
+                                       [self.mappers removeObject:mapper];
+                                   }];
+                
+                [mappingProgress resignCurrent];
             }
             else {
                 endMappingBlock();
@@ -114,7 +163,7 @@
         mapResponseBlock(responseDescriptor);
     }
     else {
-        completion(@[]);
+        completion(@[], nil);
     }
 }
 
@@ -131,11 +180,18 @@
     if ([requestDescriptors count] != 0) {
         NSAssert([requestDescriptors count] == 1, @"For now, we only want one request descriptor per request. If this is an issue then update me");
         WARequestDescriptor *requestDescriptor = [requestDescriptors firstObject];
-        NSArray *mappedObjects = [self.reverseMapper reverseMapObjects:@[object]
-                                                           fromMapping:requestDescriptor.mapping
-                                                 shouldMapRelationship:^BOOL(NSString *sourceRelationShip) {
-                                                     return requestDescriptor.shouldMapBlock(requestDescriptor.mapping.entityName, sourceRelationShip);
-                                                 }];
+        WAReverseMapper *reverseMapper = [WAReverseMapper new];
+        // Transfer default mappings blocks
+        [self.defaultReverseMappingBlocks enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            [reverseMapper addReverseDefaultMappingBlock:obj forDestinationClass:NSClassFromString(key)];
+        }];
+
+        NSArray *mappedObjects = [reverseMapper reverseMapObjects:@[object]
+                                                      fromMapping:requestDescriptor.mapping
+                                            shouldMapRelationship:^BOOL(NSString *sourceRelationShip) {
+                                                return requestDescriptor.shouldMapBlock(requestDescriptor.mapping.entityName, sourceRelationShip);
+                                            }
+                                                            error:nil];
         
         NSDictionary *finalDictionary = nil;
         
@@ -176,9 +232,45 @@
     }
     
     if (shouldDelete) {
-        [self.mapper.store beginTransaction];
-        [self.mapper.store deleteObject:object];
-        [self.mapper.store commitTransaction];
+        [self.store beginTransaction];
+        [self.store deleteObject:object];
+        [self.store commitTransaction];
+    }
+}
+
+- (void)addDefaultMappingBlock:(WAMappingBlock)mappingBlock forDestinationClass:(Class)destinationClass {
+    WANRParameterAssert(destinationClass);
+    WANRParameterAssert(mappingBlock);
+    
+    if (!self.defaultMappingBlocks) {
+        self.defaultMappingBlocks = [NSMutableDictionary dictionary];
+    }
+    
+    self.defaultMappingBlocks[NSStringFromClass(destinationClass)] = mappingBlock;
+}
+
+
+- (void)addReverseDefaultMappingBlock:(WAMappingBlock)mappingBlock forDestinationClass:(Class)destinationClass {
+    WANRParameterAssert(destinationClass);
+    WANRParameterAssert(mappingBlock);
+    
+    if (!self.defaultReverseMappingBlocks) {
+        self.defaultReverseMappingBlocks = [NSMutableDictionary dictionary];
+    }
+    
+    self.defaultReverseMappingBlocks[NSStringFromClass(destinationClass)] = mappingBlock;
+}
+
+#pragma mark - Observer
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([object isKindOfClass:[NSProgress class]]) {
+        WAObjectRequest *request = (__bridge WAObjectRequest *)context;
+        if (request.progressBlock) {
+            request.progressBlock(request, nil, nil, (NSProgress *)object);
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 

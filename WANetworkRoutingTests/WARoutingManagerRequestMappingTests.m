@@ -44,9 +44,6 @@ describe(@"RoutingManagerRequestMappingTests", ^{
         // ———————————————————————————————————————————
         memoryStore = [[WAMemoryStore alloc] init];
         
-        WAMapper *mapper               = [WAMapper newMapperWithStore:memoryStore];
-        WAReverseMapper *reverseMapper = [WAReverseMapper new];
-        
         enterpriseMapping = [WAEntityMapping mappingForEntityName:@"Enterprise"];
         enterpriseMapping.identificationAttribute = @"itemID";
         [enterpriseMapping addAttributeMappingsFromDictionary:@{
@@ -66,8 +63,7 @@ describe(@"RoutingManagerRequestMappingTests", ^{
         // ———————————————————————————————————————————
         // Create the mapping manager
         // ———————————————————————————————————————————
-        WAMappingManager *mappingManager = [WAMappingManager mappingManagerWithMapper:mapper
-                                                                        reverseMapper:reverseMapper];
+        WAMappingManager *mappingManager = [WAMappingManager mappingManagerWithStore:memoryStore];
         
         // ———————————————————————————————————————————
         // Create the response descriptors
@@ -146,16 +142,19 @@ describe(@"RoutingManagerRequestMappingTests", ^{
         __block NSArray *_mappedObjects = nil;
         __block WAObjectResponse *_response = nil;
         __block id _error = nil;
-        
-        [routingManager getObjectsAtPath:@"enterprises"
-                              parameters:nil
-                                 success:^(WAObjectRequest *objectRequest, WAObjectResponse *response, NSArray *mappedObjects) {
-                                     _response = response;
-                                     _mappedObjects = mappedObjects;
-                                 }
-                                 failure:^(WAObjectRequest *objectRequest, WAObjectResponse *response, id<WANRErrorProtocol> error) {
-                                     _error = error;
-                                 }];
+    
+[routingManager getObjectsAtPath:@"enterprises"
+                      parameters:nil
+                        progress:^(WAObjectRequest *objectRequest, NSProgress *uploadProgress, NSProgress *downloadProgress, NSProgress *mappingProgress) {
+                            
+                        }
+                         success:^(WAObjectRequest *objectRequest, WAObjectResponse *response, NSArray *mappedObjects) {
+                             _response = response;
+                             _mappedObjects = mappedObjects;
+                         }
+                         failure:^(WAObjectRequest *objectRequest, WAObjectResponse *response, id<WANRErrorProtocol> error) {
+                             _error = error;
+                         }];
         
         [[expectFutureValue(_mappedObjects) shouldEventually] haveCountOf:3];
         [[expectFutureValue([_mappedObjects firstObject]) shouldEventually] beKindOfClass:[Enterprise class]];

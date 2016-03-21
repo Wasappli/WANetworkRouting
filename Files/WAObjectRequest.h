@@ -38,6 +38,8 @@
 @property (nonatomic, strong, readonly ) NSDictionary                          *headers;
 @property (nonatomic, copy, readonly   ) WAObjectRequestSuccessCompletionBlock successBlock;
 @property (nonatomic, copy, readonly   ) WAObjectRequestFailureCompletionBlock failureBlock;
+@property (nonatomic, copy,readwrite   ) WAObjectRequestProgressBlock          progressBlock;
+
 @property (nonatomic, strong, readwrite) id                                    targetObject;
 
 @end

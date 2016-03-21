@@ -12,6 +12,8 @@
 #import "WANetworkRouter.h"
 #import "WAObjectRequest.h"
 
+#import "WANRErrorProtocol.h"
+
 @implementation WANetworkRoutingManager
 
 - (instancetype)initWithBaseURL:(NSURL *)baseURL requestManager:(id<WARequestManagerProtocol>)requestManager mappingManager:(id<WAMappingManagerProtocol>)mappingManager authenticationManager:(id<WARequestAuthenticationManagerProtocol>)authenticationManager {
@@ -39,86 +41,121 @@
 
 #pragma mark - Public method
 
-- (void)getObjectsAtPath:(NSString *)path parameters:(NSDictionary *)parameters success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
+- (void)getObjectsAtPath:(NSString *)path parameters:(NSDictionary *)parameters progress:(WAObjectRequestProgressBlock)progress success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
     WANRParameterAssert(path);
     WAObjectRequest *request = [self objectRequestForObject:nil
                                                      method:WAObjectRequestMethodGET
                                                        path:path
                                                  parameters:parameters
+                                                   progress:progress
+                                                    success:success
+                                                    failure:failure];
+    [self enqueueRequest:request];
+}
+
+- (void)getObjectsAtPath:(NSString *)path parameters:(NSDictionary *)parameters success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
+    [self getObjectsAtPath:path parameters:parameters progress:nil success:success failure:failure];
+}
+
+- (void)getObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters progress:(WAObjectRequestProgressBlock)progress success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
+    NSAssert(object || path, @"Cannot make a request without an object or a path.");
+    WAObjectRequest *request = [self objectRequestForObject:object
+                                                     method:WAObjectRequestMethodGET
+                                                       path:path
+                                                 parameters:parameters
+                                                   progress:progress
                                                     success:success
                                                     failure:failure];
     [self enqueueRequest:request];
 }
 
 - (void)getObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
+    [self getObject:object path:path parameters:parameters progress:nil success:success failure:failure];
+}
+
+- (void)postObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters progress:(WAObjectRequestProgressBlock)progress success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
     NSAssert(object || path, @"Cannot make a request without an object or a path.");
     WAObjectRequest *request = [self objectRequestForObject:object
-                                                     method:WAObjectRequestMethodGET
+                                                     method:WAObjectRequestMethodPOST
                                                        path:path
                                                  parameters:parameters
+                                                   progress:progress
                                                     success:success
                                                     failure:failure];
     [self enqueueRequest:request];
 }
 
 - (void)postObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
+    [self postObject:object path:path parameters:parameters progress:nil success:success failure:failure];
+}
+
+- (void)putObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters progress:(WAObjectRequestProgressBlock)progress success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure{
     NSAssert(object || path, @"Cannot make a request without an object or a path.");
     WAObjectRequest *request = [self objectRequestForObject:object
-                                                     method:WAObjectRequestMethodPOST
+                                                     method:WAObjectRequestMethodPUT
                                                        path:path
                                                  parameters:parameters
+                                                   progress:progress
                                                     success:success
                                                     failure:failure];
     [self enqueueRequest:request];
 }
 
 - (void)putObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
+    [self putObject:object path:path parameters:parameters progress:nil success:success failure:failure];
+}
+
+- (void)deleteObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters progress:(WAObjectRequestProgressBlock)progress success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
     NSAssert(object || path, @"Cannot make a request without an object or a path.");
     WAObjectRequest *request = [self objectRequestForObject:object
-                                                     method:WAObjectRequestMethodPUT
+                                                     method:WAObjectRequestMethodDELETE
                                                        path:path
                                                  parameters:parameters
+                                                   progress:progress
                                                     success:success
                                                     failure:failure];
     [self enqueueRequest:request];
 }
 
 - (void)deleteObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
+    [self deleteObject:object path:path parameters:parameters progress:nil success:success failure:failure];
+}
+
+- (void)headObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters progress:(WAObjectRequestProgressBlock)progress success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
     NSAssert(object || path, @"Cannot make a request without an object or a path.");
     WAObjectRequest *request = [self objectRequestForObject:object
-                                                     method:WAObjectRequestMethodDELETE
+                                                     method:WAObjectRequestMethodHEAD
                                                        path:path
                                                  parameters:parameters
+                                                   progress:progress
                                                     success:success
                                                     failure:failure];
     [self enqueueRequest:request];
 }
 
 - (void)headObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
+    [self headObject:object path:path parameters:parameters progress:nil success:success failure:failure];
+}
+
+- (void)patchObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters progress:(WAObjectRequestProgressBlock)progress success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure{
     NSAssert(object || path, @"Cannot make a request without an object or a path.");
     WAObjectRequest *request = [self objectRequestForObject:object
-                                                     method:WAObjectRequestMethodHEAD
+                                                     method:WAObjectRequestMethodPATCH
                                                        path:path
                                                  parameters:parameters
+                                                   progress:progress
                                                     success:success
                                                     failure:failure];
     [self enqueueRequest:request];
 }
 
 - (void)patchObject:(id)object path:(NSString *)path parameters:(NSDictionary *)parameters success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
-    NSAssert(object || path, @"Cannot make a request without an object or a path.");
-    WAObjectRequest *request = [self objectRequestForObject:object
-                                                     method:WAObjectRequestMethodPATCH
-                                                       path:path
-                                                 parameters:parameters
-                                                    success:success
-                                                    failure:failure];
-    [self enqueueRequest:request];
+    [self patchObject:object path:path parameters:parameters progress:nil success:success failure:failure];
 }
 
 #pragma mark - Object request
 
-- (WAObjectRequest *)objectRequestForObject:(id)object method:(WAObjectRequestMethod)method path:(NSString *)path parameters:(NSDictionary *)parameters success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
+- (WAObjectRequest *)objectRequestForObject:(id)object method:(WAObjectRequestMethod)method path:(NSString *)path parameters:(NSDictionary *)parameters progress:(WAObjectRequestProgressBlock)progress success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure {
     
     if (!path) {
         NSURL *fullURL = [self.router urlForObject:object method:method];
@@ -160,9 +197,11 @@
                                                                  path:path
                                                            parameters:[finalParameters count] > 0 ? [NSDictionary dictionaryWithDictionary:finalParameters] : nil
                                                       optionalHeaders:self.optionalHeaders];
-
+    
     [request setCompletionBlocksWithSuccess:success
                                     failure:failure];
+    
+    request.progressBlock = progress;
     
     request.targetObject = object;
     
@@ -185,17 +224,25 @@
                            successBlock:
      ^(WAObjectRequest *request, WAObjectResponse *response) {
          wanrStrongify(self);
-         
          if (self.mappingManager) {
              if ([self.mappingManager canMapRequestResponse:request]) {
+                 wanrWeakify(self)
                  [self.mappingManager mapResponse:response
                                       fromRequest:request
-                                   withCompletion:^(NSArray *mappedObjects) {
-                                       if (request.method & WAObjectRequestMethodPOST || request.method & WAObjectRequestMethodDELETE) {
-                                           [self.mappingManager deleteObjectFromStore:request.targetObject fromRequest:request];
-                                           request.targetObject = nil;
+                                   withCompletion:^(NSArray *mappedObjects, NSError *error) {
+                                       wanrStrongify(self);
+                                       if (error) {
+                                           id apiError = [[self.requestManager.errorClass alloc] initWithOriginalError:error
+                                                                                                              response:nil];
+                                           request.failureBlock(request, response, apiError);
                                        }
-                                       request.successBlock(request, response, mappedObjects);
+                                       else {
+                                           if (request.method & WAObjectRequestMethodPOST || request.method & WAObjectRequestMethodDELETE) {
+                                               [self.mappingManager deleteObjectFromStore:request.targetObject fromRequest:request];
+                                               request.targetObject = nil;
+                                           }
+                                           request.successBlock(request, response, mappedObjects);
+                                       }
                                    }];
              }
              else {
@@ -220,7 +267,12 @@
          else {
              request.failureBlock(request, response, error);
          }
-     }];
+     }
+                               progress:^(WAObjectRequest *request, NSProgress *uploadProgress, NSProgress *downloadProgress) {
+                                   if (request.progressBlock) {
+                                       request.progressBlock(request, uploadProgress, downloadProgress, nil);
+                                   }
+                               }];
 }
 
 #pragma mark - Setters

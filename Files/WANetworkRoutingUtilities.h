@@ -27,6 +27,7 @@ FOUNDATION_EXPORT NSString *WAStringFromObjectRequestMethod(WAObjectRequestMetho
 @class WAObjectRequest, WAObjectResponse;
 
 typedef void (^WAObjectRequestSuccessCompletionBlock)(WAObjectRequest *objectRequest, WAObjectResponse *response, NSArray *mappedObjects);
+typedef void (^WAObjectRequestProgressBlock)(WAObjectRequest *objectRequest, NSProgress *uploadProgress, NSProgress *downloadProgress, NSProgress *mappingProgress);
 typedef void (^WAObjectRequestFailureCompletionBlock)(WAObjectRequest *objectRequest, WAObjectResponse *response, id<WANRErrorProtocol> error);
 
 

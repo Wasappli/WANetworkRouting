@@ -11,7 +11,8 @@
 
 @class WAObjectRequest, WAObjectResponse;
 
-typedef void (^WAMappingManagerMappingCompletion)(NSArray *mappedObjects);
+typedef void (^WAMappingManagerMappingCompletion)(NSArray *mappedObjects, NSError *error);
+typedef id (^WAMappingManagerMappingBlock)(id value);
 
 @protocol WAMappingManagerProtocol <NSObject>
 
@@ -50,5 +51,21 @@ typedef void (^WAMappingManagerMappingCompletion)(NSArray *mappedObjects);
  *  @param object the object to delete
  */
 - (void)deleteObjectFromStore:(id)object fromRequest:(WAObjectRequest *)request;
+
+/**
+ *  Add a default mapping block for a class. For example, you could have an API returning dates all with the same format. You can register the transformation once here.
+ *
+ *  @param mappingBlock     the mapping block called to transform the value
+ *  @param destinationClass the destination class
+ */
+- (void)addDefaultMappingBlock:(WAMappingManagerMappingBlock)mappingBlock forDestinationClass:(Class)destinationClass;
+
+/**
+ *  Add a reverse default mapping block for a class. For example, you could have an API returning dates all with the same format. You can register the transformation once here.
+ *
+ *  @param reverseMappingBlock the reverse mapping block called to transform the value
+ *  @param destinationClass    the destination class
+ */
+- (void)addReverseDefaultMappingBlock:(WAMappingManagerMappingBlock)reverseMappingBlock forDestinationClass:(Class)destinationClass;
 
 @end

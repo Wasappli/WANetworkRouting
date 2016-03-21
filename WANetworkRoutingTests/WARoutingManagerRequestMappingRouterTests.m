@@ -46,9 +46,6 @@ describe(@"RoutingManagerRequestMappingRouterTests", ^{
         // ———————————————————————————————————————————
         memoryStore = [[WAMemoryStore alloc] init];
         
-        WAMapper *mapper               = [WAMapper newMapperWithStore:memoryStore];
-        WAReverseMapper *reverseMapper = [WAReverseMapper new];
-        
         enterpriseMapping = [WAEntityMapping mappingForEntityName:@"Enterprise"];
         enterpriseMapping.identificationAttribute = @"itemID";
         [enterpriseMapping addAttributeMappingsFromDictionary:@{
@@ -68,8 +65,7 @@ describe(@"RoutingManagerRequestMappingRouterTests", ^{
         // ———————————————————————————————————————————
         // Create the mapping manager
         // ———————————————————————————————————————————
-        WAMappingManager *mappingManager = [WAMappingManager mappingManagerWithMapper:mapper
-                                                                        reverseMapper:reverseMapper];
+        WAMappingManager *mappingManager = [WAMappingManager mappingManagerWithStore:memoryStore];
         
         // ———————————————————————————————————————————
         // Create the response descriptors

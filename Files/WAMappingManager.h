@@ -8,17 +8,32 @@
 
 @import Foundation;
 #import "WAMappingManagerProtocol.h"
+#import <WAMapping/WAStoreProtocol.h>
 
 @class WAResponseDescriptor, WARequestDescriptor;
-@class WAMapper, WAReverseMapper;
 
 @interface WAMappingManager : NSObject <WAMappingManagerProtocol>
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-- (instancetype)initWithMapper:(WAMapper *)mapper reverseMapper:(WAReverseMapper *)reverseMapper NS_DESIGNATED_INITIALIZER;
-+ (instancetype)mappingManagerWithMapper:(WAMapper *)mapper reverseMapper:(WAReverseMapper *)reverseMapper;
+/**
+ *  Init the mapping manager with a store
+ *
+ *  @param store the store to use: memory, CoreData, NSCoding, ...
+ *
+ *  @return a fresh mapping manager
+ */
+- (instancetype)initWithStore:(id <WAStoreProtocol>)store NS_DESIGNATED_INITIALIZER;
+
+/**
+ *  Create mapping manager with a store
+ *
+ *  @param store the store to use: memory, CoreData, NSCoding, ...
+ *
+ *  @return a fresh mapping manager
+ */
++ (instancetype)mappingManagerWithStore:(id <WAStoreProtocol>)store;
 
 /**
  *  Add a new response descriptor

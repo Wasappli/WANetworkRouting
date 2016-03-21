@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
+
+#import "Post.h"
+#import "Comment.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +20,103 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+    // ———————————————————————————————————————————
+    // Create the mapping
+    // ———————————————————————————————————————————
+    WAMemoryStore *memoryStore = [[WAMemoryStore alloc] init];
+    
+    WAEntityMapping *postMapping = [WAEntityMapping mappingForEntityName:@"Post"];
+    postMapping.identificationAttribute = @"postID";
+    [postMapping addAttributeMappingsFromDictionary:@{
+                                                      @"id": @"postID",
+                                                      @"title": @"title",
+                                                      @"body": @"body"
+                                                      }];
+    
+    WAEntityMapping *commentMapping = [WAEntityMapping mappingForEntityName:@"Comment"];
+    commentMapping.identificationAttribute = @"commentID";
+    [commentMapping addAttributeMappingsFromDictionary:@{
+                                                         @"postId": @"postID",
+                                                         @"id": @"commentID",
+                                                         @"name": @"name",
+                                                         @"body": @"body",
+                                                         @"email": @"email"
+                                                         }];
+    
+    // ———————————————————————————————————————————
+    // Create the mapping manager
+    // ———————————————————————————————————————————
+    WAMappingManager *mappingManager = [WAMappingManager mappingManagerWithStore:memoryStore];
+    
+    // ———————————————————————————————————————————
+    // Create the response descriptors
+    // ———————————————————————————————————————————
+    WAResponseDescriptor *postsResponseDescriptor = [WAResponseDescriptor responseDescriptorWithMapping:postMapping
+                                                                                                 method:WAObjectRequestMethodGET
+                                                                                            pathPattern:@"posts"
+                                                                                                keyPath:nil];
+    
+    WAResponseDescriptor *singlePostResponseDescriptor = [WAResponseDescriptor responseDescriptorWithMapping:postMapping
+                                                                                                      method:WAObjectRequestMethodGET | WAObjectRequestMethodPUT
+                                                                                                 pathPattern:@"posts/:postID"
+                                                                                                     keyPath:nil];
+    [mappingManager addResponseDescriptor:postsResponseDescriptor];
+    [mappingManager addResponseDescriptor:singlePostResponseDescriptor];
+    
+    WAResponseDescriptor *commentsResponseDescriptor = [WAResponseDescriptor responseDescriptorWithMapping:commentMapping
+                                                                                                    method:WAObjectRequestMethodGET
+                                                                                               pathPattern:@"posts/:postID/comments"
+                                                                                                   keyPath:nil];
+    [mappingManager addResponseDescriptor:commentsResponseDescriptor];
+    
+    // ———————————————————————————————————————————
+    // Create the request descriptors
+    // ———————————————————————————————————————————
+    WARequestDescriptor *postRequestDescriptor = [WARequestDescriptor requestDescriptorWithMethod:WAObjectRequestMethodPOST
+                                                                                      pathPattern:@"posts"
+                                                                                          mapping:postMapping
+                                                                                   shouldMapBlock:nil
+                                                                                   requestKeyPath:nil];
+    
+    WARequestDescriptor *postUpdateRequestDescriptor = [WARequestDescriptor requestDescriptorWithMethod:WAObjectRequestMethodPUT
+                                                                                            pathPattern:@"posts/:postID"
+                                                                                                mapping:postMapping
+                                                                                         shouldMapBlock:nil
+                                                                                         requestKeyPath:nil];
+    [mappingManager addRequestDescriptor:postRequestDescriptor];
+    [mappingManager addRequestDescriptor:postUpdateRequestDescriptor];
+    
+    // ———————————————————————————————————————————
+    // Create the routing manager
+    // ———————————————————————————————————————————
+    WAAFNetworkingRequestManager *requestManager = [WAAFNetworkingRequestManager new];
+    
+    WANetworkRoutingManager *routingManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:@"http://jsonplaceholder.typicode.com"]
+                                                                           requestManager:requestManager
+                                                                           mappingManager:mappingManager
+                                                                    authenticationManager:nil];
+    
+    // ———————————————————————————————————————————
+    // Configure the router
+    // ———————————————————————————————————————————
+    WANetworkRoute *enterpriseRoute = [WANetworkRoute routeWithObjectClass:[Post class]
+                                                               pathPattern:@"posts/:postID"
+                                                                    method:WAObjectRequestMethodGET | WAObjectRequestMethodPUT];
+    
+    [routingManager.router addRoute:enterpriseRoute];
+    
+    self.routingManager = routingManager;
+    
+    ViewController *v = [[ViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:v];
+    
+    UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    window.rootViewController = nav;
+    self.window = window;
+    
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

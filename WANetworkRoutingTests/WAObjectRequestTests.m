@@ -16,7 +16,7 @@
 
 
 @interface WANetworkRoutingManager (exposeCreateRequest)
-- (WAObjectRequest *)objectRequestForObject:(id)object method:(WAObjectRequestMethod)method path:(NSString *)path parameters:(NSDictionary *)parameters success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (WAObjectRequest *)objectRequestForObject:(id)object method:(WAObjectRequestMethod)method path:(NSString *)path parameters:(NSDictionary *)parameters progress:(WAObjectRequestProgressBlock)progress success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure;
 @end
 
 @interface ObjectRequestTest : NSObject
@@ -52,6 +52,7 @@ describe(@"Create request with simple URL", ^{
                                                                   method:WAObjectRequestMethodGET
                                                                     path:nil
                                                               parameters:nil
+                                                                progress:nil
                                                                  success:nil
                                                                  failure:nil];
         
@@ -64,6 +65,7 @@ describe(@"Create request with simple URL", ^{
                                                                   method:WAObjectRequestMethodGET
                                                                     path:path
                                                               parameters:nil
+                                                                progress:nil
                                                                  success:nil
                                                                  failure:nil];
         
@@ -93,6 +95,7 @@ describe(@"Create request with URL subpaths", ^{
                                                                   method:WAObjectRequestMethodGET
                                                                     path:nil
                                                               parameters:nil
+                                                                progress:nil
                                                                  success:nil
                                                                  failure:nil];
         
@@ -105,6 +108,7 @@ describe(@"Create request with URL subpaths", ^{
                                                                   method:WAObjectRequestMethodGET
                                                                     path:path
                                                               parameters:nil
+                                                                progress:nil
                                                                  success:nil
                                                                  failure:nil];
         

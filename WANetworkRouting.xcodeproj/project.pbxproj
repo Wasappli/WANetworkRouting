@@ -12,7 +12,6 @@
 		E01C1C971C7CB5CB00FFEF06 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1C961C7CB5CB00FFEF06 /* main.m */; };
 		E01C1C9A1C7CB5CB00FFEF06 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1C991C7CB5CB00FFEF06 /* AppDelegate.m */; };
 		E01C1C9D1C7CB5CB00FFEF06 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1C9C1C7CB5CB00FFEF06 /* ViewController.m */; };
-		E01C1CA01C7CB5CB00FFEF06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E01C1C9E1C7CB5CB00FFEF06 /* Main.storyboard */; };
 		E01C1CA21C7CB5CB00FFEF06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E01C1CA11C7CB5CB00FFEF06 /* Assets.xcassets */; };
 		E01C1CA51C7CB5CB00FFEF06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E01C1CA31C7CB5CB00FFEF06 /* LaunchScreen.storyboard */; };
 		E01C1CC61C7CBBC800FFEF06 /* WAAFNetworkingRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1CC51C7CBBC800FFEF06 /* WAAFNetworkingRequestManager.m */; };
@@ -38,6 +37,11 @@
 		E01C1D061C7CEE5300FFEF06 /* WARouteURLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1D051C7CEE5300FFEF06 /* WARouteURLTests.m */; };
 		E01C1D081C7CEEEE00FFEF06 /* WAObjectRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1D071C7CEEEE00FFEF06 /* WAObjectRequestTests.m */; };
 		E01C1D0A1C7CF06C00FFEF06 /* WAResponseDescriptorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1D091C7CF06C00FFEF06 /* WAResponseDescriptorTests.m */; };
+		E03BAC311C9D95EB00006C89 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BAC301C9D95EB00006C89 /* Post.m */; };
+		E04C8E241C9DEA8100D51D2C /* WANetworkRoutingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1D011C7CE87600FFEF06 /* WANetworkRoutingManager.m */; };
+		E04C8E271C9EF4CC00D51D2C /* CommentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E04C8E261C9EF4CC00D51D2C /* CommentsTableViewController.m */; };
+		E04C8E2A1C9EF4D400D51D2C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = E04C8E291C9EF4D400D51D2C /* Comment.m */; };
+		E04C8E2D1CA0798000D51D2C /* WAProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = E04C8E2C1CA0798000D51D2C /* WAProgress.m */; };
 		E09D02F31C7D17E800938629 /* WANRBasicError.m in Sources */ = {isa = PBXBuildFile; fileRef = E09D02F21C7D17E800938629 /* WANRBasicError.m */; };
 		E09D02F51C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E09D02F41C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m */; };
 		E09D02F71C7D1C4E00938629 /* EnterprisesList.json in Resources */ = {isa = PBXBuildFile; fileRef = E09D02F61C7D1C4E00938629 /* EnterprisesList.json */; };
@@ -67,7 +71,6 @@
 		E01C1C991C7CB5CB00FFEF06 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E01C1C9B1C7CB5CB00FFEF06 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		E01C1C9C1C7CB5CB00FFEF06 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		E01C1C9F1C7CB5CB00FFEF06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E01C1CA11C7CB5CB00FFEF06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E01C1CA41C7CB5CB00FFEF06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E01C1CA61C7CB5CB00FFEF06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -120,6 +123,14 @@
 		E01C1D051C7CEE5300FFEF06 /* WARouteURLTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARouteURLTests.m; sourceTree = "<group>"; };
 		E01C1D071C7CEEEE00FFEF06 /* WAObjectRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAObjectRequestTests.m; sourceTree = "<group>"; };
 		E01C1D091C7CF06C00FFEF06 /* WAResponseDescriptorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAResponseDescriptorTests.m; sourceTree = "<group>"; };
+		E03BAC2F1C9D95EB00006C89 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		E03BAC301C9D95EB00006C89 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		E04C8E251C9EF4CC00D51D2C /* CommentsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableViewController.h; sourceTree = "<group>"; };
+		E04C8E261C9EF4CC00D51D2C /* CommentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableViewController.m; sourceTree = "<group>"; };
+		E04C8E281C9EF4D400D51D2C /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		E04C8E291C9EF4D400D51D2C /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		E04C8E2B1CA0798000D51D2C /* WAProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAProgress.h; sourceTree = "<group>"; };
+		E04C8E2C1CA0798000D51D2C /* WAProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAProgress.m; sourceTree = "<group>"; };
 		E09D02F11C7D17E800938629 /* WANRBasicError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WANRBasicError.h; sourceTree = "<group>"; };
 		E09D02F21C7D17E800938629 /* WANRBasicError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WANRBasicError.m; sourceTree = "<group>"; };
 		E09D02F41C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARoutingManagerRequestOnlyTests.m; sourceTree = "<group>"; };
@@ -188,11 +199,18 @@
 				E01C1C991C7CB5CB00FFEF06 /* AppDelegate.m */,
 				E01C1C9B1C7CB5CB00FFEF06 /* ViewController.h */,
 				E01C1C9C1C7CB5CB00FFEF06 /* ViewController.m */,
-				E01C1C9E1C7CB5CB00FFEF06 /* Main.storyboard */,
+				E04C8E251C9EF4CC00D51D2C /* CommentsTableViewController.h */,
+				E04C8E261C9EF4CC00D51D2C /* CommentsTableViewController.m */,
 				E01C1CA11C7CB5CB00FFEF06 /* Assets.xcassets */,
 				E01C1CA31C7CB5CB00FFEF06 /* LaunchScreen.storyboard */,
 				E01C1CA61C7CB5CB00FFEF06 /* Info.plist */,
 				E01C1C951C7CB5CB00FFEF06 /* Supporting Files */,
+				E03BAC2F1C9D95EB00006C89 /* Post.h */,
+				E03BAC301C9D95EB00006C89 /* Post.m */,
+				E04C8E281C9EF4D400D51D2C /* Comment.h */,
+				E04C8E291C9EF4D400D51D2C /* Comment.m */,
+				E04C8E2B1CA0798000D51D2C /* WAProgress.h */,
+				E04C8E2C1CA0798000D51D2C /* WAProgress.m */,
 			);
 			path = WANetworkRouting;
 			sourceTree = "<group>";
@@ -445,7 +463,6 @@
 			files = (
 				E01C1CA51C7CB5CB00FFEF06 /* LaunchScreen.storyboard in Resources */,
 				E01C1CA21C7CB5CB00FFEF06 /* Assets.xcassets in Resources */,
-				E01C1CA01C7CB5CB00FFEF06 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,10 +581,15 @@
 				E01C1CCF1C7CC02600FFEF06 /* WAObjectResponse.m in Sources */,
 				E01C1CE31C7CDA3000FFEF06 /* WARequestDescriptor.m in Sources */,
 				E01C1CDC1C7CD6BD00FFEF06 /* WANetworkRoutePattern.m in Sources */,
+				E04C8E2D1CA0798000D51D2C /* WAProgress.m in Sources */,
 				E01C1CC61C7CBBC800FFEF06 /* WAAFNetworkingRequestManager.m in Sources */,
+				E04C8E2A1C9EF4D400D51D2C /* Comment.m in Sources */,
 				E01C1CD21C7CC78000FFEF06 /* WAURLResponse.m in Sources */,
+				E04C8E271C9EF4CC00D51D2C /* CommentsTableViewController.m in Sources */,
 				E01C1CE61C7CDB3400FFEF06 /* WAMappingManager.m in Sources */,
+				E04C8E241C9DEA8100D51D2C /* WANetworkRoutingManager.m in Sources */,
 				E01C1C9A1C7CB5CB00FFEF06 /* AppDelegate.m in Sources */,
+				E03BAC311C9D95EB00006C89 /* Post.m in Sources */,
 				E01C1C971C7CB5CB00FFEF06 /* main.m in Sources */,
 				E01C1CCB1C7CC00300FFEF06 /* WAObjectRequest.m in Sources */,
 				E01C1CD61C7CD6A700FFEF06 /* WANetworkRouter.m in Sources */,
@@ -609,14 +631,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E01C1C9E1C7CB5CB00FFEF06 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E01C1C9F1C7CB5CB00FFEF06 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		E01C1CA31C7CB5CB00FFEF06 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
