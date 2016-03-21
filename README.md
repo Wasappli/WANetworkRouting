@@ -94,18 +94,6 @@ Have a look at [`WAMapping`](https://github.com/wasappli/WAMapping) for every de
 ```objc
 // Specify a store to use between WAMemoryStore, WANSCodingStore, WACoreDataStore, your own store.
 WAMemoryStore *memoryStore = [[WAMemoryStore alloc] init];
-
-// Add a default date formatter on mapper
-id(^toDateMappingBlock)(id ) = ^id(id value) {
-    if ([value isKindOfClass:[NSString class]]) {
-        return [dateFormatter dateFromString:value];
-    }
-
-    return value;
-};
-
-[mapper addDefaultMappingBlock:toDateMappingBlock
-           forDestinationClass:[NSDate class]];
            
 // Create the mapping description for `Enterprise`
 WAEntityMapping *enterpriseMapping = [WAEntityMapping mappingForEntityName:@"Enterprise"];
@@ -124,6 +112,18 @@ WANetworkRoutingManager *routingManager = [WANetworkRoutingManager managerWithBa
                                                                        requestManager:requestManager
                                                                        mappingManager:mappingManager
                                                                 authenticationManager:nil];
+                                                                
+// Add a default date formatter on mapper
+id(^toDateMappingBlock)(id ) = ^id(id value) {
+    if ([value isKindOfClass:[NSString class]]) {
+        return [dateFormatter dateFromString:value];
+    }
+
+    return value;
+};
+
+[mappingManager addDefaultMappingBlock:toDateMappingBlock
+                   forDestinationClass:[NSDate class]];
 ```
 
 #### Step 2: configure the response descriptors
