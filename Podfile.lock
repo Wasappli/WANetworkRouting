@@ -36,7 +36,7 @@ DEPENDENCIES:
   - Kiwi
   - M13ProgressSuite
   - OHHTTPStubs
-  - WAMapping (~> 0.0.4)
+  - WAMapping
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93

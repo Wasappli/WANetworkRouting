@@ -126,7 +126,7 @@
             NSArray *array = [self representationArrayFromResponse:response usingResponseDescriptor:responseDescriptor];
             if (array) {
                 [mappingProgress becomeCurrentWithPendingUnitCount:1];
-
+                
                 WAMapper *mapper = [WAMapper newMapperWithStore:self.store];
                 // Transfer default mappings blocks
                 [self.defaultMappingBlocks enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
@@ -147,12 +147,12 @@
                                            finalError = error;
                                        }
                                        
+                                       [mappingProgress resignCurrent];
+                                       
                                        endMappingBlock();
                                        
                                        [self.mappers removeObject:mapper];
                                    }];
-                
-                [mappingProgress resignCurrent];
             }
             else {
                 endMappingBlock();
