@@ -1,3 +1,6 @@
+## 0.0.4 - Released Mar 22, 2015
+Fixed an issue with mapping progress with several response descriptors
+
 ## 0.0.3 - Released Mar 21, 2015
 
 This release brings the progress for download and mapping using `NSProgress`!
