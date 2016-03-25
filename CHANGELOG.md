@@ -1,3 +1,6 @@
+## 0.0.5 - Released Mar 25, 2015
+Fixed an issue with mapping progress when the object to map is empty
+
 ## 0.0.4 - Released Mar 22, 2015
 Fixed an issue with mapping progress with several response descriptors
 
