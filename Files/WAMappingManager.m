@@ -96,7 +96,7 @@
         for (WAResponseDescriptor *responseDescriptor in responseDescriptors) {
             NSArray *array = [self representationArrayFromResponse:response
                                            usingResponseDescriptor:responseDescriptor];
-            if (array) {
+            if ([array count]) {
                 numberOfMappings++;
             }
         }
@@ -124,7 +124,7 @@
         
         mapResponseBlock = ^(WAResponseDescriptor *responseDescriptor) {
             NSArray *array = [self representationArrayFromResponse:response usingResponseDescriptor:responseDescriptor];
-            if (array) {
+            if ([array count]) {
                 [mappingProgress becomeCurrentWithPendingUnitCount:1];
                 
                 WAMapper *mapper = [WAMapper newMapperWithStore:self.store];
