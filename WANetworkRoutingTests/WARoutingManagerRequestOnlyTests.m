@@ -24,15 +24,16 @@ SPEC_BEGIN(RoutingManagerRequestOnlyTests)
 static NSString *kBaseURL = @"http://www.someURL.com";
 
 describe(@"RoutingManagerRequestOnlyTests", ^{
-
+    
     __block WANetworkRoutingManager *routingManager = nil;
     
     beforeAll(^{
-WAAFNetworkingRequestManager *requestManager = [WAAFNetworkingRequestManager new];
-routingManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURL]
-                                                                       requestManager:requestManager
-                                                                       mappingManager:nil
-                                                                authenticationManager:nil];
+        WAAFNetworkingRequestManager *requestManager = [WAAFNetworkingRequestManager new];
+        routingManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURL]
+                                                      requestManager:requestManager
+                                                      mappingManager:nil
+                                               authenticationManager:nil
+                                                        batchManager:nil];
         
         [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest * _Nonnull request) {
             return [request.URL.path isEqualToString:@"/enterprises"];

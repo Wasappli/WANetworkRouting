@@ -78,7 +78,7 @@ static NSString *WANetworkRoutePatternObjectEscapeString = @"\\";
                 suffix        = [pathComponent substringFromIndex:escapedCharactersRange.location + escapedCharactersRange.length];
             }
             
-            NSString *value = [[object valueForKey:parameterName] description];
+            NSString *value = [[object valueForKeyPath:parameterName] description];
             if (suffix) {
                 value = [value stringByAppendingString:suffix];
             }

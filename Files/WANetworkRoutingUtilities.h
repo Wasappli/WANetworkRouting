@@ -23,6 +23,7 @@ typedef NS_OPTIONS(NSInteger, WAObjectRequestMethod) {
 };
 
 FOUNDATION_EXPORT NSString *WAStringFromObjectRequestMethod(WAObjectRequestMethod method);
+FOUNDATION_EXPORT WAObjectRequestMethod WAObjectRequestMethodFromString(NSString *method);
 
 @class WAObjectRequest, WAObjectResponse;
 

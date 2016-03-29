@@ -169,7 +169,7 @@
 
 - (NSDictionary *)mapObject:(id)object forPath:(NSString *)path method:(WAObjectRequestMethod)method {
     
-    if (!object) {
+    if (!object || method & WAObjectRequestMethodDELETE) {
         return nil;
     }
     
@@ -189,7 +189,7 @@
         NSArray *mappedObjects = [reverseMapper reverseMapObjects:@[object]
                                                       fromMapping:requestDescriptor.mapping
                                             shouldMapRelationship:^BOOL(NSString *sourceRelationShip) {
-                                                return requestDescriptor.shouldMapBlock(requestDescriptor.mapping.entityName, sourceRelationShip);
+                                                return requestDescriptor.shouldMapBlock ? requestDescriptor.shouldMapBlock(requestDescriptor.mapping.entityName, sourceRelationShip) : YES;
                                             }
                                                             error:nil];
         
@@ -210,7 +210,28 @@
 
 - (void)deleteObjectFromStore:(id)object fromRequest:(WAObjectRequest *)request {
     if (!object) {
-        return;
+        if (request.method & WAObjectRequestMethodDELETE) {
+            // Try to grab it from path
+            NSArray *responseDescriptors = [self responseDescriptorsForRequest:request];
+            WANRParameterAssert([responseDescriptors count] <= 1);
+            WAResponseDescriptor *responseDescriptor = [responseDescriptors firstObject];
+            if (responseDescriptor) {
+                id objectID = [request.path lastPathComponent];
+                // Test if the 
+                if ([objectID isEqualToString:[NSString stringWithFormat:@"%ld", [objectID integerValue]]]) {
+                    objectID = @([objectID integerValue]);
+                }
+                
+                if (objectID) {
+                    NSArray *objects = [self.store objectsWithAttributes:@[objectID] forMapping:responseDescriptor.mapping];
+                    object = [objects firstObject];
+                }
+            }
+        }
+        
+        if (!object) {
+            return;
+        }
     }
     
     BOOL shouldDelete = NO;

@@ -11,12 +11,17 @@
 
 #import "WANetworkRouter.h"
 #import "WAObjectRequest.h"
+#import "WABatchResponse.h"
 
 #import "WANRErrorProtocol.h"
 
+@interface WANetworkRoutingManager () <WABatchManagerDelegate>
+
+@end
+
 @implementation WANetworkRoutingManager
 
-- (instancetype)initWithBaseURL:(NSURL *)baseURL requestManager:(id<WARequestManagerProtocol>)requestManager mappingManager:(id<WAMappingManagerProtocol>)mappingManager authenticationManager:(id<WARequestAuthenticationManagerProtocol>)authenticationManager {
+- (instancetype)initWithBaseURL:(NSURL *)baseURL requestManager:(id<WARequestManagerProtocol>)requestManager mappingManager:(id<WAMappingManagerProtocol>)mappingManager authenticationManager:(id<WARequestAuthenticationManagerProtocol>)authenticationManager batchManager:(id<WABatchManagerProtocol>)batchManager {
     self = [super init];
     
     if (self) {
@@ -24,10 +29,14 @@
         WANRProtocolParameterAssertIfExists(requestManager, WARequestManagerProtocol);
         WANRProtocolParameterAssertIfExists(mappingManager, WAMappingManagerProtocol);
         WANRProtocolParameterAssertIfExists(authenticationManager, WARequestAuthenticationManagerProtocol);
+        WANRProtocolParameterAssertIfExists(batchManager, WABatchManagerProtocol);
+
+        batchManager.delegate = self;
         
         self->_requestManager        = requestManager;
         self->_authenticationManager = authenticationManager;
         self->_mappingManager        = mappingManager;
+        self->_batchManager          = batchManager;
         self->_router                = [[WANetworkRouter alloc] initWithBaseURL:baseURL];
         self.baseURL                 = baseURL;
     }
@@ -35,8 +44,8 @@
     return self;
 }
 
-+ (instancetype)managerWithBaseURL:(NSURL *)baseURL requestManager:(id<WARequestManagerProtocol>)requestManager mappingManager:(id<WAMappingManagerProtocol>)mappingManager authenticationManager:(id<WARequestAuthenticationManagerProtocol>)authenticationManager {
-    return [[self alloc] initWithBaseURL:baseURL requestManager:requestManager mappingManager:mappingManager authenticationManager:authenticationManager];
++ (instancetype)managerWithBaseURL:(NSURL *)baseURL requestManager:(id<WARequestManagerProtocol>)requestManager mappingManager:(id<WAMappingManagerProtocol>)mappingManager authenticationManager:(id<WARequestAuthenticationManagerProtocol>)authenticationManager batchManager:(id<WABatchManagerProtocol>)batchManager {
+    return [[self alloc] initWithBaseURL:baseURL requestManager:requestManager mappingManager:mappingManager authenticationManager:authenticationManager batchManager:batchManager];
 }
 
 #pragma mark - Public method
@@ -159,7 +168,7 @@
     
     if (!path) {
         NSURL *fullURL = [self.router urlForObject:object method:method];
-        NSAssert(@"Cannot create a URL from %@ (%@)", object, WAStringFromObjectRequestMethod(method));
+        NSAssert(fullURL, @"Cannot create a URL from %@ (%@)", object, WAStringFromObjectRequestMethod(method));
         if (!fullURL) {
             return nil;
         }
@@ -169,6 +178,7 @@
     NSDictionary *objectAsParameters = [self.mappingManager mapObject:object
                                                               forPath:path
                                                                method:method];
+
     NSMutableDictionary *finalParameters = [NSMutableDictionary dictionary];
     
     if (objectAsParameters) {
@@ -208,11 +218,40 @@
     return request;
 }
 
-- (void)enqueueRequest:(WAObjectRequest *)request {
+- (void)enqueueRequest:(WAObjectRequest *)originalRequest {
+    if (!originalRequest) {
+        return;
+    }
+    
+    if (self.batchManager) {
+        if ([self.batchManager needsFlushing] && [self.requestManager isReachable]) {
+            wanrWeakify(self);
+            [self.batchManager flushDataWithCompletion:^(BOOL success) {
+                wanrStrongify(self);
+                [self _enqueueRequestAfterProcessing:originalRequest];
+            }];
+        } else if ([self.batchManager isFlushing] && [self.batchManager canEnqueueOfflineRequest:originalRequest]) {
+            [self _sendRequestToBatchManager:originalRequest];
+        } else {
+            [self _enqueueRequestAfterProcessing:originalRequest];
+        }
+    } else {
+        [self _enqueueRequestAfterProcessing:originalRequest];
+    }
+}
+
+- (void)_enqueueRequestAfterProcessing:(WAObjectRequest *)request {
     if (!request) {
         return;
     }
     
+    if (self.batchManager) {
+        // If we are not reachable AND the request is batchable, then enqueue
+        if (![self.requestManager isReachable] && [self.batchManager canEnqueueOfflineRequest:request]) {
+            [self _sendRequestToBatchManager:request];
+            return;
+        }
+    }
     wanrWeakify(self)
     [self.requestManager enqueueRequest:request
                authenticateRequestBlock:
@@ -224,38 +263,19 @@
                            successBlock:
      ^(WAObjectRequest *request, WAObjectResponse *response) {
          wanrStrongify(self);
-         if (self.mappingManager) {
-             if ([self.mappingManager canMapRequestResponse:request]) {
-                 wanrWeakify(self)
-                 [self.mappingManager mapResponse:response
-                                      fromRequest:request
-                                   withCompletion:^(NSArray *mappedObjects, NSError *error) {
-                                       wanrStrongify(self);
-                                       if (error) {
-                                           id apiError = [[self.requestManager.errorClass alloc] initWithOriginalError:error
-                                                                                                              response:nil];
-                                           request.failureBlock(request, response, apiError);
-                                       }
-                                       else {
-                                           if (request.method & WAObjectRequestMethodPOST || request.method & WAObjectRequestMethodDELETE) {
-                                               [self.mappingManager deleteObjectFromStore:request.targetObject fromRequest:request];
-                                               request.targetObject = nil;
-                                           }
-                                           request.successBlock(request, response, mappedObjects);
-                                       }
-                                   }];
-             }
-             else {
-                 if (request.method & WAObjectRequestMethodDELETE) {
-                     [self.mappingManager deleteObjectFromStore:request.targetObject fromRequest:request];
-                     request.targetObject = nil;
-                 }
-                 request.successBlock(request, response, nil);
-             }
-         }
-         else {
-             request.successBlock(request, response, nil);
-         }
+         [self _mapObjectsFromRequest:request
+                             response:response
+                           completion:^(NSArray *mappedObjects, id<WANRErrorProtocol> error) {
+                               if (error) {
+                                   if (request.failureBlock) {
+                                       request.failureBlock(request, response, error);
+                                   }
+                               } else {
+                                   if (request.successBlock) {
+                                       request.successBlock(request, response, mappedObjects);
+                                   }
+                               }
+                           }];
      }
                            failureBlock:
      ^(WAObjectRequest *request, WAObjectResponse *response, id<WANRErrorProtocol> error) {
@@ -265,7 +285,11 @@
              [self.authenticationManager authenticateAndReplayRequest:request fromNetworkRoutingManager:self];
          }
          else {
-             request.failureBlock(request, response, error);
+             if ([self _isErrorANetworkFail:error] && [self.batchManager canEnqueueOfflineRequest:request]) {
+                 [self.batchManager enqueueOfflineRequest:request];
+             } else if (request.failureBlock) {
+                 request.failureBlock(request, response, error);
+             }
          }
      }
                                progress:^(WAObjectRequest *request, NSProgress *uploadProgress, NSProgress *downloadProgress) {
@@ -273,6 +297,72 @@
                                        request.progressBlock(request, uploadProgress, downloadProgress, nil);
                                    }
                                }];
+}
+
+- (BOOL)_isErrorANetworkFail:(id <WANRErrorProtocol>)error {
+    BOOL toReturn = NO;
+    if ([[[error originalError] domain] isEqualToString:NSURLErrorDomain]) {
+        NSInteger code = [[error originalError] code];
+        if (code == NSURLErrorNotConnectedToInternet || code == NSURLErrorTimedOut) {
+            toReturn = YES;
+        }
+    }
+    
+    return toReturn;
+}
+
+- (void)_sendRequestToBatchManager:(WAObjectRequest *)request {
+    [self.batchManager enqueueOfflineRequest:request];
+    
+    if (request.failureBlock) {
+        NSError *error = [NSError errorWithDomain:WANetworkRoutingManagerErrorDomain
+                                             code:WANetworkRoutingManagerErrorRequestBatched
+                                         userInfo:nil];
+        id apiError = [[self.requestManager.errorClass alloc] initWithOriginalError:error
+                                                                           response:nil];
+        request.failureBlock(request, nil, apiError);
+    }
+}
+
+- (void)_mapObjectsFromRequest:(WAObjectRequest *)request response:(WAObjectResponse *)response completion:(void(^)(NSArray *mappedObjects, id <WANRErrorProtocol>error))completion {
+    if (self.mappingManager) {
+        if ([self.mappingManager canMapRequestResponse:request]) {
+            wanrWeakify(self)
+            [self.mappingManager mapResponse:response
+                                 fromRequest:request
+                              withCompletion:^(NSArray *mappedObjects, NSError *error) {
+                                  wanrStrongify(self);
+                                  if (error) {
+                                      id apiError = [[self.requestManager.errorClass alloc] initWithOriginalError:error
+                                                                                                         response:nil];
+                                     
+                                      completion(nil, apiError);
+                                  }
+                                  else {
+                                      if (
+                                          (request.method & WAObjectRequestMethodPOST)
+                                          ||
+                                          request.method & WAObjectRequestMethodDELETE) {
+                                          // If POST, then the target object might not be the one retrieved (if no identification attribute for example). In this case, you want to clean the store
+                                          [self.mappingManager deleteObjectFromStore:request.targetObject fromRequest:request];
+                                          request.targetObject = nil;
+                                      }
+                                      
+                                      completion(mappedObjects, nil);
+                                  }
+                              }];
+        }
+        else {
+            if (request.method & WAObjectRequestMethodDELETE) {
+                [self.mappingManager deleteObjectFromStore:request.targetObject fromRequest:request];
+                request.targetObject = nil;
+            }
+            completion(nil, nil);
+        }
+    }
+    else {
+        completion(nil, nil);
+    }
 }
 
 #pragma mark - Setters
@@ -283,4 +373,22 @@
     [self.router setBaseURL:baseURL];
 }
 
+#pragma mark - WABatchManagerDelegate
+
+- (void)batchManager:(id<WABatchManagerProtocol>)batchManager haveBatchRequestToEnqueue:(WAObjectRequest *)objectRequest {
+    [self _enqueueRequestAfterProcessing:objectRequest];
+}
+
+- (void)batchManager:(id<WABatchManagerProtocol>)batchManager haveBatchResponsesToProcess:(NSArray<WABatchResponse *> *)batchReponses {
+    for (WABatchResponse *batchResponse in batchReponses) {
+        [self _mapObjectsFromRequest:batchResponse.request
+                            response:batchResponse.response
+                          completion:^(NSArray *mappedObjects, id<WANRErrorProtocol> error) {
+                              batchResponse.mappedObjects = mappedObjects;
+                          }];
+    }
+}
+
 @end
+
+NSString * const WANetworkRoutingManagerErrorDomain = @"li.wasapp.wanetworkrouting";

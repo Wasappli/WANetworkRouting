@@ -15,6 +15,7 @@
 #import "WANetworkRoutingManager.h"
 #import "WAAFNetworkingRequestManager.h"
 #import "WAMappingManager.h"
+#import "WABatchManager.h"
 
 #import "WAObjectRequest.h"
 #import "WAObjectResponse.h"
@@ -22,14 +23,15 @@
 #import "WAURLResponse.h"
 #import "WAResponseDescriptor.h"
 #import "WARequestDescriptor.h"
+#import "WANetworkRoute.h"
 
 #import "Enterprise.h"
 
-SPEC_BEGIN(RoutingManagerRequestMappingTests)
+SPEC_BEGIN(RoutingManagerRequestMappingBatchTests)
 
 static NSString *kBaseURL = @"http://www.someURL.com";
 
-describe(@"RoutingManagerRequestMappingTests", ^{
+describe(@"RoutingManagerRequestMappingBatchTests", ^{
     
     __block WANetworkRoutingManager *routingManager = nil;
     __block WAMemoryStore *memoryStore              = nil;
@@ -74,7 +76,7 @@ describe(@"RoutingManagerRequestMappingTests", ^{
                                                                                                           keyPath:@"enterprises"];
         
         WAResponseDescriptor *singleEnterpriseResponseDescriptor = [WAResponseDescriptor responseDescriptorWithMapping:enterpriseMapping
-                                                                                                                method:WAObjectRequestMethodGET | WAObjectRequestMethodPUT
+                                                                                                                method:WAObjectRequestMethodGET | WAObjectRequestMethodPUT | WAObjectRequestMethodDELETE
                                                                                                            pathPattern:@"enterprises/:itemID"
                                                                                                                keyPath:nil];
         
@@ -104,6 +106,23 @@ describe(@"RoutingManagerRequestMappingTests", ^{
         [mappingManager addRequestDescriptor:enterpriseUpdateRequestDescriptor];
         
         // ———————————————————————————————————————————
+        // Create the batch manager
+        // ———————————————————————————————————————————
+        WABatchManager *batchManager = [[WABatchManager alloc] initWithBatchPath:@"batch" limit:1];
+        [batchManager reset];
+        
+        WANetworkRoute *postEnterprise = [WANetworkRoute routeWithObjectClass:nil
+                                                                  pathPattern:@"enterprises"
+                                                                       method:WAObjectRequestMethodPOST];
+        
+        WANetworkRoute *putDeleteEnterprise = [WANetworkRoute routeWithObjectClass:nil
+                                                                       pathPattern:@"enterprises/:itemID"
+                                                                            method:WAObjectRequestMethodPUT|WAObjectRequestMethodDELETE];
+        
+        [batchManager addRouteToBatchIfOffline:postEnterprise];
+        [batchManager addRouteToBatchIfOffline:putDeleteEnterprise];
+        
+        // ———————————————————————————————————————————
         // Create the routing manager
         // ———————————————————————————————————————————
         WAAFNetworkingRequestManager *requestManager = [WAAFNetworkingRequestManager new];
@@ -112,62 +131,109 @@ describe(@"RoutingManagerRequestMappingTests", ^{
                                                       requestManager:requestManager
                                                       mappingManager:mappingManager
                                                authenticationManager:nil
-                                                        batchManager:nil];
+                                                        batchManager:batchManager];
         
+        // ———————————————————————————————————————————
+        // Stub requests
+        // ———————————————————————————————————————————
         [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest * _Nonnull request) {
             return [request.URL.path isEqualToString:@"/enterprises"];
         } withStubResponse:^OHHTTPStubsResponse * _Nonnull(NSURLRequest * _Nonnull request) {
             if ([request.HTTPMethod isEqualToString:@"POST"]) {
-                return [OHHTTPStubsResponse responseWithData:[@"{\"name\": \"Test\"}" dataUsingEncoding:NSUTF8StringEncoding] statusCode:200 headers:@{@"Content-Type":@"application/json"}];
-            } else {
-                return [OHHTTPStubsResponse responseWithFileAtPath:OHPathForFile(@"EnterprisesList.json", self.class)
-                                                        statusCode:200
-                                                           headers:@{@"Content-Type":@"application/json"}];
+                NSError *error = [NSError errorWithDomain:NSURLErrorDomain
+                                                     code:NSURLErrorNotConnectedToInternet
+                                                 userInfo:nil];
+                
+                return [OHHTTPStubsResponse responseWithError:error];
             }
+            return nil;
         }];
         
         [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest * _Nonnull request) {
             return [request.URL.path isEqualToString:@"/enterprises/1"];
         } withStubResponse:^OHHTTPStubsResponse * _Nonnull(NSURLRequest * _Nonnull request) {
-            if ([request.HTTPMethod isEqualToString:@"PUT"]) {
+            if ([request.HTTPMethod isEqualToString:@"GET"]) {
                 return [OHHTTPStubsResponse responseWithData:[@"{\"id\": 1, \"name\": \"Test\"}" dataUsingEncoding:NSUTF8StringEncoding] statusCode:200 headers:@{@"Content-Type":@"application/json"}];
-            } else {
-                return [OHHTTPStubsResponse responseWithFileAtPath:OHPathForFile(@"Wasappli.json", self.class)
-                                                        statusCode:200
-                                                           headers:@{@"Content-Type":@"application/json"}];
             }
+            return nil;
         }];
     });
-    
-    it(@"Map enterprises", ^{
-        __block NSArray *_mappedObjects = nil;
-        __block WAObjectResponse *_response = nil;
-        __block id _error = nil;
+
+    it(@"Batch if offline when received", ^{
+        // CF stub response
+        [[theValue([routingManager.batchManager needsFlushing]) should] equal:@NO];
         
-        [routingManager getObjectsAtPath:@"enterprises"
-                              parameters:nil
-                                progress:^(WAObjectRequest *objectRequest, NSProgress *uploadProgress, NSProgress *downloadProgress, NSProgress *mappingProgress) {
-                                    
-                                }
-                                 success:^(WAObjectRequest *objectRequest, WAObjectResponse *response, NSArray *mappedObjects) {
-                                     _response = response;
-                                     _mappedObjects = mappedObjects;
-                                 }
-                                 failure:^(WAObjectRequest *objectRequest, WAObjectResponse *response, id<WANRErrorProtocol> error) {
-                                     _error = error;
-                                 }];
+        [routingManager postObject:nil
+                              path:@"enterprises"
+                        parameters:nil
+                           success:nil
+                           failure:nil];
         
-        [[expectFutureValue(_mappedObjects) shouldEventually] haveCountOf:3];
-        [[expectFutureValue([_mappedObjects firstObject]) shouldEventually] beKindOfClass:[Enterprise class]];
-        [[expectFutureValue([[_mappedObjects firstObject] name]) shouldEventually] equal:@"Wasappli"];
-        [[expectFutureValue(_error) shouldEventually] beNil];
+        [[expectFutureValue(theValue([routingManager.batchManager needsFlushing])) shouldEventually] equal:@YES];
     });
     
-    it(@"Map an enterprise from GET", ^{
-        __block NSArray *_mappedObjects = nil;
-        __block WAObjectResponse *_response = nil;
-        __block id _error = nil;
+    it(@"Batch if offline when sending", ^{
+        // Stub reachability
+        [(WAAFNetworkingRequestManager *)routingManager.requestManager stub:@selector(isReachable) andReturn:theValue(NO)];
         
+        [routingManager putObject:nil
+                             path:@"enterprises/1"
+                       parameters:nil
+                          success:nil
+                          failure:nil];
+        
+        [[theValue([routingManager.batchManager needsFlushing]) should] equal:@YES];
+    });
+    
+    it(@"Flush", ^{
+        __block NSUInteger callCount = 0;
+        id stubs = [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest * _Nonnull request) {
+            return [request.URL.path isEqualToString:@"/batch"];
+        } withStubResponse:^OHHTTPStubsResponse * _Nonnull(NSURLRequest * _Nonnull request) {
+            NSArray *array = nil;
+            switch(callCount) {
+                case 0:
+                {
+                    array = @[@{
+                                  @"body": @"{\"id\": 1, \"name\": \"Test\"}",
+                                  @"code": @200
+                                  }];
+                }
+                    break;
+                case 1:
+                {
+                    array = @[@{
+                                  @"body": @"{\"id\": 2, \"name\": \"Test\"}",
+                                  @"code": @200
+                                  }];
+                }
+                    break;
+                case 2:
+                {
+                    array = @[@{
+                                  @"body": [NSNull null],
+                                  @"code": @200
+                                  }];
+                }
+                    break;
+            }
+            
+            callCount++;
+            
+            NSData *data = [NSJSONSerialization dataWithJSONObject:array options:0 error:nil];
+            return [OHHTTPStubsResponse responseWithData:data statusCode:200 headers:@{@"Content-Type":@"application/json"}];
+        }];
+        
+            // Stub reachability
+            [(WAAFNetworkingRequestManager *)routingManager.requestManager stub:@selector(isReachable) andReturn:theValue(YES)];
+        
+        [[theValue([routingManager.batchManager needsFlushing]) should] equal:@YES];
+        
+        [[[memoryStore objectsWithAttributes:@[@1, @2] forMapping:enterpriseMapping] should] haveCountOf:0];
+        
+        __block NSArray *_mappedObjects     = nil;
+        __block WAObjectResponse *_response = nil;
+        __block id _error                   = nil;
         [routingManager getObject:nil
                              path:@"enterprises/1"
                        parameters:nil
@@ -178,72 +244,102 @@ describe(@"RoutingManagerRequestMappingTests", ^{
                           failure:^(WAObjectRequest *objectRequest, WAObjectResponse *response, id<WANRErrorProtocol> error) {
                               _error = error;
                           }];
-        
+        // See the get
         [[expectFutureValue(_mappedObjects) shouldEventually] beNonNil];
         [[expectFutureValue(_mappedObjects) shouldEventually] haveCountOf:1];
         [[expectFutureValue([_mappedObjects firstObject]) shouldEventually] beKindOfClass:[Enterprise class]];
-        [[expectFutureValue([[_mappedObjects firstObject] name]) shouldEventually] equal:@"Wasappli"];
+        [[expectFutureValue([[_mappedObjects firstObject] name]) shouldEventually] equal:@"Test"];
         [[expectFutureValue(_error) shouldEventually] beNil];
+        
+        // See the flush
+        [[theValue([routingManager.batchManager needsFlushing]) should] equal:@NO];
+        
+        NSArray *objectsIDs = @[@1, @2];
+        [[expectFutureValue([memoryStore objectsWithAttributes:objectsIDs forMapping:enterpriseMapping]) shouldEventually] haveCountOf:2];
+        
+        [OHHTTPStubs removeStub:stubs];
     });
     
-    it(@"POST an enterprise", ^{
-        __block NSArray *_mappedObjects = nil;
-        __block WAObjectResponse *_response = nil;
-        __block WAObjectRequest *_request = nil;
-        __block id<WANRErrorProtocol> _error = nil;
+    it(@"Batch and delete", ^{
+        __block NSUInteger callCount = 0;
+
+        id stubs = [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest * _Nonnull request) {
+            return [request.URL.path isEqualToString:@"/batch"];
+        } withStubResponse:^OHHTTPStubsResponse * _Nonnull(NSURLRequest * _Nonnull request) {
+            NSArray *array = nil;
+            switch(callCount) {
+                case 0:
+                {
+                    array = @[@{
+                                  @"body": @"{\"id\": 1, \"name\": \"Test\"}",
+                                  @"code": @200
+                                  }];
+                }
+                    break;
+                case 1:
+                {
+                    array = @[@{
+                                  @"body": @"{\"id\": 2, \"name\": \"Test\"}",
+                                  @"code": @200
+                                  }];
+                }
+                    break;
+                case 2:
+                {
+                    array = @[@{
+                                  @"body": [NSNull null],
+                                  @"code": @200
+                                  }];
+                }
+                    break;
+            }
+            
+            callCount++;
+            
+            NSData *data = [NSJSONSerialization dataWithJSONObject:array options:0 error:nil];
+            return [OHHTTPStubsResponse responseWithData:data statusCode:200 headers:@{@"Content-Type":@"application/json"}];
+        }];
         
-        Enterprise *enterprise = [Enterprise new];
-        enterprise.name = @"Test";
+        // Stub reachability
+        [(WAAFNetworkingRequestManager *)routingManager.requestManager stub:@selector(isReachable) andReturn:theValue(NO)];
+        [[theValue([routingManager.batchManager needsFlushing]) should] equal:@NO];
         
-        [routingManager postObject:enterprise
+        [routingManager postObject:nil
                               path:@"enterprises"
                         parameters:nil
-                           success:^(WAObjectRequest *objectRequest, WAObjectResponse *response, NSArray *mappedObjects) {
-                               _response = response;
-                               _mappedObjects = mappedObjects;
-                               _request = objectRequest;
-                           }
-                           failure:^(WAObjectRequest *objectRequest, WAObjectResponse *response, id<WANRErrorProtocol> error) {
-                               _error = error;
-                           }];
+                           success:nil
+                           failure:nil];
         
-        [[expectFutureValue(_request.targetObject) shouldEventually] beNil]; // Deleted from store
-        [[expectFutureValue(_request.parameters[@"name"]) shouldEventually] equal:@"Test"]; // Mapped from object
-        [[expectFutureValue(_mappedObjects) shouldEventually] haveCountOf:1];
-        [[expectFutureValue([_mappedObjects firstObject]) shouldEventually] beKindOfClass:[Enterprise class]];
-        [[expectFutureValue([[_mappedObjects firstObject] name]) shouldEventually] equal:@"Test"];
-    });
-    
-    it(@"PUT an enterprise", ^{
-        __block NSArray *_mappedObjects = nil;
-        __block WAObjectResponse *_response = nil;
-        __block WAObjectRequest *_request = nil;
-        __block id<WANRErrorProtocol> _error = nil;
-        
-        Enterprise *enterprise = [[memoryStore objectsWithAttributes:@[@1] forMapping:enterpriseMapping] firstObject];
-        [[enterprise shouldNot] beNil];
-        enterprise.itemID = @1;
-        enterprise.name = @"Test";
-        
-        [routingManager putObject:enterprise
+        [routingManager putObject:nil
                              path:@"enterprises/1"
                        parameters:nil
-                          success:^(WAObjectRequest *objectRequest, WAObjectResponse *response, NSArray *mappedObjects) {
-                              _response = response;
-                              _mappedObjects = mappedObjects;
-                              _request = objectRequest;
-                          }
-                          failure:^(WAObjectRequest *objectRequest, WAObjectResponse *response, id<WANRErrorProtocol> error) {
-                              _error = error;
-                          }];
+                          success:nil
+                          failure:nil];
         
-        [[expectFutureValue(_request.targetObject) shouldEventually] beNonNil];
-        [[expectFutureValue(_request.targetObject) shouldEventually] equal:enterprise];
-        [[expectFutureValue(_request.parameters[@"name"]) shouldEventually] equal:@"Test"];
-        [[expectFutureValue(_mappedObjects) shouldEventually] haveCountOf:1];
-        [[expectFutureValue([_mappedObjects firstObject]) shouldEventually] beKindOfClass:[Enterprise class]];
-        [[expectFutureValue([[_mappedObjects firstObject] name]) shouldEventually] equal:@"Test"];
-        [[expectFutureValue([_mappedObjects firstObject]) shouldEventually] equal:enterprise];
+        [routingManager deleteObject:nil
+                                path:@"enterprises/2"
+                          parameters:nil
+                             success:nil
+                             failure:nil];
+        
+        [[theValue([routingManager.batchManager needsFlushing]) should] equal:@YES];
+        
+        [(WAAFNetworkingRequestManager *)routingManager.requestManager stub:@selector(isReachable) andReturn:theValue(YES)];
+        
+        // Get to trigger the flush
+        [routingManager getObject:nil
+                             path:@"enterprises/1"
+                       parameters:nil
+                          success:nil
+                          failure:nil];
+        
+        // See the flush
+        [[theValue([routingManager.batchManager needsFlushing]) should] equal:@NO];        
+
+        NSArray *objectsIDs = @[@1, @2];
+        [[expectFutureValue([memoryStore objectsWithAttributes:objectsIDs forMapping:enterpriseMapping]) shouldEventually] haveCountOf:1];
+        
+        [OHHTTPStubs removeStub:stubs];
     });
     
     afterAll(^{
@@ -252,4 +348,3 @@ describe(@"RoutingManagerRequestMappingTests", ^{
 });
 
 SPEC_END
-

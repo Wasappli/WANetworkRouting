@@ -33,7 +33,7 @@ static NSString *kBaseURLSimple = @"http://www.someURL.com";
 static NSString *kBaseURLWithPaths = @"http://www.someURL.com/api/v2";
 
 describe(@"Create request with simple URL", ^{
-    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURLSimple] requestManager:nil mappingManager:nil authenticationManager:nil];
+    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURLSimple] requestManager:nil mappingManager:nil authenticationManager:nil batchManager:nil];
     
     WANetworkRoute *routeClassic = [WANetworkRoute routeWithObjectClass:[ObjectRequestTest class]
                                                             pathPattern:@"categories/:itemID"
@@ -76,7 +76,7 @@ describe(@"Create request with simple URL", ^{
 
 describe(@"Create request with URL subpaths", ^{
     
-    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURLWithPaths] requestManager:nil mappingManager:nil authenticationManager:nil];
+    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURLWithPaths] requestManager:nil mappingManager:nil authenticationManager:nil batchManager:nil];
     
     WANetworkRoute *routeClassic = [WANetworkRoute routeWithObjectClass:[ObjectRequestTest class]
                                                             pathPattern:@"categories/:itemID"

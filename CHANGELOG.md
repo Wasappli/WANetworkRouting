@@ -1,3 +1,12 @@
+## 0.0.6 - Released Mar 25, 2015
+- Added Batch manager
+- Fixed an issue on route and `DELETE`: the object is no longer mapped as a request
+- Fixed an issue on request descriptors and routes with keypath. You can now write `meetings/:meeting.itemID/privatenotes/:itemID`
+- Added reachability on `WARequestManagerProtocol` and `WAAFNetworkingRequestManager`: `isReachable`
+- When you delete an object without using routes|request descriptors, the path is parsed to get the object ID to delete. It was not deleted before
+- Fixed crashes when object requests have no success or failure blocks
+- Fixed a crash when your request descriptor have no `shouldMapBlock`
+ 
 ## 0.0.5 - Released Mar 25, 2015
 Fixed an issue with mapping progress when the object to map is empty
 

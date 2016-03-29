@@ -25,4 +25,8 @@
 #import "WANetworkRouter.h"
 #import "WANetworkRoute.h"
 
+#import "WABatchManager.h"
+#import "WABatchSession.h"
+#import "WABatchResponse.h"
+
 #import <WAMapping/WAMapping.h>

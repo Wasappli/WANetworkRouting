@@ -22,6 +22,23 @@ NSString *WAStringFromObjectRequestMethod(WAObjectRequestMethod method) {
     return [NSString stringWithFormat:@"%@", [methodsAsString componentsJoinedByString:@"|"]];
 }
 
+WAObjectRequestMethod WAObjectRequestMethodFromString(NSString *method) {
+    if ([method isEqualToString:@"GET"]) {
+        return WAObjectRequestMethodGET;
+    } else if ([method isEqualToString:@"PUT"]) {
+        return WAObjectRequestMethodPUT;
+    } else if ([method isEqualToString:@"POST"]) {
+        return WAObjectRequestMethodPOST;
+    } else if ([method isEqualToString:@"HEAD"]) {
+        return WAObjectRequestMethodHEAD;
+    } else if ([method isEqualToString:@"PATCH"]) {
+        return WAObjectRequestMethodPATCH;
+    } else if ([method isEqualToString:@"DELETE"]) {
+        return WAObjectRequestMethodDELETE;
+    }
+    return -1;
+}
+
 @interface WANetworkRoute ()
 
 @property (nonatomic, strong) Class                 objectClass;
@@ -66,7 +83,7 @@ NSString *WAStringFromObjectRequestMethod(WAObjectRequestMethod method) {
         return YES;
     }
     
-    if ([self.objectClass isEqual:route.objectClass]
+    if (((!self.objectClass && !route.objectClass) || [self.objectClass isEqual:route.objectClass])
         &&
         [self.pathPattern isEqualToString:route.pathPattern]
         &&
