@@ -14,7 +14,7 @@ A routing library to fetch objects from an API and map them to your app
 - [x] Default network request layer built on top of AFNetworking 3.0
 - [x] Default mapping layer built on top of WAMapping
 - [x] Built-in object router
-- [x] Build-in batch manager
+- [x] Built-in batch manager
 - [x] Different configurations available
 - [x] `NSProgress` support
 - [x] Tested and used on real projects
@@ -393,12 +393,12 @@ Basically, you register routes describing requests which can be enqueued if ther
 ```objc
 // Meetings
 WANetworkRoute *modifyMeeting = [WANetworkRoute routeWithObjectClass:nil
-                                                         pathPattern:WS_ENDPOINT_PATH(@"meetings/:itemID")
+                                                         pathPattern:@"meetings/:itemID"
                                                               method:WAObjectRequestMethodPUT | WAObjectRequestMethodeDELETE];
 
 // Action items
 WANetworkRoute *postActionItem = [WANetworkRoute routeWithObjectClass:nil
-                                                          pathPattern:WS_ENDPOINT_PATH(@"meetings/:itemID/notes")
+                                                          pathPattern:@"meetings/:itemID/notes"
                                                                method:WAObjectRequestMethodPOST];
 ```
 - Add them to the batch manager
