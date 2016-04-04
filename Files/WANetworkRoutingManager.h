@@ -11,10 +11,15 @@
 #import "WARequestManagerProtocol.h"
 #import "WAMappingManagerProtocol.h"
 #import "WARequestAuthenticationManagerProtocol.h"
+#import "WABatchManagerProtocol.h"
 
 #import "WANetworkRoutingUtilities.h"
 
 @class WANetworkRouter;
+
+typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
+    WANetworkRoutingManagerErrorRequestBatched
+};
 
 @interface WANetworkRoutingManager : NSObject
 
@@ -28,12 +33,13 @@
  *  @param requestManager        the request manager used to fetch data from server
  *  @param mappingManager        the mapping manager used to turn json to objects
  *  @param authenticationManager the authentication manager if your API needs an authentication
+ *  @param batchManager          the batch manager if you have any batch behavior to handle
  *
  *  @return a fresh instance
  */
-- (instancetype)initWithBaseURL:(NSURL *)baseURL requestManager:(id <WARequestManagerProtocol>)requestManager mappingManager:(id <WAMappingManagerProtocol>)mappingManager authenticationManager:(id <WARequestAuthenticationManagerProtocol>)authenticationManager NS_DESIGNATED_INITIALIZER;
-// @see `initWithBaseURL: requestManager: mappingManager: authenticationManager:`
-+ (instancetype)managerWithBaseURL:(NSURL *)baseURL requestManager:(id <WARequestManagerProtocol>)requestManager mappingManager:(id <WAMappingManagerProtocol>)mappingManager authenticationManager:(id <WARequestAuthenticationManagerProtocol>)authenticationManager;
+- (instancetype)initWithBaseURL:(NSURL *)baseURL requestManager:(id <WARequestManagerProtocol>)requestManager mappingManager:(id <WAMappingManagerProtocol>)mappingManager authenticationManager:(id <WARequestAuthenticationManagerProtocol>)authenticationManager batchManager:(id <WABatchManagerProtocol>)batchManager NS_DESIGNATED_INITIALIZER;
+// @see `initWithBaseURL: requestManager: mappingManager: authenticationManager: batchManager:`
++ (instancetype)managerWithBaseURL:(NSURL *)baseURL requestManager:(id <WARequestManagerProtocol>)requestManager mappingManager:(id <WAMappingManagerProtocol>)mappingManager authenticationManager:(id <WARequestAuthenticationManagerProtocol>)authenticationManager batchManager:(id <WABatchManagerProtocol>)batchManager;
 
 /**
  *  GET all objects on a path
@@ -267,7 +273,10 @@
 @property (nonatomic, strong, readonly ) id <WARequestManagerProtocol>               requestManager;
 @property (nonatomic, strong, readonly ) id <WARequestAuthenticationManagerProtocol> authenticationManager;
 @property (nonatomic, strong, readonly ) id <WAMappingManagerProtocol>               mappingManager;
+@property (nonatomic, strong, readonly ) id <WABatchManagerProtocol>                 batchManager;
 @property (nonatomic, strong, readonly ) WANetworkRouter                             *router;
 @property (nonatomic, strong, readwrite) NSDictionary                                *optionalHeaders;
 
 @end
+
+FOUNDATION_EXTERN NSString * const WANetworkRoutingManagerErrorDomain;

@@ -113,7 +113,8 @@ describe(@"RoutingManagerRequestMappingRouterTests", ^{
         routingManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURL]
                                                       requestManager:requestManager
                                                       mappingManager:mappingManager
-                                               authenticationManager:nil];
+                                               authenticationManager:nil
+                          batchManager:nil];
         
         // ———————————————————————————————————————————
         // Configure the router

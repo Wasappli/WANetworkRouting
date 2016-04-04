@@ -32,4 +32,11 @@ typedef void (^WARequestManagerProgress)(WAObjectRequest *request, NSProgress *u
  */
 - (void)enqueueRequest:(WAObjectRequest *)objectRequest authenticateRequestBlock:(WARequestManagerAuthenticateRequest)authenticateRequestBlock successBlock:(WARequestManagerSuccess)successBlock failureBlock:(WARequestManagerFailure)failureBlock progress:(WARequestManagerProgress)progressBlock;
 
+/**
+ *  Returns reachability status
+ *
+ *  @return YES if reachable, NO otherwise
+ */
+- (BOOL)isReachable;
+
 @end

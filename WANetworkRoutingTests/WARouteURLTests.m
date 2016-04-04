@@ -26,7 +26,7 @@ static NSString *kBaseURL = @"http://www.someURL.com";
 
 describe(@"Get url paths from path pattern and object", ^{
     
-    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURL] requestManager:nil mappingManager:nil authenticationManager:nil];
+    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURL] requestManager:nil mappingManager:nil authenticationManager:nil batchManager:nil];
     
     WANetworkRoute *routeClassic = [WANetworkRoute routeWithObjectClass:[RouteObjectTest class]
                                                             pathPattern:@"categories/:itemID"

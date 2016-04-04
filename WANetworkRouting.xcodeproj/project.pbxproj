@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3B220D457102AEFF2B257BB1 /* libPods-WANetworkRoutingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DE48A9F7E1AFBF272F4C39EB /* libPods-WANetworkRoutingTests.a */; };
 		A112863FA06BAC723883769B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8288A69B4A2CB10241A9C1C4 /* libPods.a */; };
+		E00C832B1CAC7C72004F3F1C /* WABatchResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E00C832A1CAC7C72004F3F1C /* WABatchResponse.m */; };
+		E00C832D1CAC8BDD004F3F1C /* WARoutingManagerRequestMappingBatchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E00C832C1CAC8BDD004F3F1C /* WARoutingManagerRequestMappingBatchTests.m */; };
 		E01C1C971C7CB5CB00FFEF06 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1C961C7CB5CB00FFEF06 /* main.m */; };
 		E01C1C9A1C7CB5CB00FFEF06 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1C991C7CB5CB00FFEF06 /* AppDelegate.m */; };
 		E01C1C9D1C7CB5CB00FFEF06 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E01C1C9C1C7CB5CB00FFEF06 /* ViewController.m */; };
@@ -42,12 +44,19 @@
 		E04C8E271C9EF4CC00D51D2C /* CommentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E04C8E261C9EF4CC00D51D2C /* CommentsTableViewController.m */; };
 		E04C8E2A1C9EF4D400D51D2C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = E04C8E291C9EF4D400D51D2C /* Comment.m */; };
 		E04C8E2D1CA0798000D51D2C /* WAProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = E04C8E2C1CA0798000D51D2C /* WAProgress.m */; };
+		E063DD951CAACB5800E55764 /* WABatchSession.m in Sources */ = {isa = PBXBuildFile; fileRef = E063DD941CAACB5800E55764 /* WABatchSession.m */; };
+		E063DD981CAACD0600E55764 /* WABatchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E063DD971CAACD0600E55764 /* WABatchManager.m */; };
+		E063DD9B1CAACF0A00E55764 /* WABatchCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E063DD9A1CAACF0A00E55764 /* WABatchCache.m */; };
+		E063DD9E1CAACF1400E55764 /* WABatchObject.m in Sources */ = {isa = PBXBuildFile; fileRef = E063DD9D1CAACF1400E55764 /* WABatchObject.m */; };
+		E063DDA11CAAD47A00E55764 /* WABatchCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E063DDA01CAAD47A00E55764 /* WABatchCacheTests.m */; };
+		E063DDA31CAADDB000E55764 /* WABatchManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E063DDA21CAADDB000E55764 /* WABatchManagerTests.m */; };
 		E09D02F31C7D17E800938629 /* WANRBasicError.m in Sources */ = {isa = PBXBuildFile; fileRef = E09D02F21C7D17E800938629 /* WANRBasicError.m */; };
 		E09D02F51C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E09D02F41C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m */; };
 		E09D02F71C7D1C4E00938629 /* EnterprisesList.json in Resources */ = {isa = PBXBuildFile; fileRef = E09D02F61C7D1C4E00938629 /* EnterprisesList.json */; };
 		E09D02F91C7D1CD300938629 /* Wasappli.json in Resources */ = {isa = PBXBuildFile; fileRef = E09D02F81C7D1CD300938629 /* Wasappli.json */; };
 		E09D02FB1C7D24AD00938629 /* WARoutingManagerRequestMappingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E09D02FA1C7D24AD00938629 /* WARoutingManagerRequestMappingTests.m */; };
 		E09D02FE1C7D421100938629 /* WARoutingManagerRequestMappingRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E09D02FD1C7D421100938629 /* WARoutingManagerRequestMappingRouterTests.m */; };
+		E0F343211CAC30CA00055D0F /* WARoutingManagerRequestBatchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F343201CAC30CA00055D0F /* WARoutingManagerRequestBatchTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +74,9 @@
 		70E6F3FE1A9A8BE187FC72D4 /* Pods-WANetworkRoutingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WANetworkRoutingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WANetworkRoutingTests/Pods-WANetworkRoutingTests.release.xcconfig"; sourceTree = "<group>"; };
 		8288A69B4A2CB10241A9C1C4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE48A9F7E1AFBF272F4C39EB /* libPods-WANetworkRoutingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WANetworkRoutingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E00C83291CAC7C72004F3F1C /* WABatchResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WABatchResponse.h; sourceTree = "<group>"; };
+		E00C832A1CAC7C72004F3F1C /* WABatchResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WABatchResponse.m; sourceTree = "<group>"; };
+		E00C832C1CAC8BDD004F3F1C /* WARoutingManagerRequestMappingBatchTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARoutingManagerRequestMappingBatchTests.m; sourceTree = "<group>"; };
 		E01C1C921C7CB5CB00FFEF06 /* WANetworkRouting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WANetworkRouting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01C1C961C7CB5CB00FFEF06 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E01C1C981C7CB5CB00FFEF06 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -131,6 +143,17 @@
 		E04C8E291C9EF4D400D51D2C /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		E04C8E2B1CA0798000D51D2C /* WAProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAProgress.h; sourceTree = "<group>"; };
 		E04C8E2C1CA0798000D51D2C /* WAProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WAProgress.m; sourceTree = "<group>"; };
+		E063DD911CAAC96C00E55764 /* WABatchManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WABatchManagerProtocol.h; sourceTree = "<group>"; };
+		E063DD931CAACB5800E55764 /* WABatchSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WABatchSession.h; sourceTree = "<group>"; };
+		E063DD941CAACB5800E55764 /* WABatchSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WABatchSession.m; sourceTree = "<group>"; };
+		E063DD961CAACD0600E55764 /* WABatchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WABatchManager.h; sourceTree = "<group>"; };
+		E063DD971CAACD0600E55764 /* WABatchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WABatchManager.m; sourceTree = "<group>"; };
+		E063DD991CAACF0A00E55764 /* WABatchCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WABatchCache.h; sourceTree = "<group>"; };
+		E063DD9A1CAACF0A00E55764 /* WABatchCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WABatchCache.m; sourceTree = "<group>"; };
+		E063DD9C1CAACF1400E55764 /* WABatchObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WABatchObject.h; sourceTree = "<group>"; };
+		E063DD9D1CAACF1400E55764 /* WABatchObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WABatchObject.m; sourceTree = "<group>"; };
+		E063DDA01CAAD47A00E55764 /* WABatchCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WABatchCacheTests.m; sourceTree = "<group>"; };
+		E063DDA21CAADDB000E55764 /* WABatchManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WABatchManagerTests.m; sourceTree = "<group>"; };
 		E09D02F11C7D17E800938629 /* WANRBasicError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WANRBasicError.h; sourceTree = "<group>"; };
 		E09D02F21C7D17E800938629 /* WANRBasicError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WANRBasicError.m; sourceTree = "<group>"; };
 		E09D02F41C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARoutingManagerRequestOnlyTests.m; sourceTree = "<group>"; };
@@ -138,6 +161,7 @@
 		E09D02F81C7D1CD300938629 /* Wasappli.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Wasappli.json; sourceTree = "<group>"; };
 		E09D02FA1C7D24AD00938629 /* WARoutingManagerRequestMappingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARoutingManagerRequestMappingTests.m; sourceTree = "<group>"; };
 		E09D02FD1C7D421100938629 /* WARoutingManagerRequestMappingRouterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARoutingManagerRequestMappingRouterTests.m; sourceTree = "<group>"; };
+		E0F343201CAC30CA00055D0F /* WARoutingManagerRequestBatchTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WARoutingManagerRequestBatchTests.m; sourceTree = "<group>"; };
 		E82FFD9E7F3107C38B61B5AD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E984CCFFE13D7E119A724EAD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -246,6 +270,7 @@
 				E01C1CCC1C7CC00C00FFEF06 /* Response */,
 				E01C1CD31C7CD68B00FFEF06 /* Router */,
 				E01C1CDD1C7CDA0200FFEF06 /* Mapping */,
+				E063DD921CAACB3F00E55764 /* Batch */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -256,6 +281,7 @@
 				E01C1CBE1C7CB78400FFEF06 /* WARequestAuthenticationManagerProtocol.h */,
 				E01C1CBF1C7CB86200FFEF06 /* WARequestManagerProtocol.h */,
 				E01C1CC01C7CB98700FFEF06 /* WAMappingManagerProtocol.h */,
+				E063DD911CAAC96C00E55764 /* WABatchManagerProtocol.h */,
 				E01C1CC81C7CBF4000FFEF06 /* WANRErrorProtocol.h */,
 			);
 			name = Protocols;
@@ -351,8 +377,29 @@
 				E09D02F41C7D1AFB00938629 /* WARoutingManagerRequestOnlyTests.m */,
 				E09D02FA1C7D24AD00938629 /* WARoutingManagerRequestMappingTests.m */,
 				E09D02FD1C7D421100938629 /* WARoutingManagerRequestMappingRouterTests.m */,
+				E063DDA01CAAD47A00E55764 /* WABatchCacheTests.m */,
+				E063DDA21CAADDB000E55764 /* WABatchManagerTests.m */,
+				E0F343201CAC30CA00055D0F /* WARoutingManagerRequestBatchTests.m */,
+				E00C832C1CAC8BDD004F3F1C /* WARoutingManagerRequestMappingBatchTests.m */,
 			);
 			name = Specs;
+			sourceTree = "<group>";
+		};
+		E063DD921CAACB3F00E55764 /* Batch */ = {
+			isa = PBXGroup;
+			children = (
+				E063DD961CAACD0600E55764 /* WABatchManager.h */,
+				E063DD971CAACD0600E55764 /* WABatchManager.m */,
+				E063DD931CAACB5800E55764 /* WABatchSession.h */,
+				E063DD941CAACB5800E55764 /* WABatchSession.m */,
+				E063DD991CAACF0A00E55764 /* WABatchCache.h */,
+				E063DD9A1CAACF0A00E55764 /* WABatchCache.m */,
+				E063DD9C1CAACF1400E55764 /* WABatchObject.h */,
+				E063DD9D1CAACF1400E55764 /* WABatchObject.m */,
+				E00C83291CAC7C72004F3F1C /* WABatchResponse.h */,
+				E00C832A1CAC7C72004F3F1C /* WABatchResponse.m */,
+			);
+			name = Batch;
 			sourceTree = "<group>";
 		};
 		E09D02FC1C7D24B300938629 /* Fixtures */ = {
@@ -580,11 +627,15 @@
 				E01C1CD91C7CD6B100FFEF06 /* WANetworkRoute.m in Sources */,
 				E01C1CCF1C7CC02600FFEF06 /* WAObjectResponse.m in Sources */,
 				E01C1CE31C7CDA3000FFEF06 /* WARequestDescriptor.m in Sources */,
+				E063DD951CAACB5800E55764 /* WABatchSession.m in Sources */,
 				E01C1CDC1C7CD6BD00FFEF06 /* WANetworkRoutePattern.m in Sources */,
 				E04C8E2D1CA0798000D51D2C /* WAProgress.m in Sources */,
+				E063DD981CAACD0600E55764 /* WABatchManager.m in Sources */,
+				E063DD9E1CAACF1400E55764 /* WABatchObject.m in Sources */,
 				E01C1CC61C7CBBC800FFEF06 /* WAAFNetworkingRequestManager.m in Sources */,
 				E04C8E2A1C9EF4D400D51D2C /* Comment.m in Sources */,
 				E01C1CD21C7CC78000FFEF06 /* WAURLResponse.m in Sources */,
+				E00C832B1CAC7C72004F3F1C /* WABatchResponse.m in Sources */,
 				E04C8E271C9EF4CC00D51D2C /* CommentsTableViewController.m in Sources */,
 				E01C1CE61C7CDB3400FFEF06 /* WAMappingManager.m in Sources */,
 				E04C8E241C9DEA8100D51D2C /* WANetworkRoutingManager.m in Sources */,
@@ -594,6 +645,7 @@
 				E01C1CCB1C7CC00300FFEF06 /* WAObjectRequest.m in Sources */,
 				E01C1CD61C7CD6A700FFEF06 /* WANetworkRouter.m in Sources */,
 				E09D02F31C7D17E800938629 /* WANRBasicError.m in Sources */,
+				E063DD9B1CAACF0A00E55764 /* WABatchCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,8 +655,10 @@
 			files = (
 				E01C1CFA1C7CE7C500FFEF06 /* EnterpriseCD+CoreDataProperties.m in Sources */,
 				E01C1D061C7CEE5300FFEF06 /* WARouteURLTests.m in Sources */,
+				E063DDA31CAADDB000E55764 /* WABatchManagerTests.m in Sources */,
 				E01C1D021C7CE87600FFEF06 /* WANetworkRoutingManager.m in Sources */,
 				E01C1CF71C7CE7C500FFEF06 /* EmployeeCD+CoreDataProperties.m in Sources */,
+				E0F343211CAC30CA00055D0F /* WARoutingManagerRequestBatchTests.m in Sources */,
 				E01C1D0A1C7CF06C00FFEF06 /* WAResponseDescriptorTests.m in Sources */,
 				E01C1CF61C7CE7C500FFEF06 /* EmployeeCD.m in Sources */,
 				E01C1CFF1C7CE81B00FFEF06 /* WARouteTests.m in Sources */,
@@ -613,6 +667,8 @@
 				E01C1CFB1C7CE7C500FFEF06 /* Model.xcdatamodeld in Sources */,
 				E09D02FE1C7D421100938629 /* WARoutingManagerRequestMappingRouterTests.m in Sources */,
 				E01C1D081C7CEEEE00FFEF06 /* WAObjectRequestTests.m in Sources */,
+				E00C832D1CAC8BDD004F3F1C /* WARoutingManagerRequestMappingBatchTests.m in Sources */,
+				E063DDA11CAAD47A00E55764 /* WABatchCacheTests.m in Sources */,
 				E01C1CF81C7CE7C500FFEF06 /* Enterprise.m in Sources */,
 				E01C1CF91C7CE7C500FFEF06 /* EnterpriseCD.m in Sources */,
 				E01C1CF51C7CE7C500FFEF06 /* Employee.m in Sources */,

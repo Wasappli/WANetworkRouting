@@ -17,7 +17,7 @@ SPEC_BEGIN(WARouteEquality)
 
 describe(@"Create two routes with the same parameters", ^{
         
-    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:@"http://www.someURL.com"] requestManager:nil mappingManager:nil authenticationManager:nil];
+    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:@"http://www.someURL.com"] requestManager:nil mappingManager:nil authenticationManager:nil batchManager:nil];
     
     WANetworkRoute *route1 = [WANetworkRoute routeWithObjectClass:[Enterprise class]
                                                       pathPattern:@"enterprises"
@@ -58,8 +58,8 @@ describe(@"Create two routes with the same parameters", ^{
     });
     
     WANetworkRoute *singleObjectGetRoute = [WANetworkRoute routeWithObjectClass:[Enterprise class]
-                                                        pathPattern:@"enterprise/:itemID"
-                                                             method:WAObjectRequestMethodGET];
+                                                                    pathPattern:@"enterprise/:itemID"
+                                                                         method:WAObjectRequestMethodGET];
     
     it(@"You can add two routes with the same method and class", ^{
         [[theBlock(^{
@@ -67,5 +67,33 @@ describe(@"Create two routes with the same parameters", ^{
         }) shouldNot] raise];
     });
 });
+
+describe(@"Create two routes with the same parameters but no class", ^{
+    
+    WANetworkRoute *route1 = [WANetworkRoute routeWithObjectClass:nil
+                                                      pathPattern:@"enterprises"
+                                                           method:WAObjectRequestMethodGET];
+    
+    WANetworkRoute *routeEqualTo1 = [WANetworkRoute routeWithObjectClass:nil
+                                                             pathPattern:@"enterprises"
+                                                                  method:WAObjectRequestMethodGET];
+    
+    WANetworkRoute *routeNotEqualTo1 = [WANetworkRoute routeWithObjectClass:nil
+                                                                pathPattern:@"enterprise"
+                                                                     method:WAObjectRequestMethodGET];
+    
+    it(@"1 and 1 should be equals", ^{
+        [[route1 should] equal:route1];
+    });
+    
+    it(@"1 and equalTo1 should be equals", ^{
+        [[route1 should] equal:routeEqualTo1];
+    });
+    
+    it(@"1 and notEqualTo1 should not be equals", ^{
+        [[route1 shouldNot] equal:routeNotEqualTo1];
+    });
+});
+
 
 SPEC_END

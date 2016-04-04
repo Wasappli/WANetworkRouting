@@ -37,6 +37,8 @@
         
         // Set a default error class
         [self setErrorClass:[WANRBasicError class]];
+        
+        [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     }
     
     return self;
@@ -110,6 +112,10 @@
                                    }];
     
     [dataTask resume];
+}
+
+- (BOOL)isReachable {
+    return [[AFNetworkReachabilityManager sharedManager] isReachable] || [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusUnknown;
 }
 
 - (void)addAPIHeadersToRequest:(NSMutableURLRequest *)request extraHeaders:(NSDictionary *)extraHeaders {

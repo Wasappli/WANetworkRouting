@@ -14,9 +14,10 @@ A routing library to fetch objects from an API and map them to your app
 - [x] Default network request layer built on top of AFNetworking 3.0
 - [x] Default mapping layer built on top of WAMapping
 - [x] Built-in object router
+- [x] Build-in batch manager
 - [x] Different configurations available
 - [x] `NSProgress` support
-- [x] Tested
+- [x] Tested and used on real projects
 
 Go visit the [wiki](https://github.com/wasappli/WANetworkRouting/wiki) for more details about `WANetworkRouting` advanced use.
 
@@ -291,6 +292,170 @@ By implementing the simple `WARequestAuthenticationManagerProtocol` protocol, an
 - Ask you to authenticate (renew the authorization somehow) and replay the request (`[routingManager enqueueRequest:]`) (The request will automatically be re authorized for you).
 
 This will allow the routing manager to run every requests without any surprise when authentication has expired!
+
+### Add batch 
+The batch managers answers two needs:
+
+1/ Let's say that you want to minimize the impact on server of having multiple calls to perform at the same time. Like `GET /me`, `GET /meetings`, `GET /configuration`
+2/ Have offline support, for example add notes to a meeting and automatically sync them when you are back online!
+
+Well, `WABatchManager` is there for you
+
+#### Step 1: create a batch api
+This library comes with a built-in batch manager from the following specifications. You can either create an API which conforms to the specification, or create a new batch manager from `WABatchManager` which fits your needs.
+
+The specifications: (this is  closely following the batch api requests by facebook [Facebook batch API](https://developers.facebook.com/docs/graph-api/making-multiple-requests))
+
+- Set a limit per session
+- The data sent has the following format
+
+```
+{
+	"batch": [{
+		"uri": "\/meetings\/Ufd8f4e\/notes",
+		"method": "POST",
+		"body": "{\"note\":{\"hash\":\"817ebd76b6a89eff47bbd8e53f633c93eeadf23e\",\"title\":\"New first note\",\"type\":\"item\",\"position\":0}}",
+		"headers": {
+          "Content-Type": "application/json"
+        }
+	}, {
+		"uri": "\/meetings\/Ufd8f4e\/notes",
+		"method": "POST",
+		"body": "{\"note\":{\"hash\":\"f4e893ab9a754c273707b264359e7ec12262959d\",\"title\":\"New second note\",\"type\":\"note\",\"position\":1}}"
+	}]
+}
+```
+Please note that `uri` is relative to the base URL and `body` is an encoded string
+
+- Respond with
+
+```
+[
+  {
+    "body": "[{\"note\":\"...\"}]
+    "code": 200
+  },
+  {
+    "body": "[{\"note\":\"...\"}]
+    "code": 200
+  }
+ ]
+ ```
+
+#### Step 2: create a batch manager
+
+```objc
+WABatchManager *batchManager = [[WABatchManager alloc] initWithBatchPath:@"/batch" limit:20];
+
+routingManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURL]
+                                              requestManager:requestManager
+                                              mappingManager:mappingManager
+                                       authenticationManager:authManager
+                                                batchManager:batchManager];
+```
+
+#### Manually batch requests
+
+```objc
+// Create a batch session
+WABatchSession *batchSession = [WABatchSession new];
+
+// Enqueue the requests you want to perform
+[batchSession addRequest:[WAObjectRequest requestWithHTTPMethod:WAObjectRequestMethodGET
+                                                           path:@"/me"
+                                                     parameters:nil
+                                                optionalHeaders:nil]];
+[batchSession addRequest:[WAObjectRequest requestWithHTTPMethod:WAObjectRequestMethodGET
+                                                           path:@"/meetings"
+                                                     parameters:nil
+                                                optionalHeaders:nil]];
+[batchSession addRequest:[WAObjectRequest requestWithHTTPMethod:WAObjectRequestMethodGET
+                                                           path:@"/configuration"
+                                                     parameters:nil
+                                                optionalHeaders:nil]];
+                                                
+// Send the session
+[batchManager sendBatchSession:batchSession
+                  successBlock:^(id<WABatchManagerProtocol> batchManager, NSArray<WABatchResponse *> *batchResponses) {
+                      
+                  }
+                  failureBlock:^(id<WABatchManagerProtocol> batchManager, WAObjectRequest *request, WAObjectResponse *response, id<WANRErrorProtocol> error) {
+                      
+                  }];
+```
+
+#### Add an offline mode
+The offline mode works out of the box.
+Basically, you register routes describing requests which can be enqueued if there is a network issue (you should not include `GET`) and you let the library do its job! It also integrates with mapping and authentication without any further step.
+
+- Create routes to describe the requests to be enqueued
+
+```objc
+// Meetings
+WANetworkRoute *modifyMeeting = [WANetworkRoute routeWithObjectClass:nil
+                                                         pathPattern:WS_ENDPOINT_PATH(@"meetings/:itemID")
+                                                              method:WAObjectRequestMethodPUT | WAObjectRequestMethodeDELETE];
+
+// Action items
+WANetworkRoute *postActionItem = [WANetworkRoute routeWithObjectClass:nil
+                                                          pathPattern:WS_ENDPOINT_PATH(@"meetings/:itemID/notes")
+                                                               method:WAObjectRequestMethodPOST];
+```
+- Add them to the batch manager
+
+```objc
+[batchManager addRouteToBatchIfOffline:modifyMeeting];
+[batchManager addRouteToBatchIfOffline:postActionItem];
+```
+
+- Answers to errors
+
+```objc
+[self.apiManager putObject:meeting
+                      path:nil
+                parameters:nil
+                   success:...
+                   failure:^(WAObjectRequest *objectRequest, WAObjectResponse *response, id<WANRErrorProtocol> error) {
+                       SLDMeeting *meetingReturned = nil;
+                       // Check if the error is a batch one
+                       if ([[error.originalError.domain isEqualToString:WANetworkRoutingManagerErrorDomain] && error.originalError.code == WANetworkRoutingManagerErrorRequestBatched) {
+                           // Return the meeting for any UI update
+                           meetingReturned = meeting;
+                           // Store a "has offline changes" flag
+                           meeting.hasOfflineModifications = @YES;
+                           // Save the store
+                           [store save];
+                       }
+                       
+                       if (completion) {
+                           completion(meetingReturned, error);
+                       }
+                   }];
+```
+
+- Wait for flush. The library automatically flush the offline changes on any request made while online. You can also manually trigger the flush with 
+
+```objc
+if ([batchManager needsFlushing]) {
+  [batchManager flushDataWithCompletion:completion];
+}
+```
+
+- Perform actions post flush
+
+```objc
+[batchManager setOfflineFlushSuccessBlock:^(id <WABatchManagerProtocol> batchManager, NSArray<WABatchResponse *> *batchResponses) {
+    if (![batchManager needsFlushing]) {
+        // Consider all meetings synchronized. You could also iterate trough batch responses
+        NSArray *notSyncedMeetings = [SLDMeeting findAll];
+        for (SLDMeeting *meeting in notSyncedMeetings) {
+            meeting.hasOfflineModifications = @NO;
+        }
+        
+        [store save];
+    }
+}];
+```
 
 ## Progress
 
