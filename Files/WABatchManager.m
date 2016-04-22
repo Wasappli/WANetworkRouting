@@ -15,6 +15,7 @@
 #import "WAObjectResponse.h"
 #import "WAURLResponse.h"
 #import "WABatchResponse.h"
+#import "WANRErrorProtocol.h"
 
 #import "WANetworkRoute.h"
 #import "WANetworkRoutePattern.h"
@@ -127,8 +128,8 @@
               }];
 }
 
-- (BOOL)canEnqueueOfflineRequest:(WAObjectRequest *)request {    
-    __block BOOL matches = NO;
+- (BOOL)canEnqueueOfflineRequest:(WAObjectRequest *)request withResponse:(WAObjectResponse *)response error:(id<WANRErrorProtocol>)error {
+    __block BOOL matchesRoute = NO;
     
     [self.offlineRoutes enumerateObjectsUsingBlock:^(WANetworkRoute *obj, BOOL * _Nonnull stop) {
         BOOL correctMethod = obj.method & request.method;
@@ -140,17 +141,35 @@
             }
             
             if (samePath) {
-                matches = YES;
+                matchesRoute = YES;
                 *stop   = YES;
             }
         }
     }];
     
-    return matches;
+    BOOL matchesError = NO;
+    
+    if (!error && !response) {
+        matchesError = YES;
+    } else {
+        // If the server is not responding or in maintenance mode, then enqueue
+        if (response.urlResponse.statusCode == 500 || response.urlResponse.statusCode == 503) {
+            matchesError = YES;
+        }
+        
+        if ([[[error originalError] domain] isEqualToString:NSURLErrorDomain]) {
+            NSInteger code = [[error originalError] code];
+            if (code == NSURLErrorNotConnectedToInternet || code == NSURLErrorTimedOut) {
+                matchesError = YES;
+            }
+        }
+    }
+    
+    return matchesRoute && matchesError;
 }
 
 - (void)enqueueOfflineRequest:(WAObjectRequest *)request {
-    NSAssert([self canEnqueueOfflineRequest:request], @"Cannot enqueue %@ for offline batch, define a route to match the pattern", request.path);
+    NSAssert([self canEnqueueOfflineRequest:request withResponse:nil error:nil], @"Cannot enqueue %@ for offline batch, define a route to match the pattern", request.path);
     
     [self.cache addBatchObject:[self batchObjectFromRequest:request]];
 }

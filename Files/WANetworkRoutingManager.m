@@ -230,7 +230,7 @@
                 wanrStrongify(self);
                 [self _enqueueRequestAfterProcessing:originalRequest];
             }];
-        } else if ([self.batchManager isFlushing] && [self.batchManager canEnqueueOfflineRequest:originalRequest]) {
+        } else if ([self.batchManager isFlushing] && [self.batchManager canEnqueueOfflineRequest:originalRequest withResponse:nil error:nil]) {
             [self _sendRequestToBatchManager:originalRequest];
         } else {
             [self _enqueueRequestAfterProcessing:originalRequest];
@@ -247,7 +247,7 @@
     
     if (self.batchManager) {
         // If we are not reachable AND the request is batchable, then enqueue
-        if (![self.requestManager isReachable] && [self.batchManager canEnqueueOfflineRequest:request]) {
+        if (![self.requestManager isReachable] && [self.batchManager canEnqueueOfflineRequest:request withResponse:nil error:nil]) {
             [self _sendRequestToBatchManager:request];
             return;
         }
@@ -285,7 +285,7 @@
              [self.authenticationManager authenticateAndReplayRequest:request fromNetworkRoutingManager:self];
          }
          else {
-             if ([self _isErrorANetworkFail:error] && [self.batchManager canEnqueueOfflineRequest:request]) {
+             if ([self.batchManager canEnqueueOfflineRequest:request withResponse:response error:error]) {
                  [self.batchManager enqueueOfflineRequest:request];
              } else if (request.failureBlock) {
                  request.failureBlock(request, response, error);
@@ -297,18 +297,6 @@
                                        request.progressBlock(request, uploadProgress, downloadProgress, nil);
                                    }
                                }];
-}
-
-- (BOOL)_isErrorANetworkFail:(id <WANRErrorProtocol>)error {
-    BOOL toReturn = NO;
-    if ([[[error originalError] domain] isEqualToString:NSURLErrorDomain]) {
-        NSInteger code = [[error originalError] code];
-        if (code == NSURLErrorNotConnectedToInternet || code == NSURLErrorTimedOut) {
-            toReturn = YES;
-        }
-    }
-    
-    return toReturn;
 }
 
 - (void)_sendRequestToBatchManager:(WAObjectRequest *)request {

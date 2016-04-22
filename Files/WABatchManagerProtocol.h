@@ -78,10 +78,12 @@ typedef void (^WABatchManagerFailure)(id <WABatchManagerProtocol> batchManager, 
  *  Determine if a request can be enqueued or not. On `WABatchManager` implementation, you have to use `WANetworkRoute`
  *
  *  @param request the request which cannot be triggered because the app is offline
+ *  @param response the optional response
+ *  @param error the optional error
  *
  *  @return YES if the request can be enqueued
  */
-- (BOOL)canEnqueueOfflineRequest:(WAObjectRequest *)request;
+- (BOOL)canEnqueueOfflineRequest:(WAObjectRequest *)request withResponse:(WAObjectResponse *)response error:(id<WANRErrorProtocol>) error;
 
 /**
  *  Enqueue for offline the request which cannot be triggered because the app is offline

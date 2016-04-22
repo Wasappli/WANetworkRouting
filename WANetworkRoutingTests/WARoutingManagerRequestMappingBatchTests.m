@@ -29,7 +29,7 @@
 
 SPEC_BEGIN(RoutingManagerRequestMappingBatchTests)
 
-static NSString *kBaseURL = @"http://www.someURL.com";
+static NSString *kBaseURL = @"http://www.google.com";
 
 describe(@"RoutingManagerRequestMappingBatchTests", ^{
     
