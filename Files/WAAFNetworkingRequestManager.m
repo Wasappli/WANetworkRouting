@@ -37,8 +37,9 @@
         
         // Set a default error class
         [self setErrorClass:[WANRBasicError class]];
-        
+#if !TARGET_OS_WATCH
         [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+#endif
     }
     
     return self;
@@ -115,7 +116,11 @@
 }
 
 - (BOOL)isReachable {
+#if !TARGET_OS_WATCH
     return [[AFNetworkReachabilityManager sharedManager] isReachable] || [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusUnknown;
+#endif
+    
+    return YES;
 }
 
 - (void)addAPIHeadersToRequest:(NSMutableURLRequest *)request extraHeaders:(NSDictionary *)extraHeaders {
