@@ -16,9 +16,10 @@
 /**
  *  Authenticate an URL request. This is usually done by adding a token to the authentication header
  *
- *  @param request the request to authenticate
+ *  @param urlRequest the request to authenticate
+ *  @param request the original request
  */
-- (void)authenticateURLRequest:(NSMutableURLRequest *)request;
+- (void)authenticateURLRequest:(NSMutableURLRequest *)urlRequest request:(WAObjectRequest *)request;
 
 /**
  *  A method which asks if a request, based on the response, should be replayed after renewing authentication. This is usually on 401 + some error codes from server

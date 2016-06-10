@@ -255,10 +255,10 @@
     wanrWeakify(self)
     [self.requestManager enqueueRequest:request
                authenticateRequestBlock:
-     ^NSMutableURLRequest *(NSMutableURLRequest *request) {
+     ^NSMutableURLRequest *(NSMutableURLRequest *urlRequest) {
          wanrStrongify(self);
-         [self.authenticationManager authenticateURLRequest:request];
-         return request;
+         [self.authenticationManager authenticateURLRequest:urlRequest request:request];
+         return urlRequest;
      }
                            successBlock:
      ^(WAObjectRequest *request, WAObjectResponse *response) {
