@@ -71,7 +71,18 @@
     NSString *key = responseDescriptor.keyPath;
     NSArray *array = nil;
     if (key) {
-        array = response.responseObject[key];
+        NSArray *attributes = [key componentsSeparatedByString:@"."];
+        id value = response.responseObject[[attributes firstObject]];
+        if (![value isEqual:[NSNull null]]) {
+            for (int i = 1 ; i < [attributes count] ; i ++) {
+                value = value[attributes[i]];
+                if ([value isEqual:[NSNull null]]) {
+                    break;
+                }
+            }
+        }
+        
+        array = value;
     }
     else {
         if (response.responseObject) {
