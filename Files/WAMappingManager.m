@@ -80,6 +80,8 @@
                     break;
                 }
             }
+        } else {
+            value = nil;
         }
         
         array = value;
