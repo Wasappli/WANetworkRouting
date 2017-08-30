@@ -47,7 +47,9 @@
                 &&
                 evaluatedObject.method & method
                 &&
-                [evaluatedObject.pathPattern rangeOfString:WANetworkRoutePatternObjectPrefix].location != NSNotFound);
+                (([evaluatedObject.pathPattern rangeOfString:WANetworkRoutePatternObjectPrefix].location != NSNotFound && method != WAObjectRequestMethodPOST)
+                ||
+                 (method == WAObjectRequestMethodPOST)));
     }]];
     
     NSAssert([filteredSet count] <= 1, @"You should not have more than one route which match these conditions. Please review the routes we found for you:\n%@", filteredSet);
