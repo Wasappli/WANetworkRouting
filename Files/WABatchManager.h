@@ -15,14 +15,14 @@
  */
 @interface WABatchManager : NSObject <WABatchManagerProtocol>
 
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
+- (instancetype _Nonnull)init NS_UNAVAILABLE;
++ (instancetype _Nonnull)new NS_UNAVAILABLE;
 
 /**
  *  Add a route describing the request which can be enqueued
  *
  *  @param route the route allowed to be automatically batched if offline
  */
-- (void)addRouteToBatchIfOffline:(WANetworkRoute *)route;
+- (void)addRouteToBatchIfOffline:(WANetworkRoute *_Nonnull)route;
 
 @end

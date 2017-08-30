@@ -22,18 +22,18 @@
  *
  *  @param objectRequest the request to enqueue in the session
  */
-- (void)addRequest:(WAObjectRequest *)objectRequest;
+- (void)addRequest:(WAObjectRequest *_Nonnull)objectRequest;
 
 /**
  *  Same as adding a request, but you add a batch object instead. You have no reason to use this method. It is internally used in `WABatchManager` implementation.
  *
  *  @param batchObject the batch objct to enqueue in the session
  */
-- (void)addBatchObject:(WABatchObject *)batchObject;
+- (void)addBatchObject:(WABatchObject *_Nonnull)batchObject;
 
 /**
  *  An array of batch objects enqueued
  */
-@property (nonatomic, readonly) NSArray<WABatchObject *> *batchObjects;
+@property (nonatomic, readonly) NSArray<WABatchObject *> *_Nonnull batchObjects;
 
 @end

@@ -13,7 +13,7 @@
 #import "WANetworkRouter.h"
 #import "Enterprise.h"
 #import "WAObjectRequest.h"
-
+#import "WAAFNetworkingRequestManager.h"
 
 @interface WANetworkRoutingManager (exposeCreateRequest)
 - (WAObjectRequest *)objectRequestForObject:(id)object method:(WAObjectRequestMethod)method path:(NSString *)path parameters:(NSDictionary *)parameters progress:(WAObjectRequestProgressBlock)progress success:(WAObjectRequestSuccessCompletionBlock)success failure:(WAObjectRequestFailureCompletionBlock)failure;
@@ -33,7 +33,8 @@ static NSString *kBaseURLSimple = @"http://www.someURL.com";
 static NSString *kBaseURLWithPaths = @"http://www.someURL.com/api/v2";
 
 describe(@"Create request with simple URL", ^{
-    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURLSimple] requestManager:nil mappingManager:nil authenticationManager:nil batchManager:nil];
+    
+    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURLSimple] requestManager:[[WAAFNetworkingRequestManager alloc] init] mappingManager:nil authenticationManager:nil batchManager:nil];
     
     WANetworkRoute *routeClassic = [WANetworkRoute routeWithObjectClass:[ObjectRequestTest class]
                                                             pathPattern:@"categories/:itemID"
@@ -76,7 +77,7 @@ describe(@"Create request with simple URL", ^{
 
 describe(@"Create request with URL subpaths", ^{
     
-    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURLWithPaths] requestManager:nil mappingManager:nil authenticationManager:nil batchManager:nil];
+    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURLWithPaths] requestManager:[[WAAFNetworkingRequestManager alloc] init] mappingManager:nil authenticationManager:nil batchManager:nil];
     
     WANetworkRoute *routeClassic = [WANetworkRoute routeWithObjectClass:[ObjectRequestTest class]
                                                             pathPattern:@"categories/:itemID"

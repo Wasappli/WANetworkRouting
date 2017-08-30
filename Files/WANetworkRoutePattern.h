@@ -10,8 +10,8 @@
 
 @interface WANetworkRoutePattern : NSObject
 
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
+- (instancetype _Nonnull)init NS_UNAVAILABLE;
++ (instancetype _Nonnull)new NS_UNAVAILABLE;
 
 /**
  *  Init with a pattern like 'list/:itemID/extra'
@@ -20,7 +20,7 @@
  *
  *  @return Return a fresh pattern matcher
  */
-- (instancetype)initWithPattern:(NSString *)pattern NS_DESIGNATED_INITIALIZER;
+- (instancetype _Nonnull)initWithPattern:(NSString *_Nonnull)pattern NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Tests if a route matches the pattern
@@ -29,7 +29,7 @@
  *
  *  @return YES if matches, NO if not
  */
-- (BOOL)matchesRoute:(NSString *)route;
+- (BOOL)matchesRoute:(NSString *_Nonnull)route;
 
 /**
  *  Get the string path with values replaced from object properties
@@ -38,8 +38,8 @@
  *
  *  @return A string from path pattern with values replaced
  */
-- (NSString *)stringFromObject:(id)object;
+- (NSString *_Nullable)stringFromObject:(_Nonnull id)object;
 
 @end
 
-FOUNDATION_EXTERN NSString * const WANetworkRoutePatternObjectPrefix;
+FOUNDATION_EXTERN NSString * _Nonnull const WANetworkRoutePatternObjectPrefix;

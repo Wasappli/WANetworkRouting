@@ -16,8 +16,8 @@
  */
 @interface WANetworkRouter : NSObject
 
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
+- (instancetype _Nonnull )init NS_UNAVAILABLE;
++ (instancetype _Nonnull )new NS_UNAVAILABLE;
 
 /**
  *  Init the router with a base URL which will be used to create the URLs
@@ -26,14 +26,14 @@
  *
  *  @return a WANetworkRouter object freshly instanciated
  */
-- (instancetype)initWithBaseURL:(NSURL *)baseURL NS_DESIGNATED_INITIALIZER;
+- (instancetype _Nonnull)initWithBaseURL:(NSURL *_Nonnull)baseURL NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Register a new route
  *
  *  @param route the route to register
  */
-- (void)addRoute:(WANetworkRoute *)route;
+- (void)addRoute:(WANetworkRoute *_Nonnull)route;
 
 /**
  *  Get the existing route from an object and method
@@ -43,7 +43,7 @@
  *
  *  @return A route
  */
-- (WANetworkRoute *)routeForObject:(id)object method:(WAObjectRequestMethod)method;
+- (WANetworkRoute *_Nullable)routeForObject:(_Nonnull id)object method:(WAObjectRequestMethod)method;
 
 /**
  *  Returns an array of registered route for a class
@@ -52,7 +52,7 @@
  *
  *  @return An array of all routes for a class
  */
-- (NSArray<WANetworkRoute *> *)routesForClass:(Class)objectClass;
+- (NSArray<WANetworkRoute *> *_Nullable)routesForClass:(_Nonnull Class)objectClass;
 
 /**
  *  Get the url for a path pattern. For example, from categories/:itemID, you'd get [baseURL]/categories/1234
@@ -62,10 +62,10 @@
  *
  *  @return an URL with the baseURL+path with values replaced
  */
-- (NSURL *)urlForObject:(id)object method:(WAObjectRequestMethod)method;
+- (NSURL *_Nullable)urlForObject:(_Nonnull id)object method:(WAObjectRequestMethod)method;
 
 
-@property (nonatomic, strong, readwrite) NSURL        *baseURL;
-@property (nonatomic, strong, readonly ) NSMutableSet *routes;
+@property (nonatomic, strong, readwrite) NSURL        *_Nonnull baseURL;
+@property (nonatomic, strong, readonly ) NSMutableSet *_Nonnull routes;
 
 @end

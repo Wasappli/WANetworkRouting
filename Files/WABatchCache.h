@@ -21,14 +21,14 @@
  *
  *  @param batchObject a batch object to enqueue
  */
-- (void)addBatchObject:(WABatchObject *)batchObject;
+- (void)addBatchObject:(WABatchObject *_Nonnull)batchObject;
 
 /**
  *  Remove objects from cache store
  *
  *  @param batchObjects the objects to remove
  */
-- (void)removeBatchObjects:(NSArray <WABatchObject *>*)batchObjects;
+- (void)removeBatchObjects:(NSArray <WABatchObject *>*_Nonnull)batchObjects;
 
 /**
  *  Completely drop the database. Also resets the auto increment id
@@ -38,6 +38,6 @@
 /**
  *  The batch objects on cache
  */
-@property (nonatomic, readonly) NSArray *batchObjects;
+@property (nonatomic, readonly) NSArray *_Nonnull batchObjects;
 
 @end

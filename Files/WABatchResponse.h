@@ -16,8 +16,8 @@
  */
 @interface WABatchResponse : NSObject
 
-@property (nonatomic, strong) WAObjectRequest  *request;
-@property (nonatomic, strong) WAObjectResponse *response;
-@property (nonatomic, strong) NSArray          *mappedObjects;
+@property (nonatomic, strong) WAObjectRequest  *_Nonnull request;
+@property (nonatomic, strong) WAObjectResponse *_Nonnull response;
+@property (nonatomic, strong) NSArray          *_Nullable mappedObjects;
 
 @end

@@ -17,7 +17,7 @@
  *  @param batchManager   the batch manager triggering the event
  *  @param batchResponses an array of batch responses which contains the request, the response and the mapped object if the mapping is configured
  */
-typedef void (^WABatchManagerSuccess)(id <WABatchManagerProtocol> batchManager, NSArray <WABatchResponse *> *batchResponses);
+typedef void (^WABatchManagerSuccess)(_Nonnull id <WABatchManagerProtocol> batchManager, NSArray <WABatchResponse *> *_Nullable batchResponses);
 
 /**
  *  A block called on failure
@@ -25,9 +25,9 @@ typedef void (^WABatchManagerSuccess)(id <WABatchManagerProtocol> batchManager, 
  *  @param batchManager             the batch manager triggering the event
  *  @param request                  the batch request
  *  @param response                 the response from the batch request
- *  @param <WANRErrorProtocol>error the error
+ *  @param error                    the error
  */
-typedef void (^WABatchManagerFailure)(id <WABatchManagerProtocol> batchManager, WAObjectRequest *request, WAObjectResponse *response, id <WANRErrorProtocol>error);
+typedef void (^WABatchManagerFailure)(_Nonnull id <WABatchManagerProtocol> batchManager, WAObjectRequest *_Nonnull request, WAObjectResponse *_Nullable response, _Nullable id <WANRErrorProtocol>error);
 
 /**
  This protocols defines the batch manager. The library has a default implementation `WABatchManager`.
@@ -44,7 +44,7 @@ typedef void (^WABatchManagerFailure)(id <WABatchManagerProtocol> batchManager, 
  *
  *  @return a batch manager
  */
-- (instancetype)initWithBatchPath:(NSString *)batchPath limit:(NSUInteger)limit;
+- (instancetype _Nonnull)initWithBatchPath:(NSString *_Nonnull)batchPath limit:(NSUInteger)limit;
 
 /**
  *  @see `initWithBatchPath: limit`
@@ -54,7 +54,7 @@ typedef void (^WABatchManagerFailure)(id <WABatchManagerProtocol> batchManager, 
  *
  *  @return a batch manager
  */
-+ (instancetype)batchManagerWithBatchPath:(NSString *)batchPath limit:(NSUInteger)limit;
++ (instancetype _Nonnull)batchManagerWithBatchPath:(NSString *_Nonnull)batchPath limit:(NSUInteger)limit;
 
 // ———————————————————————
 // Offline management
@@ -72,7 +72,7 @@ typedef void (^WABatchManagerFailure)(id <WABatchManagerProtocol> batchManager, 
  *
  *  @param completion a completion block called when the flush is complete.
  */
-- (void)flushDataWithCompletion:(void(^)(BOOL success))completion;
+- (void)flushDataWithCompletion:( void(^ _Nonnull )(BOOL success))completion;
 
 /**
  *  Determine if a request can be enqueued or not. On `WABatchManager` implementation, you have to use `WANetworkRoute`
@@ -83,14 +83,14 @@ typedef void (^WABatchManagerFailure)(id <WABatchManagerProtocol> batchManager, 
  *
  *  @return YES if the request can be enqueued
  */
-- (BOOL)canEnqueueOfflineRequest:(WAObjectRequest *)request withResponse:(WAObjectResponse *)response error:(id<WANRErrorProtocol>) error;
+- (BOOL)canEnqueueOfflineRequest:(WAObjectRequest *_Nonnull)request withResponse:(WAObjectResponse *_Nullable)response error:(_Nullable id<WANRErrorProtocol>) error;
 
 /**
  *  Enqueue for offline the request which cannot be triggered because the app is offline
  *
  *  @param request the request to enqueue
  */
-- (void)enqueueOfflineRequest:(WAObjectRequest *)request;
+- (void)enqueueOfflineRequest:(WAObjectRequest *_Nonnull)request;
 
 /**
  *  Reset the database and remove all saved requests
@@ -115,27 +115,27 @@ typedef void (^WABatchManagerFailure)(id <WABatchManagerProtocol> batchManager, 
  *  @param successBlock a block called on success
  *  @param failureBlock a block called on failure
  */
-- (void)sendBatchSession:(WABatchSession *)session successBlock:(WABatchManagerSuccess)successBlock failureBlock:(WABatchManagerFailure)failureBlock;
+- (void)sendBatchSession:(WABatchSession *_Nonnull)session successBlock:(_Nullable WABatchManagerSuccess)successBlock failureBlock:(_Nullable WABatchManagerFailure)failureBlock;
 
 /**
  *  A delegate for the batch. Used for communicating with the `WANetworkRoutingManager` to enqueue the request and map the responses
  */
-@property (nonatomic, weak) id <WABatchManagerDelegate> delegate;
+@property (nonatomic, weak) _Nullable id <WABatchManagerDelegate> delegate;
 
 /**
  *  A block called on each offline batch session sent if success. Basically, you should call `neesdFlushing` to know if there are some pending offline batch objects to send.
  */
-@property (nonatomic, copy) WABatchManagerSuccess offlineFlushSuccessBlock;
+@property (nonatomic, copy) _Nullable WABatchManagerSuccess offlineFlushSuccessBlock;
 /**
  *  A block called on offline batch if there is any error. Note that this is the `/batch` error, not the possible errors from the batch requests themselves.
  */
-@property (nonatomic, copy) WABatchManagerFailure offlineFlushFailureBlock;
+@property (nonatomic, copy) _Nullable WABatchManagerFailure offlineFlushFailureBlock;
 
 @end
 
 @protocol WABatchManagerDelegate <NSObject>
 
-- (void)batchManager:(id<WABatchManagerProtocol>)batchManager haveBatchRequestToEnqueue:(WAObjectRequest *)objectRequest;
-- (void)batchManager:(id<WABatchManagerProtocol>)batchManager haveBatchResponsesToProcess:(NSArray <WABatchResponse *>*)batchReponses;
+- (void)batchManager:(_Nonnull id<WABatchManagerProtocol>)batchManager haveBatchRequestToEnqueue:(WAObjectRequest *_Nonnull)objectRequest;
+- (void)batchManager:(_Nonnull id<WABatchManagerProtocol>)batchManager haveBatchResponsesToProcess:(NSArray <WABatchResponse *>*_Nonnull)batchReponses;
 
 @end

@@ -11,8 +11,8 @@
 
 @interface WANetworkRoute : NSObject
 
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
+- (instancetype _Nonnull)init NS_UNAVAILABLE;
++ (instancetype _Nonnull)new NS_UNAVAILABLE;
 
 /**
  *  Create a new route description to use on router
@@ -23,13 +23,13 @@
  *
  *  @return a new route
  */
-- (instancetype)initWithObjectClass:(Class)objectClass pathPattern:(NSString *)pathPattern method:(WAObjectRequestMethod)method NS_DESIGNATED_INITIALIZER;
+- (instancetype _Nonnull)initWithObjectClass:(_Nullable Class)objectClass pathPattern:(NSString *_Nonnull)pathPattern method:(WAObjectRequestMethod)method NS_DESIGNATED_INITIALIZER;
 
 // @see `initWithObjectClass: pathPattern: method:`
-+ (instancetype)routeWithObjectClass:(Class)objectClass pathPattern:(NSString *)pathPattern method:(WAObjectRequestMethod)method;
++ (instancetype _Nonnull)routeWithObjectClass:(_Nullable Class)objectClass pathPattern:(NSString *_Nonnull)pathPattern method:(WAObjectRequestMethod)method;
 
-@property (nonatomic, strong, readonly) Class                 objectClass;
+@property (nonatomic, strong, readonly) Class                 _Nullable objectClass;
 @property (nonatomic, assign, readonly) WAObjectRequestMethod method;
-@property (nonatomic, strong, readonly) NSString              *pathPattern;
+@property (nonatomic, strong, readonly) NSString              *_Nonnull pathPattern;
 
 @end

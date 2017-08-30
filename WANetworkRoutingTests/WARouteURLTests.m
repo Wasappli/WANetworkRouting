@@ -11,6 +11,7 @@
 #import "WANetworkRoutingManager.h"
 #import "WANetworkRoute.h"
 #import "WANetworkRouter.h"
+#import "WAAFNetworkingRequestManager.h"
 
 @interface RouteObjectTest : NSObject
 @property (nonatomic, strong) NSNumber *itemID;
@@ -26,7 +27,7 @@ static NSString *kBaseURL = @"http://www.someURL.com";
 
 describe(@"Get url paths from path pattern and object", ^{
     
-    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURL] requestManager:nil mappingManager:nil authenticationManager:nil batchManager:nil];
+    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:kBaseURL] requestManager:[[WAAFNetworkingRequestManager alloc] init] mappingManager:nil authenticationManager:nil batchManager:nil];
     
     WANetworkRoute *routeClassic = [WANetworkRoute routeWithObjectClass:[RouteObjectTest class]
                                                             pathPattern:@"categories/:itemID"

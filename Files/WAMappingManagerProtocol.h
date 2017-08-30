@@ -11,8 +11,8 @@
 
 @class WAObjectRequest, WAObjectResponse;
 
-typedef void (^WAMappingManagerMappingCompletion)(NSArray *mappedObjects, NSError *error);
-typedef id (^WAMappingManagerMappingBlock)(id value);
+typedef void (^WAMappingManagerMappingCompletion)(NSArray *_Nullable mappedObjects, NSError *_Nullable error);
+typedef _Nullable id (^WAMappingManagerMappingBlock)(id _Nonnull value);
 
 @protocol WAMappingManagerProtocol <NSObject>
 
@@ -23,7 +23,7 @@ typedef id (^WAMappingManagerMappingBlock)(id value);
  *
  *  @return YES if there is at least one response descriptor
  */
-- (BOOL)canMapRequestResponse:(WAObjectRequest *)request;
+- (BOOL)canMapRequestResponse:(WAObjectRequest *_Nonnull)request;
 
 /**
  *  Map the response to managed objects using responses descriptors registered (there can be many)
@@ -32,7 +32,7 @@ typedef id (^WAMappingManagerMappingBlock)(id value);
  *  @param request    the original request
  *  @param completion a block with an array of all mapped objects no matter the hierarchy
  */
-- (void)mapResponse:(WAObjectResponse *)response fromRequest:(WAObjectRequest *)request withCompletion:(WAMappingManagerMappingCompletion)completion;
+- (void)mapResponse:(WAObjectResponse *_Nonnull)response fromRequest:(WAObjectRequest *_Nonnull)request withCompletion:(_Nonnull WAMappingManagerMappingCompletion)completion;
 
 /**
  *  Map an object to dictionary for the request
@@ -43,14 +43,14 @@ typedef id (^WAMappingManagerMappingBlock)(id value);
  *
  *  @return a dictionary mapped with object properties from original mapping
  */
-- (NSDictionary *)mapObject:(id)object forPath:(NSString *)path method:(WAObjectRequestMethod)method;
+- (NSDictionary *_Nullable)mapObject:(_Nullable id)object forPath:(NSString *_Nullable)path method:(WAObjectRequestMethod)method;
 
 /**
  *  Delete an object from store. This usually comes from a DELETE operation
  *
  *  @param object the object to delete
  */
-- (void)deleteObjectFromStore:(id)object fromRequest:(WAObjectRequest *)request;
+- (void)deleteObjectFromStore:(_Nonnull id)object fromRequest:(WAObjectRequest *_Nonnull)request;
 
 /**
  *  Add a default mapping block for a class. For example, you could have an API returning dates all with the same format. You can register the transformation once here.
@@ -58,7 +58,7 @@ typedef id (^WAMappingManagerMappingBlock)(id value);
  *  @param mappingBlock     the mapping block called to transform the value
  *  @param destinationClass the destination class
  */
-- (void)addDefaultMappingBlock:(WAMappingManagerMappingBlock)mappingBlock forDestinationClass:(Class)destinationClass;
+- (void)addDefaultMappingBlock:(_Nonnull WAMappingManagerMappingBlock)mappingBlock forDestinationClass:(_Nonnull Class)destinationClass;
 
 /**
  *  Add a reverse default mapping block for a class. For example, you could have an API returning dates all with the same format. You can register the transformation once here.
@@ -66,6 +66,6 @@ typedef id (^WAMappingManagerMappingBlock)(id value);
  *  @param reverseMappingBlock the reverse mapping block called to transform the value
  *  @param destinationClass    the destination class
  */
-- (void)addReverseDefaultMappingBlock:(WAMappingManagerMappingBlock)reverseMappingBlock forDestinationClass:(Class)destinationClass;
+- (void)addReverseDefaultMappingBlock:(_Nonnull WAMappingManagerMappingBlock)reverseMappingBlock forDestinationClass:(_Nonnull Class)destinationClass;
 
 @end

@@ -13,8 +13,8 @@
 
 @interface WAResponseDescriptor : NSObject
 
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
+- (instancetype _Nonnull)init NS_UNAVAILABLE;
++ (instancetype _Nonnull)new NS_UNAVAILABLE;
 
 /**
  *  Create a response descriptor to map a dictionary (on the response) to objects
@@ -26,16 +26,16 @@
  *
  *  @return A response descriptor to give to mapping manager
  */
-- (instancetype)initWithMapping:(WAEntityMapping *)mapping
-                         method:(WAObjectRequestMethod)method
-                    pathPattern:(NSString *)pathPattern
-                        keyPath:(NSString *)keyPath NS_DESIGNATED_INITIALIZER;
+- (instancetype _Nonnull)initWithMapping:(WAEntityMapping *_Nonnull)mapping
+                                  method:(WAObjectRequestMethod)method
+                             pathPattern:(NSString *_Nonnull)pathPattern
+                                 keyPath:(NSString *_Nullable)keyPath NS_DESIGNATED_INITIALIZER;
 
 // @see `initWithMapping: method: pathPattern: keyPath:`
-+ (instancetype)responseDescriptorWithMapping:(WAEntityMapping *)mapping
-                                       method:(WAObjectRequestMethod)method
-                                  pathPattern:(NSString *)pathPattern
-                                      keyPath:(NSString *)keyPath;
++ (instancetype _Nonnull)responseDescriptorWithMapping:(WAEntityMapping *_Nonnull)mapping
+                                                method:(WAObjectRequestMethod)method
+                                           pathPattern:(NSString *_Nonnull)pathPattern
+                                               keyPath:(NSString *_Nullable)keyPath;
 
 /**
  *  Test if the response descriptor would match a request
@@ -44,11 +44,11 @@
  *
  *  @return YES if the descriptor can be used on the provided request, NO otherwise
  */
-- (BOOL)matchesObjectRequest:(WAObjectRequest *)objectRequest;
+- (BOOL)matchesObjectRequest:(WAObjectRequest *_Nonnull)objectRequest;
 
-@property (nonatomic, strong, readonly) WAEntityMapping       *mapping;
+@property (nonatomic, strong, readonly) WAEntityMapping       *_Nonnull mapping;
 @property (nonatomic, assign, readonly) WAObjectRequestMethod method;
-@property (nonatomic, strong, readonly) NSString              *pathPattern;
-@property (nonatomic, strong, readonly) NSString              *keyPath;
+@property (nonatomic, strong, readonly) NSString              *_Nonnull pathPattern;
+@property (nonatomic, strong, readonly) NSString              *_Nullable keyPath;
 
 @end
