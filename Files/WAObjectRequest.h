@@ -21,7 +21,7 @@
  *
  *  @return A freshly created object requests
  */
-+ (instancetype)requestWithHTTPMethod:(WAObjectRequestMethod)method path:(NSString *)path parameters:(NSDictionary*)parameters optionalHeaders:(NSDictionary*)headers;
++ (instancetype _Nonnull)requestWithHTTPMethod:(WAObjectRequestMethod)method path:(NSString *_Nonnull)path parameters:(NSDictionary *_Nullable)parameters optionalHeaders:(NSDictionary *_Nullable)headers;
 
 /**
  *  Set the completion block for the request
@@ -29,17 +29,17 @@
  *  @param success block called on success
  *  @param failure block called on failure
  */
-- (void)setCompletionBlocksWithSuccess:(WAObjectRequestSuccessCompletionBlock)success
-                               failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)setCompletionBlocksWithSuccess:(_Nullable WAObjectRequestSuccessCompletionBlock)success
+                               failure:(_Nullable WAObjectRequestFailureCompletionBlock)failure;
 
 @property (nonatomic, assign, readonly ) WAObjectRequestMethod                 method;
-@property (nonatomic, strong, readonly ) NSString                              *path;
-@property (nonatomic, strong, readonly ) NSDictionary                          *parameters;
-@property (nonatomic, strong, readonly ) NSDictionary                          *headers;
-@property (nonatomic, copy, readonly   ) WAObjectRequestSuccessCompletionBlock successBlock;
-@property (nonatomic, copy, readonly   ) WAObjectRequestFailureCompletionBlock failureBlock;
-@property (nonatomic, copy,readwrite   ) WAObjectRequestProgressBlock          progressBlock;
+@property (nonatomic, strong, readonly ) NSString                              *_Nonnull path;
+@property (nonatomic, strong, readonly ) NSDictionary                          *_Nullable parameters;
+@property (nonatomic, strong, readonly ) NSDictionary                          *_Nullable headers;
+@property (nonatomic, copy, readonly   ) WAObjectRequestSuccessCompletionBlock _Nullable successBlock;
+@property (nonatomic, copy, readonly   ) WAObjectRequestFailureCompletionBlock _Nullable failureBlock;
+@property (nonatomic, copy,readwrite   ) WAObjectRequestProgressBlock          _Nullable progressBlock;
 
-@property (nonatomic, strong, readwrite) id                                    targetObject;
+@property (nonatomic, strong, readwrite) id                                    _Nullable targetObject;
 
 @end

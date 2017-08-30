@@ -23,8 +23,8 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
 
 @interface WANetworkRoutingManager : NSObject
 
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
+- (instancetype _Nonnull)init NS_UNAVAILABLE;
++ (instancetype _Nonnull)new NS_UNAVAILABLE;
 
 /**
  *  Initialize an network routing manager
@@ -37,9 +37,9 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *
  *  @return a fresh instance
  */
-- (instancetype)initWithBaseURL:(NSURL *)baseURL requestManager:(id <WARequestManagerProtocol>)requestManager mappingManager:(id <WAMappingManagerProtocol>)mappingManager authenticationManager:(id <WARequestAuthenticationManagerProtocol>)authenticationManager batchManager:(id <WABatchManagerProtocol>)batchManager NS_DESIGNATED_INITIALIZER;
+- (instancetype _Nonnull)initWithBaseURL:(NSURL *_Nonnull)baseURL requestManager:(_Nonnull id <WARequestManagerProtocol>)requestManager mappingManager:(_Nullable id <WAMappingManagerProtocol>)mappingManager authenticationManager:(_Nullable id <WARequestAuthenticationManagerProtocol>)authenticationManager batchManager:(_Nullable id <WABatchManagerProtocol>)batchManager NS_DESIGNATED_INITIALIZER;
 // @see `initWithBaseURL: requestManager: mappingManager: authenticationManager: batchManager:`
-+ (instancetype)managerWithBaseURL:(NSURL *)baseURL requestManager:(id <WARequestManagerProtocol>)requestManager mappingManager:(id <WAMappingManagerProtocol>)mappingManager authenticationManager:(id <WARequestAuthenticationManagerProtocol>)authenticationManager batchManager:(id <WABatchManagerProtocol>)batchManager;
++ (instancetype _Nonnull)managerWithBaseURL:(NSURL *_Nonnull)baseURL requestManager:(_Nonnull id <WARequestManagerProtocol>)requestManager mappingManager:(_Nullable id <WAMappingManagerProtocol>)mappingManager authenticationManager:(_Nullable id <WARequestAuthenticationManagerProtocol>)authenticationManager batchManager:(_Nullable id <WABatchManagerProtocol>)batchManager;
 
 /**
  *  GET all objects on a path
@@ -49,10 +49,10 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)getObjectsAtPath:(NSString *)path
-              parameters:(NSDictionary *)parameters
-                 success:(WAObjectRequestSuccessCompletionBlock)success
-                 failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)getObjectsAtPath:(NSString *_Nonnull)path
+              parameters:(NSDictionary *_Nullable)parameters
+                 success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+                 failure:(WAObjectRequestFailureCompletionBlock _Nullable )failure;
 
 /**
  *  Get all objects on a path
@@ -63,11 +63,11 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)getObjectsAtPath:(NSString *)path
-              parameters:(NSDictionary *)parameters
-                progress:(WAObjectRequestProgressBlock)progress
-                 success:(WAObjectRequestSuccessCompletionBlock)success
-                 failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)getObjectsAtPath:(NSString *_Nonnull)path
+              parameters:(NSDictionary *_Nullable)parameters
+                progress:(WAObjectRequestProgressBlock _Nullable)progress
+                 success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+                 failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  GET an object
@@ -78,11 +78,11 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)getObject:(id)object
-             path:(NSString *)path
-       parameters:(NSDictionary *)parameters
-          success:(WAObjectRequestSuccessCompletionBlock)success
-          failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)getObject:(id _Nullable)object
+             path:(NSString *_Nullable)path
+       parameters:(NSDictionary *_Nullable)parameters
+          success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+          failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  GET an object
@@ -94,12 +94,12 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)getObject:(id)object
-             path:(NSString *)path
-       parameters:(NSDictionary *)parameters
-         progress:(WAObjectRequestProgressBlock)progress
-          success:(WAObjectRequestSuccessCompletionBlock)success
-          failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)getObject:(id _Nullable)object
+             path:(NSString *_Nullable)path
+       parameters:(NSDictionary *_Nullable)parameters
+         progress:(WAObjectRequestProgressBlock _Nullable)progress
+          success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+          failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 
 /**
@@ -111,11 +111,11 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)postObject:(id)object
-              path:(NSString *)path
-        parameters:(NSDictionary *)parameters
-           success:(WAObjectRequestSuccessCompletionBlock)success
-           failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)postObject:(id _Nullable)object
+              path:(NSString *_Nullable)path
+        parameters:(NSDictionary *_Nullable)parameters
+           success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+           failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  POST an object
@@ -127,12 +127,12 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)postObject:(id)object
-              path:(NSString *)path
-        parameters:(NSDictionary *)parameters
-          progress:(WAObjectRequestProgressBlock)progress
-           success:(WAObjectRequestSuccessCompletionBlock)success
-           failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)postObject:(id _Nullable)object
+              path:(NSString *_Nullable)path
+        parameters:(NSDictionary *_Nullable)parameters
+          progress:(WAObjectRequestProgressBlock _Nullable)progress
+           success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+           failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  PUT an object
@@ -143,11 +143,11 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)putObject:(id)object
-             path:(NSString *)path
-       parameters:(NSDictionary *)parameters
-          success:(WAObjectRequestSuccessCompletionBlock)success
-          failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)putObject:(id _Nullable)object
+             path:(NSString *_Nullable)path
+       parameters:(NSDictionary *_Nullable)parameters
+          success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+          failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  PUT an object
@@ -159,12 +159,12 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)putObject:(id)object
-             path:(NSString *)path
-       parameters:(NSDictionary *)parameters
-         progress:(WAObjectRequestProgressBlock)progress
-          success:(WAObjectRequestSuccessCompletionBlock)success
-          failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)putObject:(id _Nullable)object
+             path:(NSString *_Nullable)path
+       parameters:(NSDictionary *_Nullable)parameters
+         progress:(WAObjectRequestProgressBlock _Nullable)progress
+          success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+          failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  DELETE an object
@@ -175,11 +175,11 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)deleteObject:(id)object
-                path:(NSString *)path
-          parameters:(NSDictionary *)parameters
-             success:(WAObjectRequestSuccessCompletionBlock)success
-             failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)deleteObject:(id _Nullable)object
+                path:(NSString *_Nullable)path
+          parameters:(NSDictionary *_Nullable)parameters
+             success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+             failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  DELETE an object
@@ -191,12 +191,12 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)deleteObject:(id)object
-                path:(NSString *)path
-          parameters:(NSDictionary *)parameters
-            progress:(WAObjectRequestProgressBlock)progress
-             success:(WAObjectRequestSuccessCompletionBlock)success
-             failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)deleteObject:(id _Nullable)object
+                path:(NSString *_Nullable)path
+          parameters:(NSDictionary *_Nullable)parameters
+            progress:(WAObjectRequestProgressBlock _Nullable)progress
+             success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+             failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  HEAD an object
@@ -207,11 +207,11 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)headObject:(id)object
-              path:(NSString *)path
-        parameters:(NSDictionary *)parameters
-           success:(WAObjectRequestSuccessCompletionBlock)success
-           failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)headObject:(id _Nullable)object
+              path:(NSString *_Nullable)path
+        parameters:(NSDictionary *_Nullable)parameters
+           success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+           failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  HEAD an object
@@ -223,12 +223,12 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)headObject:(id)object
-              path:(NSString *)path
-        parameters:(NSDictionary *)parameters
-          progress:(WAObjectRequestProgressBlock)progress
-           success:(WAObjectRequestSuccessCompletionBlock)success
-           failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)headObject:(id _Nullable)object
+              path:(NSString *_Nullable)path
+        parameters:(NSDictionary *_Nullable)parameters
+          progress:(WAObjectRequestProgressBlock _Nullable)progress
+           success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+           failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  PATCH an object
@@ -239,11 +239,11 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)patchObject:(id)object
-               path:(NSString *)path
-         parameters:(NSDictionary *)parameters
-            success:(WAObjectRequestSuccessCompletionBlock)success
-            failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)patchObject:(id _Nullable)object
+               path:(NSString *_Nullable)path
+         parameters:(NSDictionary *_Nullable)parameters
+            success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+            failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  PATCH an object
@@ -255,28 +255,28 @@ typedef NS_ENUM(NSUInteger, WANetworkRoutingManagerError) {
  *  @param success    a success block
  *  @param failure    a failure block
  */
-- (void)patchObject:(id)object
-               path:(NSString *)path
-         parameters:(NSDictionary *)parameters
-           progress:(WAObjectRequestProgressBlock)progress
-            success:(WAObjectRequestSuccessCompletionBlock)success
-            failure:(WAObjectRequestFailureCompletionBlock)failure;
+- (void)patchObject:(id _Nullable)object
+               path:(NSString *_Nullable)path
+         parameters:(NSDictionary *_Nullable)parameters
+           progress:(WAObjectRequestProgressBlock _Nullable)progress
+            success:(WAObjectRequestSuccessCompletionBlock _Nullable)success
+            failure:(WAObjectRequestFailureCompletionBlock _Nullable)failure;
 
 /**
  *  Enqueue a request. Useful for re enqueuing a request after renewing authentication
  *
  *  @param request the request to execute
  */
-- (void)enqueueRequest:(WAObjectRequest *)request;
+- (void)enqueueRequest:(WAObjectRequest *_Nonnull)request;
 
-@property (nonatomic, strong, readonly ) NSURL                                       *baseURL;
-@property (nonatomic, strong, readonly ) id <WARequestManagerProtocol>               requestManager;
-@property (nonatomic, strong, readonly ) id <WARequestAuthenticationManagerProtocol> authenticationManager;
-@property (nonatomic, strong, readonly ) id <WAMappingManagerProtocol>               mappingManager;
-@property (nonatomic, strong, readonly ) id <WABatchManagerProtocol>                 batchManager;
-@property (nonatomic, strong, readonly ) WANetworkRouter                             *router;
-@property (nonatomic, strong, readwrite) NSDictionary                                *optionalHeaders;
+@property (nonatomic, strong, readonly ) NSURL * _Nonnull baseURL;
+@property (nonatomic, strong, readonly ) _Nonnull id<WARequestManagerProtocol> requestManager;
+@property (nonatomic, strong, readonly ) _Nullable id<WARequestAuthenticationManagerProtocol> authenticationManager;
+@property (nonatomic, strong, readonly ) _Nullable id<WAMappingManagerProtocol> mappingManager;
+@property (nonatomic, strong, readonly ) _Nullable id<WABatchManagerProtocol> batchManager;
+@property (nonatomic, strong, readonly ) WANetworkRouter * _Nonnull router;
+@property (nonatomic, strong, readwrite) NSDictionary * _Nullable optionalHeaders;
 
 @end
 
-FOUNDATION_EXTERN NSString * const WANetworkRoutingManagerErrorDomain;
+FOUNDATION_EXTERN NSString * _Nonnull const WANetworkRoutingManagerErrorDomain;

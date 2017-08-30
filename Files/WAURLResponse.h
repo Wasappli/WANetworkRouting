@@ -11,6 +11,6 @@
 @interface WAURLResponse : NSObject
 
 @property (nonatomic, assign) NSInteger statusCode;
-@property (nonatomic, strong) NSDictionary *httpHeaderFields;
+@property (nonatomic, strong) NSDictionary *_Nonnull httpHeaderFields;
 
 @end

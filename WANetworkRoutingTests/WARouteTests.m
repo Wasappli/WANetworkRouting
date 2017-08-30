@@ -12,11 +12,12 @@
 #import "WANetworkRoutingManager.h"
 #import "WANetworkRoute.h"
 #import "WANetworkRouter.h"
+#import "WAAFNetworkingRequestManager.h"
 
 SPEC_BEGIN(WARouteTest)
 
 describe(@"Register a simple route", ^{
-    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:@"http://www.someURL.com"] requestManager:nil mappingManager:nil authenticationManager:nil batchManager:nil];
+    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:@"http://www.someURL.com"] requestManager:[[WAAFNetworkingRequestManager alloc] init] mappingManager:nil authenticationManager:nil batchManager:nil];
     WANetworkRoute *routeGetAllEnterprises = [WANetworkRoute routeWithObjectClass:[Enterprise class]
                                                                       pathPattern:@"enterprises"
                                                                            method:WAObjectRequestMethodGET];

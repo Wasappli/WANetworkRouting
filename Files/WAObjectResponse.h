@@ -12,7 +12,7 @@
 
 @interface WAObjectResponse : NSObject
 
-@property (nonatomic, strong) NSDictionary  *responseObject;
-@property (nonatomic, strong) WAURLResponse *urlResponse;
+@property (nonatomic, strong) id _Nonnull responseObject;
+@property (nonatomic, strong) WAURLResponse *_Nonnull urlResponse;
 
 @end

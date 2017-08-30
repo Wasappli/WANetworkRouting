@@ -18,6 +18,13 @@
 
 #import "WABatchManager.h"
 
+@interface Book : NSObject
+
+@end
+
+@implementation Book
+@end
+
 SPEC_BEGIN(WABatchManagerTests)
 
 describe(@"Needs flushing", ^{
@@ -71,11 +78,11 @@ describe(@"Can enqueue offline", ^{
                                                                       parameters:nil
                                                                  optionalHeaders:nil];
     
-    WANetworkRoute *postRoute = [WANetworkRoute routeWithObjectClass:nil
+    WANetworkRoute *postRoute = [WANetworkRoute routeWithObjectClass:[Book class]
                                                          pathPattern:@"/books"
                                                               method:WAObjectRequestMethodPOST];
     
-    WANetworkRoute *putRoute = [WANetworkRoute routeWithObjectClass:nil
+    WANetworkRoute *putRoute = [WANetworkRoute routeWithObjectClass:[Book class]
                                                         pathPattern:@"/books/1"
                                                              method:WAObjectRequestMethodPUT];
     

@@ -11,15 +11,15 @@
 @class WAObjectRequest, WAObjectResponse;
 @protocol WANRErrorProtocol;
 
-typedef NSMutableURLRequest* (^WARequestManagerAuthenticateRequest)(NSMutableURLRequest *request);
-typedef void (^WARequestManagerSuccess)(WAObjectRequest *request, WAObjectResponse *response);
-typedef void (^WARequestManagerFailure)(WAObjectRequest *request, WAObjectResponse *response, id <WANRErrorProtocol>error);
-typedef void (^WARequestManagerProgress)(WAObjectRequest *request, NSProgress *uploadProgress, NSProgress *downloadProgress);
+typedef NSMutableURLRequest* _Nonnull (^WARequestManagerAuthenticateRequest)(NSMutableURLRequest *_Nonnull request);
+typedef void (^WARequestManagerSuccess)(WAObjectRequest *_Nonnull request, WAObjectResponse *_Nonnull response);
+typedef void (^WARequestManagerFailure)(WAObjectRequest *_Nonnull request, WAObjectResponse *_Nullable response, _Nullable id <WANRErrorProtocol>error);
+typedef void (^WARequestManagerProgress)(WAObjectRequest *_Nonnull request, NSProgress *_Nullable uploadProgress, NSProgress *_Nullable downloadProgress);
 
 @protocol WARequestManagerProtocol <NSObject>
 
-@property (nonatomic, strong) NSURL *baseURL;
-@property (nonatomic, strong) Class errorClass;
+@property (nonatomic, strong) NSURL *_Nonnull baseURL;
+@property (nonatomic, strong) Class _Nonnull errorClass;
 
 /**
  *  Enqueue a provided request
@@ -30,7 +30,7 @@ typedef void (^WARequestManagerProgress)(WAObjectRequest *request, NSProgress *u
  *  @param failureBlock             a block called on failure
  *  @param progressBlock            a block called for progress
  */
-- (void)enqueueRequest:(WAObjectRequest *)objectRequest authenticateRequestBlock:(WARequestManagerAuthenticateRequest)authenticateRequestBlock successBlock:(WARequestManagerSuccess)successBlock failureBlock:(WARequestManagerFailure)failureBlock progress:(WARequestManagerProgress)progressBlock;
+- (void)enqueueRequest:(WAObjectRequest *_Nonnull)objectRequest authenticateRequestBlock:(_Nullable WARequestManagerAuthenticateRequest)authenticateRequestBlock successBlock:(_Nullable WARequestManagerSuccess)successBlock failureBlock:(_Nullable WARequestManagerFailure)failureBlock progress:(_Nullable WARequestManagerProgress)progressBlock;
 
 /**
  *  Returns reachability status

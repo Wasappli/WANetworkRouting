@@ -19,7 +19,7 @@
  *  @param urlRequest the request to authenticate
  *  @param request the original request
  */
-- (void)authenticateURLRequest:(NSMutableURLRequest *)urlRequest request:(WAObjectRequest *)request;
+- (void)authenticateURLRequest:(NSMutableURLRequest *_Nonnull)urlRequest request:(WAObjectRequest *_Nonnull)request;
 
 /**
  *  A method which asks if a request, based on the response, should be replayed after renewing authentication. This is usually on 401 + some error codes from server
@@ -30,7 +30,7 @@
  *
  *  @return YES if you need to ask the server to renew the token
  */
-- (BOOL)shouldReplayRequest:(WAObjectRequest *)request response:(WAObjectResponse *)response error:(id <WANRErrorProtocol>)error;
+- (BOOL)shouldReplayRequest:(WAObjectRequest *_Nonnull)request response:(WAObjectResponse *_Nullable)response error:(_Nullable id <WANRErrorProtocol>)error;
 
 /**
  *  This method is called when the first request execution returned an authentication error asking to renew it.
@@ -39,6 +39,6 @@
  *  @param request               the request you will have to enqueue then
  *  @param networkRoutingManager the network routing manager which deals with requests
  */
-- (void)authenticateAndReplayRequest:(WAObjectRequest *)request fromNetworkRoutingManager:(WANetworkRoutingManager *)networkRoutingManager;
+- (void)authenticateAndReplayRequest:(WAObjectRequest *_Nonnull)request fromNetworkRoutingManager:(WANetworkRoutingManager *_Nonnull)networkRoutingManager;
 
 @end

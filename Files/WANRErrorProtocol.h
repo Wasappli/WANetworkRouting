@@ -12,10 +12,10 @@
 
 @protocol WANRErrorProtocol <NSObject>
 
-- (instancetype)initWithOriginalError:(NSError *)error response:(WAObjectResponse *)response;
+- (instancetype _Nonnull)initWithOriginalError:(NSError *_Nullable)error response:(WAObjectResponse *_Nullable)response;
 
-@property (nonatomic, strong, readonly) NSError          *originalError;
-@property (nonatomic, strong, readonly) NSError          *finalError;
-@property (nonatomic, strong, readonly) WAObjectResponse *response;
+@property (nonatomic, strong, readonly) NSError          *_Nullable originalError;
+@property (nonatomic, strong, readonly) NSError          *_Nullable finalError;
+@property (nonatomic, strong, readonly) WAObjectResponse *_Nullable response;
 
 @end

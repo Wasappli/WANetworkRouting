@@ -22,14 +22,14 @@ typedef NS_OPTIONS(NSInteger, WAObjectRequestMethod) {
     WAObjectRequestMethodPATCH  = 1 << 5,
 };
 
-FOUNDATION_EXPORT NSString *WAStringFromObjectRequestMethod(WAObjectRequestMethod method);
-FOUNDATION_EXPORT WAObjectRequestMethod WAObjectRequestMethodFromString(NSString *method);
+FOUNDATION_EXPORT NSString * _Nonnull WAStringFromObjectRequestMethod(WAObjectRequestMethod method);
+FOUNDATION_EXPORT WAObjectRequestMethod WAObjectRequestMethodFromString(NSString *_Nonnull method);
 
 @class WAObjectRequest, WAObjectResponse;
 
-typedef void (^WAObjectRequestSuccessCompletionBlock)(WAObjectRequest *objectRequest, WAObjectResponse *response, NSArray *mappedObjects);
-typedef void (^WAObjectRequestProgressBlock)(WAObjectRequest *objectRequest, NSProgress *uploadProgress, NSProgress *downloadProgress, NSProgress *mappingProgress);
-typedef void (^WAObjectRequestFailureCompletionBlock)(WAObjectRequest *objectRequest, WAObjectResponse *response, id<WANRErrorProtocol> error);
+typedef void (^WAObjectRequestSuccessCompletionBlock)(WAObjectRequest *_Nonnull objectRequest, WAObjectResponse *_Nonnull response, NSArray *_Nullable _mappedObjects);
+typedef void (^WAObjectRequestProgressBlock)(WAObjectRequest *_Nonnull objectRequest, NSProgress *_Nullable uploadProgress, NSProgress *_Nullable downloadProgress, NSProgress *_Nullable mappingProgress);
+typedef void (^WAObjectRequestFailureCompletionBlock)(WAObjectRequest *_Nonnull objectRequest, WAObjectResponse *_Nullable response, _Nullable id<WANRErrorProtocol> error);
 
 
 #endif /* WANetworkRoutingUtilities_h */

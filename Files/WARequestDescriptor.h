@@ -11,12 +11,12 @@
 
 @class WAEntityMapping;
 
-typedef BOOL (^WARequestDescriptorShouldMapBlock)(NSString *entityName, NSString *relationShip);
+typedef BOOL (^WARequestDescriptorShouldMapBlock)(NSString *_Nonnull entityName, NSString *_Nonnull relationShip);
 
 @interface WARequestDescriptor : NSObject
 
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
+- (instancetype _Nonnull)init NS_UNAVAILABLE;
++ (instancetype _Nonnull)new NS_UNAVAILABLE;
 
 /**
  *  Create a request descriptor to map the objects to dictionary on request
@@ -29,18 +29,18 @@ typedef BOOL (^WARequestDescriptorShouldMapBlock)(NSString *entityName, NSString
  *
  *  @return a request descriptor to use on mapping manager
  */
-- (instancetype)initWithMethod:(WAObjectRequestMethod)method
-                   pathPattern:(NSString *)pathPattern
-                       mapping:(WAEntityMapping *)mapping
-                shouldMapBlock:(WARequestDescriptorShouldMapBlock)shouldMapBlock
-                requestKeyPath:(NSString *)requestKeyPath;
+- (instancetype _Nonnull)initWithMethod:(WAObjectRequestMethod)method
+                            pathPattern:(NSString *_Nonnull)pathPattern
+                                mapping:(WAEntityMapping *_Nonnull)mapping
+                         shouldMapBlock:(_Nullable WARequestDescriptorShouldMapBlock)shouldMapBlock
+                         requestKeyPath:(NSString *_Nullable)requestKeyPath;
 
 // @see `initWithMethod: pathPattern: mapping: shouldMapBlock: requestKeyPath:`
-+ (instancetype)requestDescriptorWithMethod:(WAObjectRequestMethod)method
-                                pathPattern:(NSString *)pathPattern
-                                    mapping:(WAEntityMapping *)mapping
-                             shouldMapBlock:(WARequestDescriptorShouldMapBlock)shouldMapBlock
-                             requestKeyPath:(NSString *)requestKeyPath;
++ (instancetype _Nonnull)requestDescriptorWithMethod:(WAObjectRequestMethod)method
+                                         pathPattern:(NSString *_Nonnull)pathPattern
+                                             mapping:(WAEntityMapping *_Nonnull)mapping
+                                      shouldMapBlock:(_Nullable WARequestDescriptorShouldMapBlock)shouldMapBlock
+                                      requestKeyPath:(NSString *_Nullable)requestKeyPath;
 
 /**
  *  Test if the descriptor match a path and a method
@@ -50,12 +50,12 @@ typedef BOOL (^WARequestDescriptorShouldMapBlock)(NSString *entityName, NSString
  *
  *  @return YES if the descriptor can be used, NO otherwise
  */
-- (BOOL)matchesPath:(NSString *)path method:(WAObjectRequestMethod)method;
+- (BOOL)matchesPath:(NSString *_Nonnull)path method:(WAObjectRequestMethod)method;
 
 @property (nonatomic, assign, readonly) WAObjectRequestMethod             method;
-@property (nonatomic, strong, readonly) NSString                          *pathPattern;
-@property (nonatomic, strong, readonly) WAEntityMapping                   *mapping;
-@property (nonatomic, copy, readonly  ) WARequestDescriptorShouldMapBlock shouldMapBlock;
-@property (nonatomic, strong, readonly) NSString                          *requestKeyPath;
+@property (nonatomic, strong, readonly) NSString                          *_Nonnull pathPattern;
+@property (nonatomic, strong, readonly) WAEntityMapping                   *_Nonnull mapping;
+@property (nonatomic, copy, readonly  ) WARequestDescriptorShouldMapBlock _Nullable shouldMapBlock;
+@property (nonatomic, strong, readonly) NSString                          *_Nullable requestKeyPath;
 
 @end

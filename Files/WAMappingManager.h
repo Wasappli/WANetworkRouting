@@ -14,8 +14,8 @@
 
 @interface WAMappingManager : NSObject <WAMappingManagerProtocol>
 
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
+- (instancetype _Nonnull)init NS_UNAVAILABLE;
++ (instancetype _Nonnull)new NS_UNAVAILABLE;
 
 /**
  *  Init the mapping manager with a store
@@ -24,7 +24,7 @@
  *
  *  @return a fresh mapping manager
  */
-- (instancetype)initWithStore:(id <WAStoreProtocol>)store NS_DESIGNATED_INITIALIZER;
+- (instancetype _Nonnull)initWithStore:(_Nonnull id <WAStoreProtocol>)store NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Create mapping manager with a store
@@ -33,23 +33,23 @@
  *
  *  @return a fresh mapping manager
  */
-+ (instancetype)mappingManagerWithStore:(id <WAStoreProtocol>)store;
++ (instancetype _Nonnull)mappingManagerWithStore:(_Nonnull id <WAStoreProtocol>)store;
 
 /**
  *  Add a new response descriptor
  *
  *  @param responseDescriptor a response descriptor
  */
-- (void)addResponseDescriptor:(WAResponseDescriptor *)responseDescriptor;
+- (void)addResponseDescriptor:(WAResponseDescriptor *_Nonnull)responseDescriptor;
 
 /**
  *  Add a new request descriptor
  *
  *  @param requestDescriptor a request descriptor
  */
-- (void)addRequestDescriptor:(WARequestDescriptor *)requestDescriptor;
+- (void)addRequestDescriptor:(WARequestDescriptor *_Nonnull)requestDescriptor;
 
-@property (nonatomic, strong, readonly) NSArray<WAResponseDescriptor *> *responseDescriptors;
-@property (nonatomic, strong, readonly) NSArray<WARequestDescriptor*> *requestDescriptors;
+@property (nonatomic, strong, readonly) NSArray<WAResponseDescriptor *> *_Nonnull responseDescriptors;
+@property (nonatomic, strong, readonly) NSArray<WARequestDescriptor*> *_Nonnull requestDescriptors;
 
 @end

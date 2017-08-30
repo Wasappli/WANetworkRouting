@@ -26,7 +26,7 @@
     
     if (self) {
         WANRClassParameterAssert(baseURL, NSURL);
-        WANRProtocolParameterAssertIfExists(requestManager, WARequestManagerProtocol);
+        WANRProtocolParameterAssert(requestManager, WARequestManagerProtocol);
         WANRProtocolParameterAssertIfExists(mappingManager, WAMappingManagerProtocol);
         WANRProtocolParameterAssertIfExists(authenticationManager, WARequestAuthenticationManagerProtocol);
         WANRProtocolParameterAssertIfExists(batchManager, WABatchManagerProtocol);

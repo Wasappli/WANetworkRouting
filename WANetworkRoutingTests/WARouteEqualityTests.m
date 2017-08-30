@@ -9,6 +9,7 @@
 #import <Kiwi/Kiwi.h>
 
 #import "WANetworkRoutingManager.h"
+#import "WAAFNetworkingRequestManager.h"
 #import "WANetworkRoute.h"
 #import "WANetworkRouter.h"
 #import "Enterprise.h"
@@ -17,7 +18,7 @@ SPEC_BEGIN(WARouteEquality)
 
 describe(@"Create two routes with the same parameters", ^{
         
-    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:@"http://www.someURL.com"] requestManager:nil mappingManager:nil authenticationManager:nil batchManager:nil];
+    WANetworkRoutingManager *objectManager = [WANetworkRoutingManager managerWithBaseURL:[NSURL URLWithString:@"http://www.someURL.com"] requestManager:[[WAAFNetworkingRequestManager alloc] init] mappingManager:nil authenticationManager:nil batchManager:nil];
     
     WANetworkRoute *route1 = [WANetworkRoute routeWithObjectClass:[Enterprise class]
                                                       pathPattern:@"enterprises"
